@@ -4,6 +4,7 @@
     --secondary-color: #e09f3e;
     --accent-color: #9e2a2b;
     --danger-color: #540b0e;
+    --wine-color: #722f37;
     --text-color: #335c67;
     --bg-color: #ffffff;
     --light-bg: #f8f9fa;
@@ -379,6 +380,55 @@ body {
         margin-bottom: 0.5rem;
     }
 }
+
+/* CTA Section Styles */
+.cta-section {
+    background: var(--wine-color) !important;
+    color: white;
+    border-radius: 1rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(114, 47, 55, 0.3);
+    transition: all 0.3s ease;
+}
+
+.cta-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(114, 47, 55, 0.4);
+}
+
+.cta-section .btn-light {
+    background: white;
+    color: var(--wine-color);
+    border: 2px solid white;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.cta-section .btn-light:hover {
+    background: transparent;
+    color: white;
+    border-color: white;
+    transform: translateY(-2px);
+}
+
+.cta-section .btn-outline-light {
+    border: 2px solid white;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.cta-section .btn-outline-light:hover {
+    background: white;
+    color: var(--wine-color);
+    transform: translateY(-2px);
+}
+
 
 /* Hero Section */
 .hero-section {
