@@ -1,4 +1,4 @@
-/* Admin Panel Styles */
+/* Admin Panel Styles - Updated 2025-01-04 */
 :root {
     --admin-primary: #335c67;
     --admin-secondary: #e09f3e;
@@ -250,89 +250,573 @@
     filter: invert(1);
 }
 
-/* Pagination Styles */
-.pagination {
-    margin: 1.5rem 0;
-    justify-content: center;
-    gap: 0.25rem;
+/* Force Override Bootstrap Pagination - Maximum Specificity */
+html body .pagination,
+html body .pagination ul,
+html body .pagination nav {
+    margin: 1.5rem 0 !important;
+    justify-content: center !important;
+    display: flex !important;
+    align-items: center !important;
+    list-style: none !important;
+    padding: 0 !important;
+    gap: 0.25rem !important;
+    min-height: 40px !important;
 }
 
-.pagination .page-item {
-    margin: 0 2px;
+html body .pagination .page-item {
+    margin: 0 !important;
+    list-style: none !important;
 }
 
-.pagination .page-link {
-    border: 2px solid var(--admin-primary);
-    color: var(--admin-primary);
-    background: white;
-    border-radius: 8px;
-    padding: 0.5rem 0.75rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    min-width: 40px;
-    text-align: center;
-    font-size: 0.9rem;
-    line-height: 1.2;
+html body .pagination .page-link {
+    border: 1px solid #dee2e6 !important;
+    color: #6c757d !important;
+    background: white !important;
+    border-radius: 4px !important;
+    padding: 0.5rem 0.75rem !important;
+    font-weight: 400 !important;
+    transition: all 0.15s ease !important;
+    text-decoration: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    text-align: center !important;
+    font-size: 0.875rem !important;
+    position: relative !important;
+    z-index: 1 !important;
 }
 
-.pagination .page-link:hover {
-    background: var(--admin-primary);
-    color: white;
-    border-color: var(--admin-primary);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(51, 92, 103, 0.3);
+html body .pagination .page-link:hover {
+    background: #e9ecef !important;
+    color: #495057 !important;
+    border-color: #dee2e6 !important;
+    text-decoration: none !important;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
-.pagination .page-item.active .page-link {
-    background: linear-gradient(135deg, var(--admin-primary), #4a7c8a);
-    border-color: var(--admin-primary);
-    color: white;
-    box-shadow: 0 4px 15px rgba(51, 92, 103, 0.3);
+html body .pagination .page-item.active .page-link {
+    background: var(--admin-primary) !important;
+    border-color: var(--admin-primary) !important;
+    color: white !important;
+    box-shadow: none !important;
 }
 
-.pagination .page-item.disabled .page-link {
-    color: #6c757d;
-    background: #f8f9fa;
-    border-color: #dee2e6;
-    cursor: not-allowed;
-    opacity: 0.6;
+html body .pagination .page-item.disabled .page-link {
+    color: #6c757d !important;
+    background: #fff !important;
+    border-color: #dee2e6 !important;
+    cursor: not-allowed !important;
+    opacity: 0.5 !important;
 }
 
-.pagination .page-item.disabled .page-link:hover {
-    transform: none;
-    box-shadow: none;
+html body .pagination .page-item.disabled .page-link:hover {
+    background: #fff !important;
+    color: #6c757d !important;
+    border-color: #dee2e6 !important;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
-/* Previous/Next Arrow Styles for Admin */
-.pagination .page-item:first-child .page-link,
-.pagination .page-item:last-child .page-link {
-    font-size: 0.8rem;
-    padding: 0.5rem 0.6rem;
-    min-width: 36px;
+/* Pagination Container */
+html body .d-flex.justify-content-center {
+    margin: 1.5rem 0 !important;
+    padding: 1rem 0 !important;
+    align-items: center !important;
+    min-height: 80px !important;
 }
 
-.pagination .page-item:first-child .page-link::before {
-    content: "‹";
-    font-size: 1.1rem;
-    font-weight: bold;
+/* Pagination Navigation Container */
+html body nav.d-flex {
+    align-items: center !important;
+    padding: 1rem 0 !important;
+    min-height: 80px !important;
 }
 
-.pagination .page-item:last-child .page-link::before {
-    content: "›";
-    font-size: 1.1rem;
-    font-weight: bold;
+/* Vertical pagination layout */
+html body nav.d-flex .d-flex.flex-column {
+    width: 100% !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
-/* Hide default text in prev/next links */
-.pagination .page-item:first-child .page-link span,
-.pagination .page-item:last-child .page-link span {
-    display: none;
+html body nav.d-flex .mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+/* Results text alignment */
+html body .small.text-muted {
+    display: block !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0.5rem 0 !important;
+    font-size: 0.875rem !important;
+    line-height: 1.4 !important;
+    word-spacing: 0.25rem !important;
+    letter-spacing: 0.025rem !important;
+}
+
+/* Ensure proper spacing in pagination text */
+html body .small.text-muted span {
+    margin: 0 0.125rem !important;
+    padding: 0 !important;
+}
+
+/* Completely hide any pseudo-elements and icons */
+html body .pagination *::before,
+html body .pagination *::after,
+html body .pagination .page-link::before,
+html body .pagination .page-link::after {
+    display: none !important;
+    content: none !important;
+    font-size: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+/* Hide any FontAwesome icons */
+html body .pagination .fa,
+html body .pagination .fas,
+html body .pagination .far,
+html body .pagination .fab,
+html body .pagination .fal,
+html body .pagination .fad,
+html body .pagination .svg-inline--fa,
+html body .pagination i {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    font-size: 0 !important;
+}
+
+/* Ensure clean pagination display */
+html body .pagination {
+    position: relative !important;
+    z-index: 1 !important;
+    overflow: visible !important;
+}
+
+/* Additional overrides for any remaining issues */
+html body .pagination .page-link span {
+    display: inline !important;
+    font-size: 0.875rem !important;
+}
+
+/* Larger arrow characters for pagination */
+html body .pagination .page-link:contains('‹'),
+html body .pagination .page-link:contains('›') {
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    line-height: 1 !important;
+}
+
+/* Specific styling for arrow characters */
+html body .pagination .page-link[aria-label*="previous"],
+html body .pagination .page-link[aria-label*="next"],
+html body .pagination .page-link[rel="prev"],
+html body .pagination .page-link[rel="next"] {
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    line-height: 1 !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+}
+
+/* Force hide any large elements */
+html body .pagination *[class*="chevron"],
+html body .pagination *[class*="arrow"],
+html body .pagination *[class*="icon"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    font-size: 0 !important;
+}
+
+/* Reset any transforms or weird positioning */
+html body .pagination * {
+    transform: none !important;
+    position: static !important;
+    float: none !important;
+    clear: none !important;
 }
 
 /* Image Styles */
 .img-thumbnail {
     border: 1px solid #dee2e6;
     border-radius: 0.25rem;
+}
+
+/* Admin Table Images - Large Square Images */
+.admin-table-image {
+    width: 80px !important;
+    height: 80px !important;
+    min-width: 80px !important;
+    min-height: 80px !important;
+    max-width: 80px !important;
+    max-height: 80px !important;
+    object-fit: cover !important;
+    border-radius: 8px !important;
+    border: 2px solid #dee2e6 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Ensure table cells accommodate larger images */
+.table td:first-child {
+    width: 100px !important;
+    min-width: 100px !important;
+    padding: 8px !important;
+    vertical-align: middle !important;
+}
+
+/* Admin Table Header and Cell Optimization */
+.admin-table th,
+.admin-table td {
+    text-align: center !important;
+    vertical-align: middle !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    padding: 12px 8px !important;
+    font-size: 0.875rem !important;
+    line-height: 1.4 !important;
+}
+
+/* Header specific styling */
+.admin-table th {
+    background-color: #f8f9fa !important;
+    font-weight: 600 !important;
+    border-bottom: 2px solid #dee2e6 !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+}
+
+/* First column (image column) alignment */
+.admin-table th:first-child,
+.admin-table td:first-child {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+/* Text columns alignment */
+.admin-table th:nth-child(2),
+.admin-table td:nth-child(2) {
+    text-align: left !important;
+}
+
+/* Action column alignment */
+.admin-table th:last-child,
+.admin-table td:last-child {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+/* Prevent text wrapping in specific columns */
+.admin-table td:nth-child(2) {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 200px !important;
+}
+
+/* Table responsive behavior */
+.table-responsive {
+    overflow-x: auto !important;
+}
+
+/* Ensure consistent row height */
+.admin-table tbody tr {
+    height: 60px !important;
+}
+
+/* Admin Table Column Width Optimization */
+.admin-table {
+    table-layout: fixed !important;
+    width: 100% !important;
+}
+
+/* Categories Table */
+.admin-table.categories-table th:nth-child(1),
+.admin-table.categories-table td:nth-child(1) {
+    width: 20% !important; /* Name */
+}
+
+.admin-table.categories-table th:nth-child(2),
+.admin-table.categories-table td:nth-child(2) {
+    width: 20% !important; /* Section */
+}
+
+.admin-table.categories-table th:nth-child(3),
+.admin-table.categories-table td:nth-child(3) {
+    width: 15% !important; /* Products Count */
+}
+
+.admin-table.categories-table th:nth-child(4),
+.admin-table.categories-table td:nth-child(4) {
+    width: 20% !important; /* Created */
+}
+
+.admin-table.categories-table th:nth-child(5),
+.admin-table.categories-table td:nth-child(5) {
+    width: 25% !important; /* Actions */
+}
+
+/* Brands Table */
+.admin-table.brands-table th:nth-child(1),
+.admin-table.brands-table td:nth-child(1) {
+    width: 20% !important; /* Logo - Tăng từ 15% lên 20% */
+}
+
+.admin-table.brands-table th:nth-child(2),
+.admin-table.brands-table td:nth-child(2) {
+    width: 25% !important; /* Name - Giảm từ 30% xuống 25% */
+}
+
+.admin-table.brands-table th:nth-child(3),
+.admin-table.brands-table td:nth-child(3) {
+    width: 20% !important; /* Products Count */
+}
+
+.admin-table.brands-table th:nth-child(4),
+.admin-table.brands-table td:nth-child(4) {
+    width: 20% !important; /* Created */
+}
+
+.admin-table.brands-table th:nth-child(5),
+.admin-table.brands-table td:nth-child(5) {
+    width: 15% !important; /* Actions */
+}
+
+/* Materials Table */
+.admin-table.materials-table th:nth-child(1),
+.admin-table.materials-table td:nth-child(1) {
+    width: 20% !important; /* Image - Tăng từ 15% lên 20% */
+}
+
+.admin-table.materials-table th:nth-child(2),
+.admin-table.materials-table td:nth-child(2) {
+    width: 25% !important; /* Name - Giảm từ 35% xuống 25% */
+}
+
+.admin-table.materials-table th:nth-child(3),
+.admin-table.materials-table td:nth-child(3) {
+    width: 20% !important; /* Products Count */
+}
+
+.admin-table.materials-table th:nth-child(4),
+.admin-table.materials-table td:nth-child(4) {
+    width: 20% !important; /* Created - Tăng từ 15% lên 20% */
+}
+
+.admin-table.materials-table th:nth-child(5),
+.admin-table.materials-table td:nth-child(5) {
+    width: 15% !important; /* Actions */
+}
+
+/* Offers Table */
+.admin-table.offers-table th:nth-child(1),
+.admin-table.offers-table td:nth-child(1) {
+    width: 15% !important; /* Image - Tăng từ 12% lên 15% */
+}
+
+.admin-table.offers-table th:nth-child(2),
+.admin-table.offers-table td:nth-child(2) {
+    width: 20% !important; /* Title */
+}
+
+.admin-table.offers-table th:nth-child(3),
+.admin-table.offers-table td:nth-child(3) {
+    width: 15% !important; /* Discount */
+}
+
+.admin-table.offers-table th:nth-child(4),
+.admin-table.offers-table td:nth-child(4) {
+    width: 12% !important; /* Status */
+}
+
+.admin-table.offers-table th:nth-child(5),
+.admin-table.offers-table td:nth-child(5) {
+    width: 15% !important; /* Start Date */
+}
+
+.admin-table.offers-table th:nth-child(6),
+.admin-table.offers-table td:nth-child(6) {
+    width: 15% !important; /* End Date */
+}
+
+.admin-table.offers-table th:nth-child(7),
+.admin-table.offers-table td:nth-child(7) {
+    width: 8% !important; /* Actions - Giảm từ 11% xuống 8% */
+}
+
+/* Contacts Table */
+.admin-table.contacts-table th:nth-child(1),
+.admin-table.contacts-table td:nth-child(1) {
+    width: 20% !important; /* Họ Tên */
+}
+
+.admin-table.contacts-table th:nth-child(2),
+.admin-table.contacts-table td:nth-child(2) {
+    width: 20% !important; /* Email */
+}
+
+.admin-table.contacts-table th:nth-child(3),
+.admin-table.contacts-table td:nth-child(3) {
+    width: 15% !important; /* Số Điện Thoại */
+}
+
+.admin-table.contacts-table th:nth-child(4),
+.admin-table.contacts-table td:nth-child(4) {
+    width: 15% !important; /* Nội Dung */
+}
+
+.admin-table.contacts-table th:nth-child(5),
+.admin-table.contacts-table td:nth-child(5) {
+    width: 12% !important; /* Tình Trạng */
+}
+
+.admin-table.contacts-table th:nth-child(6),
+.admin-table.contacts-table td:nth-child(6) {
+    width: 13% !important; /* Ngày Tạo */
+}
+
+.admin-table.contacts-table th:nth-child(7),
+.admin-table.contacts-table td:nth-child(7) {
+    width: 15% !important; /* Hành Động */
+}
+
+/* Products Table */
+.admin-table.products-table th:nth-child(1),
+.admin-table.products-table td:nth-child(1) {
+    width: 12% !important; /* Hình ảnh */
+}
+
+.admin-table.products-table th:nth-child(2),
+.admin-table.products-table td:nth-child(2) {
+    width: 20% !important; /* Tên Sản Phẩm - Tăng từ 18% */
+}
+
+.admin-table.products-table th:nth-child(3),
+.admin-table.products-table td:nth-child(3) {
+    width: 13% !important; /* Mục Sản Phẩm - Tăng từ 12% */
+}
+
+.admin-table.products-table th:nth-child(4),
+.admin-table.products-table td:nth-child(4) {
+    width: 13% !important; /* Loại Sản Phẩm - Tăng từ 12% */
+}
+
+.admin-table.products-table th:nth-child(5),
+.admin-table.products-table td:nth-child(5) {
+    width: 12% !important; /* Thương Hiệu - Tăng từ 10% */
+}
+
+.admin-table.products-table th:nth-child(6),
+.admin-table.products-table td:nth-child(6) {
+    width: 12% !important; /* Đơn Giá - Tăng từ 10% */
+}
+
+.admin-table.products-table th:nth-child(7),
+.admin-table.products-table td:nth-child(7) {
+    width: 10% !important; /* Tồn Kho - Tăng từ 8% */
+}
+
+.admin-table.products-table th:nth-child(8),
+.admin-table.products-table td:nth-child(8) {
+    width: 10% !important; /* Tình Trạng - Tăng từ 8% */
+}
+
+.admin-table.products-table th:nth-child(9),
+.admin-table.products-table td:nth-child(9) {
+    width: 18% !important; /* Hành Động - Tăng từ 12% */
+}
+
+/* Reviews Table */
+.admin-table.reviews-table th:nth-child(1),
+.admin-table.reviews-table td:nth-child(1) {
+    width: 20% !important; /* Sản Phẩm */
+}
+
+.admin-table.reviews-table th:nth-child(2),
+.admin-table.reviews-table td:nth-child(2) {
+    width: 20% !important; /* Khách Hàng */
+}
+
+.admin-table.reviews-table th:nth-child(3),
+.admin-table.reviews-table td:nth-child(3) {
+    width: 15% !important; /* Đánh Giá */
+}
+
+.admin-table.reviews-table th:nth-child(4),
+.admin-table.reviews-table td:nth-child(4) {
+    width: 12% !important; /* Bình Luận - Giảm từ 15% */
+}
+
+.admin-table.reviews-table th:nth-child(5),
+.admin-table.reviews-table td:nth-child(5) {
+    width: 12% !important; /* Trạng Thái */
+}
+
+.admin-table.reviews-table th:nth-child(6),
+.admin-table.reviews-table td:nth-child(6) {
+    width: 13% !important; /* Ngày */
+}
+
+.admin-table.reviews-table th:nth-child(7),
+.admin-table.reviews-table td:nth-child(7) {
+    width: 18% !important; /* Hành Động - Tăng từ 15% */
+}
+
+/* Stars alignment in reviews */
+.admin-table.reviews-table .text-warning {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+}
+
+.admin-table.reviews-table .text-warning i {
+    display: inline !important;
+    margin-right: 2px !important;
+    font-size: 0.9rem !important;
+    line-height: 1 !important;
+}
+
+/* Larger images for all admin tables */
+.admin-table .admin-table-image {
+    width: 100px !important;
+    height: 100px !important;
+    min-width: 100px !important;
+    min-height: 100px !important;
+    max-width: 100px !important;
+    max-height: 100px !important;
+}
+
+/* Perfect center alignment for all images */
+.admin-table td:first-child {
+    text-align: center !important;
+    vertical-align: middle !important;
+    padding: 12px 8px !important;
+}
+
+/* Ensure image containers are perfectly centered */
+.admin-table td:first-child .admin-table-image,
+.admin-table td:first-child .bg-light {
+    margin: 0 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 /* Loading States */
@@ -470,6 +954,238 @@
 .text-warning { color: var(--admin-warning) !important; }
 .text-danger { color: var(--admin-danger) !important; }
 .text-info { color: var(--admin-info) !important; }
+
+/* Action Icons Container - Center alignment */
+body .table td .btn-group {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0 !important;
+}
+
+/* Action Icons Styles - Maximum Specificity to Override Bootstrap */
+html body .table .btn-group .btn,
+html body .table .btn-group .btn.btn-sm.btn-outline-primary,
+html body .table .btn-group .btn.btn-sm.btn-outline-info,
+html body .table .btn-group .btn.btn-sm.btn-outline-danger,
+html body .table .btn-group .btn.btn-sm.btn-outline-success,
+html body .table .btn-group .btn.btn-sm.btn-outline-warning,
+html body .table .btn-group .btn.btn-sm.btn-outline-secondary,
+html body .table .btn-group .btn-sm.btn-outline-primary,
+html body .table .btn-group .btn-sm.btn-outline-info,
+html body .table .btn-group .btn-sm.btn-outline-danger,
+html body .table .btn-group .btn-sm.btn-outline-success,
+html body .table .btn-group .btn-sm.btn-outline-warning,
+html body .table .btn-group .btn-sm.btn-outline-secondary {
+    border: none !important;
+    border-width: 0 !important;
+    border-style: none !important;
+    border-color: transparent !important;
+    padding: 0 !important;
+    margin: 0 2px !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    max-width: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    box-shadow: none !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    flex-basis: 32px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    line-height: 1 !important;
+    font-size: 0.875rem !important;
+}
+
+html body .table .btn-group .btn i,
+html body .table .btn-group .btn.btn-sm.btn-outline-primary i,
+html body .table .btn-group .btn.btn-sm.btn-outline-info i,
+html body .table .btn-group .btn.btn-sm.btn-outline-danger i,
+html body .table .btn-group .btn.btn-sm.btn-outline-success i,
+html body .table .btn-group .btn.btn-sm.btn-outline-warning i,
+html body .table .btn-group .btn.btn-sm.btn-outline-secondary i,
+html body .table .btn-group .btn-sm.btn-outline-primary i,
+html body .table .btn-group .btn-sm.btn-outline-info i,
+html body .table .btn-group .btn-sm.btn-outline-danger i,
+html body .table .btn-group .btn-sm.btn-outline-success i,
+html body .table .btn-group .btn-sm.btn-outline-warning i,
+html body .table .btn-group .btn-sm.btn-outline-secondary i {
+    font-size: 0.875rem !important;
+    line-height: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: inline-block !important;
+}
+
+html body .table .btn-group .btn-outline-info,
+html body .table .btn-group .btn.btn-sm.btn-outline-info,
+html body .table .btn-group .btn-sm.btn-outline-info {
+    background-color: rgba(23, 162, 184, 0.1) !important;
+    color: #17a2b8 !important;
+}
+
+html body .table .btn-group .btn-outline-info:hover,
+html body .table .btn-group .btn.btn-sm.btn-outline-info:hover,
+html body .table .btn-group .btn-sm.btn-outline-info:hover {
+    background-color: #17a2b8 !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(23, 162, 184, 0.3) !important;
+}
+
+html body .table .btn-group .btn-outline-primary,
+html body .table .btn-group .btn.btn-sm.btn-outline-primary,
+html body .table .btn-group .btn-sm.btn-outline-primary {
+    background-color: rgba(51, 92, 103, 0.1) !important;
+    color: var(--admin-primary) !important;
+}
+
+html body .table .btn-group .btn-outline-primary:hover,
+html body .table .btn-group .btn.btn-sm.btn-outline-primary:hover,
+html body .table .btn-group .btn-sm.btn-outline-primary:hover {
+    background-color: var(--admin-primary) !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(51, 92, 103, 0.3) !important;
+}
+
+html body .table .btn-group .btn-outline-danger,
+html body .table .btn-group .btn.btn-sm.btn-outline-danger,
+html body .table .btn-group .btn-sm.btn-outline-danger {
+    background-color: rgba(158, 42, 43, 0.1) !important;
+    color: var(--admin-danger) !important;
+}
+
+html body .table .btn-group .btn-outline-danger:hover,
+html body .table .btn-group .btn.btn-sm.btn-outline-danger:hover,
+html body .table .btn-group .btn-sm.btn-outline-danger:hover {
+    background-color: var(--admin-danger) !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(158, 42, 43, 0.3) !important;
+}
+
+html body .table .btn-group .btn-outline-success,
+html body .table .btn-group .btn.btn-sm.btn-outline-success,
+html body .table .btn-group .btn-sm.btn-outline-success {
+    background-color: rgba(39, 174, 96, 0.1) !important;
+    color: var(--admin-success) !important;
+}
+
+html body .table .btn-group .btn-outline-success:hover,
+html body .table .btn-group .btn.btn-sm.btn-outline-success:hover,
+html body .table .btn-group .btn-sm.btn-outline-success:hover {
+    background-color: var(--admin-success) !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3) !important;
+}
+
+html body .table .btn-group .btn-outline-warning,
+html body .table .btn-group .btn.btn-sm.btn-outline-warning,
+html body .table .btn-group .btn-sm.btn-outline-warning {
+    background-color: rgba(243, 156, 18, 0.1) !important;
+    color: var(--admin-warning) !important;
+}
+
+html body .table .btn-group .btn-outline-warning:hover,
+html body .table .btn-group .btn.btn-sm.btn-outline-warning:hover,
+html body .table .btn-group .btn-sm.btn-outline-warning:hover {
+    background-color: var(--admin-warning) !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(243, 156, 18, 0.3) !important;
+}
+
+html body .table .btn-group .btn-outline-secondary,
+html body .table .btn-group .btn.btn-sm.btn-outline-secondary,
+html body .table .btn-group .btn-sm.btn-outline-secondary {
+    background-color: rgba(224, 159, 62, 0.1) !important;
+    color: var(--admin-secondary) !important;
+}
+
+html body .table .btn-group .btn-outline-secondary:hover,
+html body .table .btn-group .btn.btn-sm.btn-outline-secondary:hover,
+html body .table .btn-group .btn-sm.btn-outline-secondary:hover {
+    background-color: var(--admin-secondary) !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(224, 159, 62, 0.3) !important;
+}
+
+/* Gallery Action Icons (not in btn-group) */
+html body .card .btn-sm.btn-outline-primary,
+html body .card .btn-sm.btn-outline-danger {
+    border: none !important;
+    border-width: 0 !important;
+    border-style: none !important;
+    border-color: transparent !important;
+    padding: 0 !important;
+    margin: 0 2px !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    max-width: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    box-shadow: none !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    flex-basis: 32px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    line-height: 1 !important;
+    font-size: 0.875rem !important;
+}
+
+html body .card .btn-sm.btn-outline-primary i,
+html body .card .btn-sm.btn-outline-danger i {
+    font-size: 0.875rem !important;
+    line-height: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: inline-block !important;
+}
+
+html body .card .btn-sm.btn-outline-primary {
+    background-color: rgba(51, 92, 103, 0.1) !important;
+    color: var(--admin-primary) !important;
+}
+
+html body .card .btn-sm.btn-outline-primary:hover {
+    background-color: var(--admin-primary) !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(51, 92, 103, 0.3) !important;
+}
+
+html body .card .btn-sm.btn-outline-danger {
+    background-color: rgba(158, 42, 43, 0.1) !important;
+    color: var(--admin-danger) !important;
+}
+
+html body .card .btn-sm.btn-outline-danger:hover {
+    background-color: var(--admin-danger) !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(158, 42, 43, 0.3) !important;
+}
 
 /* Settings Page Enhancements */
 .icon-circle {

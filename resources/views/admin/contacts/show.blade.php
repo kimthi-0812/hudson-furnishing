@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 
-@section('title', 'Contact Details - Hudson Furnishing')
-@section('page-title', 'Contact Details')
+@section('title', 'Thông Tin Liên Hệ - Hudson Furnishing')
+@section('page-title', 'Thông Tin Liên Hệ')
 
 @section('content')
 <div class="row">
     <div class="col-lg-8">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Contact Information</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Thông Tin Liên Hệ</h6>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -47,7 +47,7 @@
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit" class="btn btn-primary w-100">
-                                                <i class="fas fa-check me-2"></i>Mark as Read
+                                                <i class="fas fa-check me-2"></i>Đánh Dấu Đã Đọc
                                             </button>
                                         </form>
                                     @endif
@@ -57,21 +57,21 @@
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit" class="btn btn-success w-100">
-                                                <i class="fas fa-reply me-2"></i>Mark as Replied
+                                                <i class="fas fa-reply me-2"></i>Đánh Dấu Đã Trả Lời
                                             </button>
                                         </form>
                                     @endif
                                     
                                     <a href="mailto:{{ $contact->email }}" class="btn btn-info">
-                                        <i class="fas fa-envelope me-2"></i>Send Email
+                                        <i class="fas fa-envelope me-2"></i>Gửi Email
                                     </a>
                                     
                                     <form method="POST" action="{{ route('admin.contacts.destroy', $contact) }}" 
-                                          class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                          class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa tin nhắn liên hệ này không?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger w-100">
-                                            <i class="fas fa-trash me-2"></i>Delete Contact
+                                            <i class="fas fa-trash me-2"></i>Xóa Tin Nhắn Liên Hệ
                                         </button>
                                     </form>
                                 </div>
@@ -85,7 +85,7 @@
         <!-- Update Status Form -->
         <div class="card shadow">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Update Contact Status</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Cập Nhật Tình Trạng Liên Hệ</h6>
             </div>
             <div class="card-body">
                 <form method="POST" action="{{ route('admin.contacts.update', $contact) }}">
@@ -95,7 +95,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="status" class="form-label">Status</label>
+                                <label for="status" class="form-label">Tình Trạng</label>
                                 <select class="form-select" id="status" name="status" required>
                                     <option value="new" {{ $contact->status == 'new' ? 'selected' : '' }}>New</option>
                                     <option value="read" {{ $contact->status == 'read' ? 'selected' : '' }}>Read</option>
@@ -106,14 +106,14 @@
                         
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="notes" class="form-label">Admin Notes</label>
+                                <label for="notes" class="form-label">Ghi Chú Của Admin</label>
                                 <textarea class="form-control" id="notes" name="notes" rows="3">{{ $contact->notes }}</textarea>
                             </div>
                         </div>
                     </div>
                     
                     <div class="text-end">
-                        <button type="submit" class="btn btn-primary">Update Contact</button>
+                        <button type="submit" class="btn btn-primary">Cập Nhật Liên Hệ</button>
                     </div>
                 </form>
             </div>
@@ -123,25 +123,25 @@
     <div class="col-lg-4">
         <div class="card shadow">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Contact Statistics</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Thống Kê Liên Hệ</h6>
             </div>
             <div class="card-body">
                 <div class="row text-center">
                     <div class="col-6 mb-3">
                         <div class="border-end">
                             <h4 class="text-primary">{{ $contact->created_at->format('d') }}</h4>
-                            <small class="text-muted">Day</small>
+                            <small class="text-muted">Ngày</small>
                         </div>
                     </div>
                     <div class="col-6 mb-3">
                         <h4 class="text-success">{{ $contact->created_at->format('M') }}</h4>
-                        <small class="text-muted">Month</small>
+                        <small class="text-muted">Tháng</small>
                     </div>
                 </div>
                 
                 <div class="mt-3">
-                    <small class="text-muted">Received: {{ $contact->created_at->format('M d, Y H:i') }}</small><br>
-                    <small class="text-muted">Updated: {{ $contact->updated_at->format('M d, Y H:i') }}</small>
+                    <small class="text-muted">Nhận: {{ $contact->created_at->format('M d, Y H:i') }}</small><br>
+                    <small class="text-muted">Cập Nhật: {{ $contact->updated_at->format('M d, Y H:i') }}</small>
                 </div>
             </div>
         </div>

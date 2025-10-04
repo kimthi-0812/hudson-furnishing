@@ -1,12 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 
-@section('title', 'Special Offers - Hudson Furnishing')
+@section('title', 'Khuyến Mãi Đặc Biệt - Hudson Furnishing')
 
 @section('content')
 <div class="container py-5">
     <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold">Special Offers</h1>
-        <p class="lead text-muted">Don't miss out on these amazing deals!</p>
+        <h1 class="display-4 fw-bold">Khuyến Mãi Đặc Biệt</h1>
+        <p class="lead text-muted">Không bỏ lỡ các khuyến mãi tuyệt vời!</p>
     </div>
     
     <div class="row">
@@ -36,12 +36,12 @@
                         <div class="text-muted">
                             <small>
                                 <i class="fas fa-calendar-alt me-1"></i>
-                                Valid until: {{ $offer->end_date->format('M d, Y') }}
+                                Hạn Áp Dụng: {{ $offer->end_date->format('M d, Y') }}
                             </small>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <a href="{{ route('products.index') }}" class="btn btn-danger w-100">Shop Now</a>
+                        <a href="{{ route('products.index') }}" class="btn btn-danger w-100">Mua Ngay</a>
                     </div>
                 </div>
             </div>
@@ -49,9 +49,9 @@
             <div class="col-12">
                 <div class="text-center py-5">
                     <i class="fas fa-tags fa-3x text-muted mb-3"></i>
-                    <h4>No offers available</h4>
-                    <p class="text-muted">Check back soon for amazing deals!</p>
-                    <a href="{{ route('products.index') }}" class="btn btn-primary">Browse Products</a>
+                    <h4>Không có khuyến mãi nào</h4>
+                    <p class="text-muted">Kiểm tra lại sau để xem khuyến mãi của chúng tôi!</p>
+                    <a href="{{ route('products.index') }}" class="btn btn-primary">Xem Sản Phẩm</a>
                 </div>
             </div>
         @endforelse

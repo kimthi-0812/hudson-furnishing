@@ -1,12 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 
-@section('title', 'Categories - Hudson Furnishing')
+@section('title', 'Danh Mục - Hudson Furnishing')
 
 @section('content')
 <div class="container py-5">
     <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold">Categories</h1>
-        <p class="lead text-muted">Tìm sản phẩm bằng danh mục!</p>
+        <h1 class="display-4 fw-bold">Danh Mục</h1>
+        <p class="lead text-muted">Tìm sản phẩm theo danh mục!</p>
     </div>
     
     <div class="row">
@@ -34,7 +34,7 @@
                         <div class="mt-3">
                             <a href="{{ route('products.section', $section->slug) }}" 
                                class="btn btn-outline-primary">
-                                View All {{ $section->name }} Products
+                                Xem Tất Cả Sản Phẩm {{ $section->name }}
                             </a>
                         </div>
                     </div>

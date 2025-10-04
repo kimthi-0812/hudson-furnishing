@@ -2,13 +2,27 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 mb-4">
-                <h5 class="fw-bold mb-3">Hudson Furnishing</h5>
-                <p class="text-light mb-4">Nội thất cao cấp cho mọi phòng trong ngôi nhà của bạn. Chất lượng thủ công gặp gỡ thiết kế hiện đại để tạo ra những không gian truyền cảm hứng.</p>
-                <div class="social-links">
-                    <a href="#" class="btn btn-outline-light btn-sm me-2 mb-2">Facebook</a>
-                    <a href="#" class="btn btn-outline-light btn-sm me-2 mb-2">Twitter</a>
-                    <a href="#" class="btn btn-outline-light btn-sm me-2 mb-2">Instagram</a>
-                    <a href="#" class="btn btn-outline-light btn-sm mb-2">LinkedIn</a>
+                <div class="footer-brand">
+                    <img src="{{ asset('images/logo.png') }}" alt="Hudson Furnishing" class="footer-logo mb-3">
+                    <h5 class="fw-bold mb-3">Hudson Furnishing</h5>
+                    <p class="text-light mb-4">Nội thất cao cấp cho mọi phòng trong ngôi nhà của bạn. Chất lượng thủ công gặp gỡ thiết kế hiện đại để tạo ra những không gian truyền cảm hứng.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link me-3" title="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link me-3" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link me-3" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link me-3" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="social-link" title="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
             
@@ -51,18 +65,22 @@
             <div class="col-lg-4 mb-4">
                 <h6 class="fw-bold mb-3">Thông Tin Liên Hệ</h6>
                 <div class="contact-info">
-                    <p class="text-light mb-3">
-                        {{ $siteSettings['contact_address'] ?? '123 Đường Nội Thất, Quận Thiết Kế, TP.HCM 700000' }}
-                    </p>
-                    <p class="text-light mb-3">
-                        {{ $siteSettings['contact_phone'] ?? '+84 (0) 123 45 67 89' }}
-                    </p>
-                    <p class="text-light mb-3">
-                        {{ $siteSettings['contact_email'] ?? 'info@hudsonfurnishing.vn' }}
-                    </p>
-                    <p class="text-light mb-3">
-                        {{ $siteSettings['business_hours'] ?? 'T2 - T6: 8:00 - 18:00' }}
-                    </p>
+                    <div class="contact-item mb-3">
+                        <i class="fas fa-map-marker-alt text-secondary me-2"></i>
+                        <span class="text-light">{{ $siteSettings['contact_address'] ?? '36/5 Đường D5, Quận Bình Thạnh, TP.HCM 700000' }}</span>
+                    </div>
+                    <div class="contact-item mb-3">
+                        <i class="fas fa-phone text-secondary me-2"></i>
+                        <span class="text-light">{{ $siteSettings['contact_phone'] ?? '+84 909 090 909' }}</span>
+                    </div>
+                    <div class="contact-item mb-3">
+                        <i class="fas fa-envelope text-secondary me-2"></i>
+                        <span class="text-light">{{ $siteSettings['contact_email'] ?? 'info@hudsonfurnishing.com' }}</span>
+                    </div>
+                    <div class="contact-item mb-3">
+                        <i class="fas fa-clock text-secondary me-2"></i>
+                        <span class="text-light">{{ $siteSettings['business_hours'] ?? 'T2 - T7: 8:00 - 18:00' }}</span>
+                    </div>
                 </div>
             </div>
         </div>

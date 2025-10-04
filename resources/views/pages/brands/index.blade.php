@@ -1,12 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 
-@section('title', 'Brands - Hudson Furnishing')
+@section('title', 'Thương Hiệu - Hudson Furnishing')
 
 @section('content')
 <div class="container py-5">
     <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold">Our Brands</h1>
-        <p class="lead text-muted">Discover the brands we trust and love</p>
+        <h1 class="display-4 fw-bold">Thương Hiệu</h1>
+        <p class="lead text-muted">Khám Phá Thương Hiệu Mà Chúng Tôi Tin Tưởng Và Yêu Thích</p>
     </div>
     
     <div class="row">
@@ -28,7 +28,7 @@
                         @endif
                         <a href="{{ route('products.index', ['brand' => $brand->id]) }}" 
                            class="btn btn-outline-primary btn-sm">
-                            View Products
+                            Xem Sản Phẩm
                         </a>
                     </div>
                 </div>
@@ -37,8 +37,8 @@
             <div class="col-12">
                 <div class="text-center py-5">
                     <i class="fas fa-tags fa-3x text-muted mb-3"></i>
-                    <h4>No brands available</h4>
-                    <p class="text-muted">Check back soon for our brand partners!</p>
+                    <h4>Không có thương hiệu nào</h4>
+                    <p class="text-muted">Kiểm tra lại sau để xem thương hiệu của chúng tôi!</p>
                 </div>
             </div>
         @endforelse

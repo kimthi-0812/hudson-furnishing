@@ -1,19 +1,19 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 
-@section('title', 'Contact Us - Hudson Furnishing')
+@section('title', 'Liên Hệ - Hudson Furnishing')
 
 @section('content')
 <div class="container py-5">
     <div class="row">
         <div class="col-lg-8 mx-auto">
             <div class="text-center mb-5">
-                <h1 class="display-4 fw-bold">LIÊN HỆ VỚI CHÚNG TÔI</h1>
-                <p class="lead text-muted">Chúng tôi sẵn sàng hỗ trợ</p>
+                <h1 class="display-4 fw-bold">Liên Hệ</h1>
+                <p class="lead text-muted">Chúng tôi sẵn sàng hỗ trợ bạn</p>
             </div>
             
             <div class="row">
                 <div class="col-md-6">
-                    <h3>Liên hệ</h3>
+                    <h3>Liên Hệ</h3>
                     <p>Tư vấn về nội thất và yêu cầu hướng dẫn đặt hàng? Liên hệ ngay!</p>
                     
                     <div class="contact-info">
@@ -21,7 +21,7 @@
                             <i class="fas fa-map-marker-alt text-primary me-3"></i>
                             <div>
                                 <strong>Địa chỉ</strong><br>
-                                {!! nl2br(e($siteSettings['contact_address'] ?? '35/6 Đường D5, Phường 25<br>Quận Bình Thạnh, TP.HCM')) !!}
+                                {!! nl2br(e($siteSettings['contact_address'] ?? '36/5 Đường D5, Quận Bình Thạnh, TP.HCM')) !!}
                             </div>
                         </div>
                         
@@ -29,7 +29,7 @@
                             <i class="fas fa-phone text-primary me-3"></i>
                             <div>
                                 <strong>Số Điện Thoại / Zalo</strong><br>
-                                {{ $siteSettings['contact_phone'] ?? '+84 (0) 123 45 67 89' }}<br>
+                                {{ $siteSettings['contact_phone'] ?? '+84 909 090 909' }}<br>
                             </div>
                         </div>
                         
@@ -37,7 +37,7 @@
                             <i class="fas fa-envelope text-primary me-3"></i>
                             <div>
                                 <strong>Email</strong><br>
-                                {{ $siteSettings['contact_email'] ?? 'info@hudsonfurnishing.vn' }}
+                                {{ $siteSettings['contact_email'] ?? 'info@hudsonfurnishing.com' }}
                             </div>
                         </div>
                         
@@ -45,7 +45,7 @@
                             <i class="fas fa-clock text-primary me-3"></i>
                             <div>
                                 <strong>Giờ Hoạt Động</strong><br>
-                                {!! nl2br(e($siteSettings['business_hours'] ?? 'T2 - T6: 9AM-6PM<br>T7: 10AM-4PM<br>CN: Không hoạt động')) !!}
+                                {!! nl2br(e($siteSettings['business_hours'] ?? 'T2 - T7: 8:00 - 18:00')) !!}
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <h4>Phản hồi đến chúng tôi:</h4>
+                            <h4>Phản Hồi Đến Chúng Tôi:</h4>
                             <form id="contactForm">
                                 @csrf
                                 <div class="mb-3">
@@ -68,7 +68,7 @@
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="phone" class="form-label">Số điện thoại</label>
+                                    <label for="phone" class="form-label">Số Điện Thoại</label>
                                     <input type="tel" class="form-control" id="phone" name="phone">
                                 </div>
                                 
@@ -77,7 +77,7 @@
                                     <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
                                 </div>
                                 
-                                <button type="submit" class="btn btn-primary w-100">Gửi</button>
+                                <button type="submit" class="btn btn-primary w-100">Gửi Phản Hồi</button>
                             </form>
                         </div>
                     </div>

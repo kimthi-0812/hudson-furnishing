@@ -1,25 +1,25 @@
 @extends('layouts.admin')
 
-@section('title', 'Contacts Management - Hudson Furnishing')
-@section('page-title', 'Contacts Management')
+@section('title', 'Quản Lý Liên Hệ - Hudson Furnishing')
+@section('page-title', 'Quản Lý Liên Hệ')
 
 @section('content')
 <div class="card shadow">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">All Contact Messages</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Tất Cả Tin Nhắn Liên Hệ</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Họ Tên</th>
                         <th>Email</th>
-                        <th>Phone</th>
-                        <th>Message</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                        <th>Actions</th>
+                        <th>Số Điện Thoại</th>
+                        <th>Nội Dung</th>
+                        <th>Tình Trạng</th>
+                        <th>Ngày Tạo</th>
+                        <th>Hành Động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,7 +46,7 @@
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit" class="btn btn-sm btn-outline-primary">
-                                                <i class="fas fa-check"></i> Mark Read
+                                                <i class="fas fa-check"></i>
                                             </button>
                                         </form>
                                     @endif
@@ -55,12 +55,12 @@
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit" class="btn btn-sm btn-outline-success">
-                                                <i class="fas fa-reply"></i> Mark Replied
+                                                <i class="fas fa-reply"></i>
                                             </button>
                                         </form>
                                     @endif
                                     <form method="POST" action="{{ route('admin.contacts.destroy', $contact) }}" 
-                                          class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                          class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa tin nhắn liên hệ này không?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -74,7 +74,7 @@
                         <tr>
                             <td colspan="7" class="text-center py-4">
                                 <i class="fas fa-envelope fa-3x text-muted mb-3"></i>
-                                <p class="text-muted">No contact messages found</p>
+                                <p class="text-muted">Không tìm thấy tin nhắn liên hệ nào</p>
                             </td>
                         </tr>
                     @endforelse

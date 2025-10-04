@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 
 @section('title', $product->name . ' - Hudson Furnishing')
 
@@ -62,12 +62,12 @@
                 @if($product->stock > 0)
                     <span class="text-success">
                         <i class="fas fa-check-circle me-1"></i>
-                        In Stock ({{ $product->stock }} available)
+                        Có Sẵn ({{ $product->stock }} sản phẩm)
                     </span>
                 @else
                     <span class="text-danger">
                         <i class="fas fa-times-circle me-1"></i>
-                        Out of Stock
+                        Hết Hàng
                     </span>
                 @endif
             </div>
@@ -75,11 +75,11 @@
             <div class="product-actions mb-4">
                 <button class="btn btn-primary btn-lg me-2" {{ $product->stock <= 0 ? 'disabled' : '' }}>
                     <i class="fas fa-shopping-cart me-1"></i>
-                    Add to Cart
+                    Thêm Vào Giỏ Hàng
                 </button>
                 <button class="btn btn-outline-secondary btn-lg">
                     <i class="fas fa-heart me-1"></i>
-                    Add to Wishlist
+                    Thêm Vào Danh Sách Yêu Thích
                 </button>
             </div>
         </div>
@@ -88,7 +88,7 @@
     <!-- Reviews Section -->
     <div class="row mt-5">
         <div class="col-12">
-            <h3>Customer Reviews</h3>
+            <h3>Đánh Giá Khách Hàng</h3>
             
             @if($product->reviews->count() > 0)
                 <div class="row">
@@ -112,20 +112,20 @@
                     @endforeach
                 </div>
             @else
-                <p class="text-muted">No reviews yet. Be the first to review this product!</p>
+                <p class="text-muted">Không có đánh giá nào. Hãy là người đầu tiên đánh giá sản phẩm này!</p>
             @endif
             
             <!-- Review Form -->
             <div class="card mt-4">
                 <div class="card-body">
-                    <h5>Write a Review</h5>
+                    <h5>Viết Đánh Giá</h5>
                     <form id="reviewForm">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="name" class="form-label">Name *</label>
+                                <label for="name" class="form-label">Tên *</label>
                                 <input type="text" class="form-control" id="name" name="name" required>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -133,46 +133,12 @@
                                 <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                         </div>
-                        
-                        <div class="mb-3">
-                            <label for="rating" class="form-label">Rating *</label>
-                            <select class="form-select" id="rating" name="rating" required>
-                                <option value="">Select Rating</option>
-                                <option value="1">1 Star</option>
-                                <option value="2">2 Stars</option>
-                                <option value="3">3 Stars</option>
-                                <option value="4">4 Stars</option>
-                                <option value="5">5 Stars</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="comment" class="form-label">Comment *</label>
-                            <textarea class="form-control" id="comment" name="comment" rows="4" required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                        <button type="submit" class="btn btn-primary">Gửi Đánh Giá</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- Related Products -->
-    @if($relatedProducts->count() > 0)
-        <div class="row mt-5">
-            <div class="col-12">
-                <h3>Related Products</h3>
-                <div class="row">
-                    @foreach($relatedProducts as $relatedProduct)
-                        <div class="col-lg-3 col-md-6 mb-4">
-                            @include('components.product-card', ['product' => $relatedProduct])
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    @endif
 </div>
 @endsection
 

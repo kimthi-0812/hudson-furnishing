@@ -25,69 +25,69 @@
             <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
                 <div class="position-sticky pt-3">
                     <div class="text-center mb-4">
-                        <img src="{{ asset('images/logo-white.png') }}" alt="Hudson Furnishing" height="40">
-                        <h6 class="text-white mt-2">Admin Panel</h6>
+                        <img src="{{ asset('images/logo.png') }}" alt="Hudson Furnishing" height="40">
+                        <h6 class="text-white mt-2">Quản Lý Website</h6>
                     </div>
                     
-                    <ul class="nav flex-column">
+                    <ul class="nav flex-column">        
                         <li class="nav-item">
                             <a class="nav-link text-white {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" 
                                href="{{ route('admin.dashboard') }}">
-                                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                                <i class="fas fa-tachometer-alt me-2"></i>Bảng Điều Khiển
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" 
                                href="{{ route('admin.products.index') }}">
-                                <i class="fas fa-box me-2"></i>Products
+                                <i class="fas fa-box me-2"></i>Sản Phẩm
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}" 
                                href="{{ route('admin.categories.index') }}">
-                                <i class="fas fa-tags me-2"></i>Categories
+                                <i class="fas fa-tags me-2"></i>Danh Mục
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white {{ request()->routeIs('admin.brands.*') ? 'active' : '' }}" 
                                href="{{ route('admin.brands.index') }}">
-                                <i class="fas fa-star me-2"></i>Brands
+                                <i class="fas fa-star me-2"></i>Thương Hiệu
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white {{ request()->routeIs('admin.materials.*') ? 'active' : '' }}" 
                                href="{{ route('admin.materials.index') }}">
-                                <i class="fas fa-cube me-2"></i>Materials
+                                <i class="fas fa-cube me-2"></i>Vật Liệu
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white {{ request()->routeIs('admin.offers.*') ? 'active' : '' }}" 
                                href="{{ route('admin.offers.index') }}">
-                                <i class="fas fa-tags me-2"></i>Offers
+                                <i class="fas fa-tags me-2"></i>Ưu Đãi
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white {{ request()->routeIs('admin.reviews.*') ? 'active' : '' }}" 
                                href="{{ route('admin.reviews.index') }}">
-                                <i class="fas fa-star me-2"></i>Reviews
+                                <i class="fas fa-star me-2"></i>Đánh Giá
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}" 
                                href="{{ route('admin.gallery.index') }}">
-                                <i class="fas fa-images me-2"></i>Gallery
+                                <i class="fas fa-images me-2"></i>Thư Viện
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white {{ request()->routeIs('admin.contacts.*') ? 'active' : '' }}" 
                                href="{{ route('admin.contacts.index') }}">
-                                <i class="fas fa-envelope me-2"></i>Contacts
+                                <i class="fas fa-envelope me-2"></i>Liên Hệ
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}" 
                                href="{{ route('admin.settings.index') }}">
-                                <i class="fas fa-cog me-2"></i>Settings
+                                <i class="fas fa-cog me-2"></i>Cài Đặt
                             </a>
                         </li>
                     </ul>
@@ -96,14 +96,14 @@
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('home') }}">
-                                <i class="fas fa-external-link-alt me-2"></i>View Website
+                                <i class="fas fa-external-link-alt me-2"></i>Xem Trang Web
                             </a>
                         </li>
                         <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}" class="d-inline">
                                 @csrf
                                 <button type="submit" class="btn btn-link nav-link text-white">
-                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                    <i class="fas fa-sign-out-alt me-2"></i>Đăng Xuất
                                 </button>
                             </form>
                         </li>
@@ -115,7 +115,7 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <!-- Top Navigation -->
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">@yield('page-title', 'Dashboard')</h1>
+                    <h1 class="h2">@yield('page-title', 'Bảng Điều Khiển')</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         @yield('page-actions')
                     </div>

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title', 'Admin Dashboard - Hudson Furnishing')
-@section('page-title', 'Dashboard')
+@section('title', 'Bảng Điều Khiển - Hudson Furnishing')
+@section('page-title', 'Bảng Điều Khiển')
 
 @section('content')
 <!-- Statistics Cards -->
@@ -11,7 +11,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Products</div>
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Tổng Sản Phẩm</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $stats['total_products'] }}</div>
                     </div>
                     <div class="col-auto">
@@ -27,7 +27,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Active Products</div>
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Sản Phẩm Đang Bán</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $stats['active_products'] }}</div>
                     </div>
                     <div class="col-auto">
@@ -43,7 +43,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Visitors</div>
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tổng Lượt Truy Cập</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ number_format($stats['total_visitors']) }}</div>
                     </div>
                     <div class="col-auto">
@@ -59,7 +59,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Reviews</div>
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Đánh Giá Chờ Duyệt</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $stats['pending_reviews'] }}</div>
                     </div>
                     <div class="col-auto">
@@ -77,7 +77,7 @@
     <div class="col-xl-8 col-lg-7">
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Visitor Statistics (Last 7 Days)</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Thống Kê Khách Truy Cập (7 Ngày Gần Nhất)</h6>
             </div>
             <div class="card-body">
                 <div class="chart-area">
@@ -91,21 +91,21 @@
     <div class="col-xl-4 col-lg-5">
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Quick Actions</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Thao Tác Nhanh</h6>
             </div>
             <div class="card-body">
                 <div class="d-grid gap-2">
                     <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus me-2"></i>Add New Product
+                        <i class="fas fa-plus me-2"></i>Thêm Sản Phẩm Mới
                     </a>
                     <a href="{{ route('admin.reviews.index') }}" class="btn btn-warning">
-                        <i class="fas fa-star me-2"></i>Review Pending Reviews
+                        <i class="fas fa-star me-2"></i>Xem Đánh Giá Chờ Duyệt
                     </a>
                     <a href="{{ route('admin.gallery.index') }}" class="btn btn-info">
-                        <i class="fas fa-images me-2"></i>Manage Gallery
+                        <i class="fas fa-images me-2"></i>Quản Lý Gallery
                     </a>
                     <a href="{{ route('admin.settings.index') }}" class="btn btn-secondary">
-                        <i class="fas fa-cog me-2"></i>Site Settings
+                        <i class="fas fa-cog me-2"></i>Cài Đặt Website
                     </a>
                 </div>
             </div>
@@ -118,17 +118,17 @@
     <div class="col-lg-6">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Recent Products</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Sản Phẩm Mới Nhất</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-sm">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Section</th>
-                                <th>Status</th>
-                                <th>Created</th>
+                                <th>Tên Sản Phẩm</th>
+                                <th>Mục Sản Phẩm</th>
+                                <th>Tình Trạng</th>
+                                <th>Tạo Lúc</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -154,17 +154,17 @@
     <div class="col-lg-6">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Recent Reviews</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Đánh Giá Mới Nhất</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-sm">
                         <thead>
                             <tr>
-                                <th>Product</th>
-                                <th>Rating</th>
-                                <th>Status</th>
-                                <th>Date</th>
+                                <th>Sản Phẩm</th>
+                                <th>Xếp Hạng</th>
+                                <th>Tình Trạng</th>
+                                <th>Ngày Tạo</th>
                             </tr>
                         </thead>
                         <tbody>

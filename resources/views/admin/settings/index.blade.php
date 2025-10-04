@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title', 'Settings Management - Hudson Furnishing')
-@section('page-title', 'Settings Management')
+@section('title', 'Quản Lý Cài Đặt - Hudson Furnishing')
+@section('page-title', 'Quản Lý Cài Đặt')
 
 @section('content')
 <div class="row">
@@ -13,7 +13,7 @@
                         <i class="fas fa-cogs"></i>
                     </div>
                     <div>
-                        <h5 class="m-0 font-weight-bold text-white">Site Settings</h5>
+                        <h5 class="m-0 font-weight-bold text-white">Cài Đặt Website</h5>
                         <small class="text-white-50">Configure your website settings and preferences</small>
                     </div>
                 </div>
@@ -27,27 +27,27 @@
                     <ul class="nav nav-pills nav-fill mb-4" id="settingsTabs" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="general-tab" data-bs-toggle="pill" data-bs-target="#general" type="button" role="tab">
-                                <i class="fas fa-home me-2"></i>General
+                                <i class="fas fa-home me-2"></i>Cơ Bản
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="contact-tab" data-bs-toggle="pill" data-bs-target="#contact" type="button" role="tab">
-                                <i class="fas fa-address-book me-2"></i>Contact
+                                <i class="fas fa-address-book me-2"></i>Liên Hệ
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="social-tab" data-bs-toggle="pill" data-bs-target="#social" type="button" role="tab">
-                                <i class="fas fa-share-alt me-2"></i>Social Media
+                                <i class="fas fa-share-alt me-2"></i>Mạng Xã Hội
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="seo-tab" data-bs-toggle="pill" data-bs-target="#seo" type="button" role="tab">
-                                <i class="fas fa-search me-2"></i>SEO
+                                <i class="fas fa-search me-2"></i>Cài Đặt SEO
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="advanced-tab" data-bs-toggle="pill" data-bs-target="#advanced" type="button" role="tab">
-                                <i class="fas fa-sliders-h me-2"></i>Advanced
+                                <i class="fas fa-sliders-h me-2"></i>Cài Đặt Khác
                             </button>
                         </li>
                     </ul>
@@ -61,44 +61,44 @@
                                     <div class="settings-section">
                                         <div class="section-header mb-3">
                                             <h6 class="text-primary mb-1">
-                                                <i class="fas fa-info-circle me-2"></i>Basic Information
+                                                <i class="fas fa-info-circle me-2"></i>Thông Tin Cơ Bản
                                             </h6>
-                                            <small class="text-muted">Configure your website's basic information</small>
+                                            <small class="text-muted">Cấu hình thông tin cơ bản của website</small>
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="site_name" class="form-label">
-                                                <i class="fas fa-tag text-primary me-1"></i>Site Name
+                                                <i class="fas fa-tag text-primary me-1"></i>Tên Website
                                             </label>
                                             <input type="text" class="form-control" id="site_name" name="site_name" 
                                                    value="{{ $settings['site_name'] ?? 'Hudson Furnishing' }}"
-                                                   placeholder="Enter your website name">
+                                                   placeholder="Nhập tên website">
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="site_tagline" class="form-label">
-                                                <i class="fas fa-quote-right text-primary me-1"></i>Site Tagline
+                                                <i class="fas fa-quote-right text-primary me-1"></i>Tagline Website
                                             </label>
                                             <input type="text" class="form-control" id="site_tagline" name="site_tagline" 
                                                    value="{{ $settings['site_tagline'] ?? 'Nội thất cao cấp cho mọi không gian' }}"
-                                                   placeholder="Enter your website tagline">
+                                                   placeholder="Nhập tagline website">
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="site_description" class="form-label">
-                                                <i class="fas fa-align-left text-primary me-1"></i>Site Description
+                                                <i class="fas fa-align-left text-primary me-1"></i>Mô Tả Website
                                             </label>
                                             <textarea class="form-control" id="site_description" name="site_description" rows="3" 
-                                                      placeholder="Enter your website description">{{ $settings['site_description'] ?? 'Hudson Furnishing cung cấp nội thất cao cấp cho mọi phòng trong ngôi nhà của bạn. Chất lượng thủ công gặp gỡ thiết kế hiện đại.' }}</textarea>
+                                                      placeholder="Nhập mô tả website">{{ $settings['site_description'] ?? 'Hudson Furnishing cung cấp nội thất cao cấp cho mọi phòng trong ngôi nhà của bạn. Chất lượng thủ công gặp gỡ thiết kế hiện đại.' }}</textarea>
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="site_keywords" class="form-label">
-                                                <i class="fas fa-tags text-primary me-1"></i>Site Keywords
+                                                <i class="fas fa-tags text-primary me-1"></i>Từ Khóa Website
                                             </label>
                                             <input type="text" class="form-control" id="site_keywords" name="site_keywords" 
                                                    value="{{ $settings['site_keywords'] ?? 'nội thất, furniture, cao cấp, phòng ngủ, phòng khách, phòng ăn, văn phòng' }}"
-                                                   placeholder="Enter keywords separated by commas">
+                                                   placeholder="Nhập từ khóa website">
                                             <small class="form-text text-muted">Separate keywords with commas</small>
                                         </div>
                                     </div>
@@ -108,9 +108,9 @@
                                     <div class="settings-preview">
                                         <div class="section-header mb-3">
                                             <h6 class="text-primary mb-1">
-                                                <i class="fas fa-eye me-2"></i>Preview
+                                                <i class="fas fa-eye me-2"></i>Xem Trước
                                             </h6>
-                                            <small class="text-muted">How your site information will appear</small>
+                                            <small class="text-muted">Cách thức hiển thị thông tin website</small>
                                         </div>
                                         
                                         <div class="preview-card p-3 bg-light rounded">
@@ -135,43 +135,43 @@
                                     <div class="settings-section">
                                         <div class="section-header mb-3">
                                             <h6 class="text-primary mb-1">
-                                                <i class="fas fa-address-book me-2"></i>Contact Information
+                                                <i class="fas fa-address-book me-2"></i>Thông Tin Liên Hệ
                                             </h6>
-                                            <small class="text-muted">Configure your contact details</small>
+                                            <small class="text-muted">Cấu hình thông tin liên hệ</small>
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="contact_email" class="form-label">
-                                                <i class="fas fa-envelope text-primary me-1"></i>Contact Email
+                                                <i class="fas fa-envelope text-primary me-1"></i>Email Liên Hệ
                                             </label>
                                             <input type="email" class="form-control" id="contact_email" name="contact_email" 
                                                    value="{{ $settings['contact_email'] ?? 'info@hudsonfurnishing.vn' }}"
-                                                   placeholder="Enter your contact email">
+                                                   placeholder="Nhập email liên hệ">
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="contact_phone" class="form-label">
-                                                <i class="fas fa-phone text-primary me-1"></i>Contact Phone
+                                                <i class="fas fa-phone text-primary me-1"></i>Số Điện Thoại Liên Hệ
                                             </label>
                                             <input type="text" class="form-control" id="contact_phone" name="contact_phone" 
                                                    value="{{ $settings['contact_phone'] ?? '+84 (0) 123 45 67 89' }}" 
-                                                   placeholder="+84 (0) 123 45 67 89">
+                                                   placeholder="Nhập số điện thoại liên hệ">
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="contact_address" class="form-label">
-                                                <i class="fas fa-map-marker-alt text-primary me-1"></i>Contact Address
+                                                <i class="fas fa-map-marker-alt text-primary me-1"></i>Địa Chỉ Liên Hệ
                                             </label>
                                             <textarea class="form-control" id="contact_address" name="contact_address" rows="3" 
-                                                      placeholder="Enter your business address">{{ $settings['contact_address'] ?? "123 Đường Nội Thất\nQuận Thiết Kế, TP.HCM 700000" }}</textarea>
+                                                      placeholder="Nhập địa chỉ liên hệ">{{ $settings['contact_address'] ?? "123 Đường Nội Thất\nQuận Thiết Kế, TP.HCM 700000" }}</textarea>
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="business_hours" class="form-label">
-                                                <i class="fas fa-clock text-primary me-1"></i>Business Hours
+                                                <i class="fas fa-clock text-primary me-1"></i>Giờ Làm Việc
                                             </label>
                                             <textarea class="form-control" id="business_hours" name="business_hours" rows="3" 
-                                                      placeholder="Enter your business hours">{{ $settings['business_hours'] ?? "T2 - T6: 8:00 - 18:00\nT7: 9:00 - 17:00\nCN: Nghỉ" }}</textarea>
+                                                      placeholder="Nhập giờ làm việc">{{ $settings['business_hours'] ?? "T2 - T6: 8:00 - 18:00\nT7: 9:00 - 17:00\nCN: Nghỉ" }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -180,28 +180,28 @@
                                     <div class="contact-preview">
                                         <div class="section-header mb-3">
                                             <h6 class="text-primary mb-1">
-                                                <i class="fas fa-address-card me-2"></i>Contact Preview
+                                                <i class="fas fa-address-card me-2"></i>Xem Trước Liên Hệ
                                             </h6>
-                                            <small class="text-muted">How your contact info will appear</small>
+                                            <small class="text-muted">Cách thức hiển thị thông tin liên hệ</small>
                                         </div>
                                         
                                         <div class="contact-card p-3 bg-light rounded">
-                                            <h6 class="mb-3">Get in Touch</h6>
+                                            <h6 class="mb-3">Liên Hệ</h6>
                                             <div class="contact-item mb-2">
                                                 <i class="fas fa-envelope text-primary me-2"></i>
                                                 <span id="preview-email">{{ $settings['contact_email'] ?? 'info@hudsonfurnishing.vn' }}</span>
                                             </div>
                                             <div class="contact-item mb-2">
                                                 <i class="fas fa-phone text-primary me-2"></i>
-                                                <span id="preview-phone">{{ $settings['contact_phone'] ?? '+84 (0) 123 45 67 89' }}</span>
+                                                <span id="preview-phone">{{ $settings['contact_phone'] ?? '+84 909 090 909' }}</span>
                                             </div>
                                             <div class="contact-item mb-2">
                                                 <i class="fas fa-map-marker-alt text-primary me-2"></i>
-                                                <span id="preview-address">{{ Str::limit($settings['contact_address'] ?? '123 Đường Nội Thất, Quận Thiết Kế, TP.HCM', 50) }}</span>
+                                                <span id="preview-address">{{ Str::limit($settings['contact_address'] ?? '36/5 Đường D5, Quận Bình Thạnh, TP.HCM', 50) }}</span>
                                             </div>
                                             <div class="contact-item">
                                                 <i class="fas fa-clock text-primary me-2"></i>
-                                                <span id="preview-hours">{{ Str::limit($settings['business_hours'] ?? 'T2 - T6: 8:00 - 18:00', 30) }}</span>
+                                                <span id="preview-hours">{{ Str::limit($settings['business_hours'] ?? 'T2 - T7: 8:00 - 18:00', 30) }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -216,49 +216,49 @@
                                     <div class="settings-section">
                                         <div class="section-header mb-3">
                                             <h6 class="text-primary mb-1">
-                                                <i class="fas fa-share-alt me-2"></i>Social Media Links
+                                                <i class="fas fa-share-alt me-2"></i>Liên Kết Mạng Xã Hội
                                             </h6>
-                                            <small class="text-muted">Configure your social media presence</small>
+                                            <small class="text-muted">Cấu hình liên kết mạng xã hội</small>
                                         </div>
                                         
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="facebook_url" class="form-label">
-                                                        <i class="fab fa-facebook text-primary me-1"></i>Facebook URL
+                                                        <i class="fab fa-facebook text-primary me-1"></i>Facebook
                                                     </label>
                                                     <input type="url" class="form-control" id="facebook_url" name="facebook_url" 
                                                            value="{{ $settings['facebook_url'] ?? 'https://facebook.com/hudsonfurnishing' }}"
-                                                           placeholder="https://facebook.com/yourpage">
+                                                           placeholder="https://facebook.com/hudsonfurnishing">
                                                 </div>
                                                 
                                                 <div class="mb-3">
                                                     <label for="instagram_url" class="form-label">
-                                                        <i class="fab fa-instagram text-primary me-1"></i>Instagram URL
+                                                        <i class="fab fa-instagram text-primary me-1"></i>Instagram
                                                     </label>
                                                     <input type="url" class="form-control" id="instagram_url" name="instagram_url" 
                                                            value="{{ $settings['instagram_url'] ?? 'https://instagram.com/hudsonfurnishing' }}"
-                                                           placeholder="https://instagram.com/yourpage">
+                                                           placeholder="https://instagram.com/hudsonfurnishing">
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="twitter_url" class="form-label">
-                                                        <i class="fab fa-twitter text-primary me-1"></i>Twitter URL
+                                                        <i class="fab fa-twitter text-primary me-1"></i>Twitter
                                                     </label>
                                                     <input type="url" class="form-control" id="twitter_url" name="twitter_url" 
                                                            value="{{ $settings['twitter_url'] ?? 'https://twitter.com/hudsonfurnishing' }}"
-                                                           placeholder="https://twitter.com/yourpage">
+                                                           placeholder="https://twitter.com/hudsonfurnishing">
                                                 </div>
                                                 
                                                 <div class="mb-3">
                                                     <label for="linkedin_url" class="form-label">
-                                                        <i class="fab fa-linkedin text-primary me-1"></i>LinkedIn URL
+                                                        <i class="fab fa-linkedin text-primary me-1"></i>LinkedIn
                                                     </label>
                                                     <input type="url" class="form-control" id="linkedin_url" name="linkedin_url" 
                                                            value="{{ $settings['linkedin_url'] ?? 'https://linkedin.com/company/hudsonfurnishing' }}"
-                                                           placeholder="https://linkedin.com/company/yourcompany">
+                                                           placeholder="https://linkedin.com/company/hudsonfurnishing">
                                                 </div>
                                             </div>
                                         </div>
@@ -269,13 +269,13 @@
                                     <div class="social-preview">
                                         <div class="section-header mb-3">
                                             <h6 class="text-primary mb-1">
-                                                <i class="fas fa-thumbs-up me-2"></i>Social Preview
+                                                <i class="fas fa-thumbs-up me-2"></i>Xem Trước Mạng Xã Hội
                                             </h6>
-                                            <small class="text-muted">Your social media links</small>
+                                            <small class="text-muted">Cách thức hiển thị liên kết mạng xã hội</small>
                                         </div>
                                         
                                         <div class="social-links p-3 bg-light rounded">
-                                            <h6 class="mb-3">Follow Us</h6>
+                                            <h6 class="mb-3">Theo Dõi Chúng Tôi</h6>
                                             <div class="d-flex flex-wrap gap-2">
                                                 <a href="#" class="btn btn-outline-primary btn-sm">
                                                     <i class="fab fa-facebook me-1"></i>Facebook
@@ -303,16 +303,16 @@
                                     <div class="settings-section">
                                         <div class="section-header mb-3">
                                             <h6 class="text-primary mb-1">
-                                                <i class="fas fa-search me-2"></i>SEO Configuration
+                                                <i class="fas fa-search me-2"></i>Cài Đặt SEO
                                             </h6>
-                                            <small class="text-muted">Optimize your website for search engines</small>
+                                            <small class="text-muted">Tối ưu hóa website cho các công cụ tìm kiếm</small>
                                         </div>
                                         
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label for="google_analytics" class="form-label">
-                                                        <i class="fab fa-google text-primary me-1"></i>Google Analytics ID
+                                                        <i class="fab fa-google text-primary me-1"></i>Google Analytics
                                                     </label>
                                                     <input type="text" class="form-control" id="google_analytics" name="google_analytics" 
                                                            value="{{ $settings['google_analytics'] ?? '' }}"
@@ -359,23 +359,23 @@
                                     <div class="seo-preview">
                                         <div class="section-header mb-3">
                                             <h6 class="text-primary mb-1">
-                                                <i class="fas fa-chart-line me-2"></i>SEO Status
+                                                <i class="fas fa-chart-line me-2"></i>Trạng Thái SEO
                                             </h6>
-                                            <small class="text-muted">Your SEO configuration status</small>
+                                            <small class="text-muted">Trạng thái cài đặt SEO</small>
                                         </div>
                                         
                                         <div class="seo-status p-3 bg-light rounded">
                                             <div class="status-item mb-2">
                                                 <i class="fas fa-check-circle text-success me-2"></i>
-                                                <small>Meta tags configured</small>
+                                                <small>Meta tags đã được cấu hình</small>
                                             </div>
                                             <div class="status-item mb-2">
                                                 <i class="fas fa-{{ $settings['google_analytics'] ?? '' ? 'check-circle text-success' : 'times-circle text-warning' }} me-2"></i>
-                                                <small>Google Analytics {{ $settings['google_analytics'] ?? '' ? 'enabled' : 'not configured' }}</small>
+                                                <small>Google Analytics {{ $settings['google_analytics'] ?? '' ? 'đã được kích hoạt' : 'chưa được cấu hình' }}</small>
                                             </div>
                                             <div class="status-item">
                                                 <i class="fas fa-{{ $settings['google_maps_api'] ?? '' ? 'check-circle text-success' : 'times-circle text-warning' }} me-2"></i>
-                                                <small>Google Maps {{ $settings['google_maps_api'] ?? '' ? 'enabled' : 'not configured' }}</small>
+                                                <small>Google Maps {{ $settings['google_maps_api'] ?? '' ? 'đã được kích hoạt' : 'chưa được cấu hình' }}</small>
                                             </div>
                                         </div>
                                     </div>
@@ -390,30 +390,30 @@
                                     <div class="settings-section">
                                         <div class="section-header mb-3">
                                             <h6 class="text-primary mb-1">
-                                                <i class="fas fa-sliders-h me-2"></i>Advanced Configuration
+                                                <i class="fas fa-sliders-h me-2"></i>Cài Đặt Nâng Cao
                                             </h6>
-                                            <small class="text-muted">Configure advanced website settings</small>
+                                            <small class="text-muted">Cấu hình cài đặt nâng cao website</small>
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="items_per_page" class="form-label">
-                                                <i class="fas fa-list text-primary me-1"></i>Items Per Page
+                                                <i class="fas fa-list text-primary me-1"></i>Số Lượng Sản Phẩm Trên Trang
                                             </label>
                                             <input type="number" class="form-control" id="items_per_page" name="items_per_page" 
                                                    value="{{ $settings['items_per_page'] ?? 12 }}" min="1" max="100"
                                                    placeholder="12">
-                                            <small class="form-text text-muted">Number of items to display per page</small>
+                                            <small class="form-text text-muted">Số lượng sản phẩm hiển thị trên mỗi trang</small>
                                         </div>
                                         
                                         <div class="mb-3">
                                             <label for="maintenance_mode" class="form-label">
-                                                <i class="fas fa-tools text-primary me-1"></i>Maintenance Mode
+                                                <i class="fas fa-tools text-primary me-1"></i>Trạng Thái Bảo Trì
                                             </label>
                                             <select class="form-select" id="maintenance_mode" name="maintenance_mode">
-                                                <option value="0" {{ ($settings['maintenance_mode'] ?? '0') == '0' ? 'selected' : '' }}>Disabled</option>
-                                                <option value="1" {{ ($settings['maintenance_mode'] ?? '0') == '1' ? 'selected' : '' }}>Enabled</option>
+                                                <option value="0" {{ ($settings['maintenance_mode'] ?? '0') == '0' ? 'selected' : '' }}>Vô Hiệu Hóa</option>
+                                                <option value="1" {{ ($settings['maintenance_mode'] ?? '0') == '1' ? 'selected' : '' }}>Kích Hoạt</option>
                                             </select>
-                                            <small class="form-text text-muted">Enable to show maintenance page to visitors</small>
+                                            <small class="form-text text-muted">Kích hoạt để hiển thị trang bảo trì cho khách truy cập</small>
                                         </div>
                                     </div>
                                 </div>
@@ -422,29 +422,20 @@
                                     <div class="system-info">
                                         <div class="section-header mb-3">
                                             <h6 class="text-primary mb-1">
-                                                <i class="fas fa-info-circle me-2"></i>System Information
+                                                <i class="fas fa-info-circle me-2"></i>Thông Tin Hệ Thống
                                             </h6>
-                                            <small class="text-muted">Current system status and information</small>
+                                            <small class="text-muted">Trạng thái hiện tại của hệ thống</small>
                                         </div>
                                         
                                         <div class="system-card p-3 bg-light rounded">
                                             <div class="info-item mb-2">
-                                                <strong>Laravel Version:</strong> {{ app()->version() }}
+                                                <strong>Laravel Version:</strong> {{ app()->version() }} - Phiên Bản Laravel
                                             </div>
                                             <div class="info-item mb-2">
-                                                <strong>PHP Version:</strong> {{ PHP_VERSION }}
+                                                <strong>PHP Version:</strong> {{ PHP_VERSION }} - Phiên Bản PHP
                                             </div>
                                             <div class="info-item mb-2">
-                                                <strong>Environment:</strong> 
-                                                <span class="badge bg-{{ app()->environment() === 'production' ? 'success' : 'warning' }}">
-                                                    {{ ucfirst(app()->environment()) }}
-                                                </span>
-                                            </div>
-                                            <div class="info-item">
-                                                <strong>Debug Mode:</strong> 
-                                                <span class="badge bg-{{ config('app.debug') ? 'warning' : 'success' }}">
-                                                    {{ config('app.debug') ? 'Enabled' : 'Disabled' }}
-                                                </span>
+                                                <strong>Environment:</strong> {{ ucfirst(app()->environment()) }} - Môi Trường      
                                             </div>
                                         </div>
                                     </div>
@@ -453,12 +444,6 @@
                         </div>
                     </div>
                     
-                    <!-- Save Button -->
-                    <div class="text-end mt-4 pt-3 border-top">
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            <i class="fas fa-save me-2"></i>Save All Settings
-                        </button>
-                    </div>
                 </form>
             </div>
         </div>

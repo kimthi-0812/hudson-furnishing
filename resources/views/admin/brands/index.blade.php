@@ -16,7 +16,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered admin-table brands-table">
                 <thead>
                     <tr>
                         <th>Logo</th>
@@ -32,10 +32,9 @@
                             <td>
                                 @if($brand->logo)
                                     <img src="{{ asset('uploads/brands/' . $brand->logo) }}" 
-                                         alt="{{ $brand->name }}" class="img-thumbnail" style="width: 50px; height: 50px;">
+                                         alt="{{ $brand->name }}" class="img-thumbnail admin-table-image">
                                 @else
-                                    <div class="bg-light d-flex align-items-center justify-content-center" 
-                                         style="width: 50px; height: 50px;">
+                                    <div class="bg-light d-flex align-items-center justify-content-center admin-table-image">
                                         <i class="fas fa-image text-muted"></i>
                                     </div>
                                 @endif

@@ -5,18 +5,9 @@
                  alt="{{ $product->name }}" class="img-fluid">
         @else
             @php
-                // Tạo danh sách hình ảnh mẫu từ thư mục images
-                $sampleImages = [
-                    'HF_Home_1.jpg',
-                    'HF_About_1.jpg',
-                    'HF_Home_ProductCard_1.jpg',
-                    'placeholder.jpg'
-                ];
-                // Sử dụng ID sản phẩm để chọn hình ảnh nhất quán
-                $imageIndex = $product->id % count($sampleImages);
-                $selectedImage = $sampleImages[$imageIndex];
+                $randomImage = $product->images->random();
             @endphp
-            <img src="{{ asset('images/' . $selectedImage) }}" 
+            <img src="{{ asset('uploads/' . $randomImage->url) }}" 
                  alt="{{ $product->name }}" class="img-fluid">
         @endif
         @if($product->sale_price)
@@ -37,13 +28,9 @@
             @endif
         </div>
         <div class="d-grid gap-2 mt-auto">
-            <a href="{{ route('product.show', $product->slug) }}" class="btn btn-primary">
+            <a href="{{ route('products.show', $product->slug) }}" class="btn btn-primary">
                 Xem Chi Tiết
-            </a>
-            <button class="btn btn-outline-secondary btn-sm" 
-                    onclick="addToWishlist({{ $product->id }})">
-                Thêm Yêu Thích
-            </button>
+                </a>
         </div>
     </div>
 </div>

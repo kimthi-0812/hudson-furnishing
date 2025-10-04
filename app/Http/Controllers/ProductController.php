@@ -12,6 +12,15 @@ use App\Models\Material;
 class ProductController extends Controller
 {
     /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        // Remove auth middleware for public product routes
+        $this->middleware('auth')->except(['index', 'bySection', 'show']);
+    }
+
+    /**
      * Display a listing of products.
      */
     public function index(Request $request)

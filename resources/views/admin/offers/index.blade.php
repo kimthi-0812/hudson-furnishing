@@ -1,31 +1,31 @@
 @extends('layouts.admin')
 
-@section('title', 'Offers Management - Hudson Furnishing')
-@section('page-title', 'Offers Management')
+@section('title', 'Quản Lý Khuyến Mãi - Hudson Furnishing')
+@section('page-title', 'Quản Lý Khuyến Mãi')
 
 @section('page-actions')
     <a href="{{ route('admin.offers.create') }}" class="btn btn-primary">
-        <i class="fas fa-plus me-2"></i>Add New Offer
+        <i class="fas fa-plus me-2"></i>Thêm Khuyến Mãi Mới
     </a>
 @endsection
 
 @section('content')
 <div class="card shadow">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">All Offers</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Tất Cả Khuyến Mãi</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered admin-table offers-table">
                 <thead>
                     <tr>
-                        <th>Image</th>
-                        <th>Title</th>
-                        <th>Discount</th>
-                        <th>Status</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Actions</th>
+                        <th>Hình Ảnh</th>
+                        <th>Tiêu Đề</th>
+                        <th>Giảm Giá</th>
+                        <th>Trạng Thái</th>
+                        <th>Ngày Bắt Đầu</th>
+                        <th>Ngày Kết Thúc</th>
+                        <th>Hành Động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,10 +34,9 @@
                             <td>
                                 @if($offer->image)
                                     <img src="{{ asset('uploads/offers/' . $offer->image) }}" 
-                                         alt="{{ $offer->title }}" class="img-thumbnail" style="width: 50px; height: 50px;">
+                                         alt="{{ $offer->title }}" class="img-thumbnail admin-table-image">
                                 @else
-                                    <div class="bg-light d-flex align-items-center justify-content-center" 
-                                         style="width: 50px; height: 50px;">
+                                    <div class="bg-light d-flex align-items-center justify-content-center admin-table-image">
                                         <i class="fas fa-image text-muted"></i>
                                     </div>
                                 @endif
@@ -45,9 +44,9 @@
                             <td>{{ $offer->title }}</td>
                             <td>
                                 @if($offer->discount_type == 'percentage')
-                                    {{ $offer->discount_value }}% OFF
+                                    {{ $offer->discount_value }}%
                                 @else
-                                    ${{ number_format($offer->discount_value, 2) }} OFF
+                                    ${{ number_format($offer->discount_value, 2) }}
                                 @endif
                             </td>
                             <td>
@@ -68,7 +67,7 @@
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <form method="POST" action="{{ route('admin.offers.destroy', $offer) }}" 
-                                          class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                          class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa khuyến mãi này không?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -82,9 +81,9 @@
                         <tr>
                             <td colspan="7" class="text-center py-4">
                                 <i class="fas fa-tags fa-3x text-muted mb-3"></i>
-                                <p class="text-muted">No offers found</p>
+                                <p class="text-muted">Không tìm thấy khuyến mãi nào</p>
                                 <a href="{{ route('admin.offers.create') }}" class="btn btn-primary">
-                                    Add Your First Offer
+                                    Thêm Khuyến Mãi Đầu Tiên
                                 </a>
                             </td>
                         </tr>
