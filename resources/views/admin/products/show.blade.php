@@ -14,7 +14,7 @@
     <div class="col-lg-8">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Thông Tin Sản Phẩm</h6>
+                <h6 class="m-0 font-weight-bold text-light">Thông Tin Sản Phẩm</h6>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -98,7 +98,7 @@
         @if($product->reviews->count() > 0)
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Đánh Giá Khách Hàng ({{ $product->reviews->count() }})</h6>
+                    <h6 class="m-0 font-weight-bold text-light">Đánh Giá Khách Hàng ({{ $product->reviews->count() }})</h6>
                 </div>
                 <div class="card-body">
                     @foreach($product->reviews as $review)
@@ -128,7 +128,7 @@
     <div class="col-lg-4">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Thống Kê Sản Phẩm</h6>
+                <h6 class="m-0 font-weight-bold text-light">Thống Kê Sản Phẩm</h6>
             </div>
             <div class="card-body">
                 <div class="row text-center">
@@ -153,7 +153,7 @@
         
         <div class="card shadow">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Hành Động Nhanh</h6>
+                <h6 class="m-0 font-weight-bold text-light">Hành Động Nhanh</h6>
             </div>
             <div class="card-body">
                 <div class="d-grid gap-2">

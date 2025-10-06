@@ -14,8 +14,15 @@ class SiteSetting extends Model
         'value',
     ];
 
+    public $timestamps = true;
+
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public static function allToArray()
+    {
+        return self::all()->pluck('value', 'key')->toArray();
+    }
 }

@@ -12,7 +12,7 @@
 @section('content')
 <div class="card shadow">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">All Brands</h6>
+        <h6 class="m-0 font-weight-bold text-light">All Brands</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -31,7 +31,7 @@
                         <tr>
                             <td>
                                 @if($brand->logo)
-                                    <img src="{{ asset('uploads/brands/' . $brand->logo) }}" 
+                                    <img src="{{ asset('storage/' . $brand->logo) }}" 
                                          alt="{{ $brand->name }}" class="img-thumbnail admin-table-image">
                                 @else
                                     <div class="bg-light d-flex align-items-center justify-content-center admin-table-image">

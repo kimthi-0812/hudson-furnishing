@@ -52,6 +52,12 @@ class Product extends Model
         return $this->belongsTo(Material::class);
     }
 
+    public function offers(): BelongsToMany
+{
+    
+    return $this->belongsToMany(Offer::class, 'offer_products');
+}
+
     public function images(): HasMany
     {
         return $this->hasMany(ProductImage::class);

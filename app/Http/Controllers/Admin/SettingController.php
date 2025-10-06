@@ -23,36 +23,50 @@ class SettingController extends Controller
      */
     public function update(Request $request)
     {
-        $validatedData = $request->validate([
+
+        // Validate only some fields and allow others to be saved dynamically
+        $validated = $request->validate([
             'site_name' => 'required|string|max:255',
-            'site_tagline' => 'required|string|max:255',
+            'site_tagline' => 'nullable|string|max:255',
             'contact_email' => 'required|email|max:255',
-            'contact_phone' => 'required|string|max:20',
-            'contact_address' => 'required|string|max:500',
-            'business_hours' => 'required|string|max:500',
-            'social_facebook' => 'nullable|url|max:255',
-            'social_instagram' => 'nullable|url|max:255',
-            'social_twitter' => 'nullable|url|max:255',
-            'social_pinterest' => 'nullable|url|max:255',
-            'ticker_enabled' => 'boolean',
-            'ticker_text' => 'nullable|string|max:500',
-            'visitor_counter_enabled' => 'boolean',
-            'featured_products_count' => 'required|integer|min:1|max:20',
-            'products_per_page' => 'required|integer|min:1|max:50',
-            'meta_title' => 'required|string|max:255',
-            'meta_description' => 'required|string|max:500',
-            'meta_keywords' => 'required|string|max:500',
-            'currency_symbol' => 'required|string|max:10',
-            'currency_code' => 'required|string|max:10',
-            'free_shipping_threshold' => 'required|numeric|min:0',
-            'return_policy_days' => 'required|integer|min:1',
-            'warranty_years' => 'required|integer|min:1',
+            'contact_phone' => 'nullable|string|max:50',
+            'contact_address' => 'nullable|string|max:1000',
+            'business_hours' => 'nullable|string|max:1000',
+            'facebook_url' => 'nullable|url|max:255',
+            'instagram_url' => 'nullable|url|max:255',
+            'twitter_url' => 'nullable|url|max:255',
+            'linkedin_url' => 'nullable|url|max:255',
+            'items_per_page' => 'nullable|integer|min:1|max:100',
+            'maintenance_mode' => 'nullable|in:0,1',
+            'logo' => 'nullable|image|max:2048',
         ]);
 
-        foreach ($validatedData as $key => $value) {
+        // Handle logo upload if present
+        if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
+            $file = $request->file('logo');
+            $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $file->getClientOriginalName());
+            $path = $file->storeAs('uploads', $filename, 'public');
+
+            // Save the logo filename as a setting
+            SiteSetting::updateOrCreate(
+                ['key' => 'logo'],
+                ['value' => basename($path)]
+            );
+        }
+
+        // Save all other inputs (except _token, _method, logo)
+        $except = ['_token', '_method', 'logo'];
+        $data = $request->except($except);
+
+        foreach ($data as $key => $value) {
+            // normalize booleans
+            if (is_array($value)) {
+                $value = json_encode($value);
+            }
+
             SiteSetting::updateOrCreate(
                 ['key' => $key],
-                ['value' => $value]
+                ['value' => (string) $value]
             );
         }
 

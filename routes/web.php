@@ -78,12 +78,12 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     
     // Products Management
     Route::resource('products', AdminProductController::class)->names([
-        'index' => 'admin.products.index',
-        'create' => 'admin.products.create',
-        'store' => 'admin.products.store',
-        'show' => 'admin.products.show',
-        'edit' => 'admin.products.edit',
-        'update' => 'admin.products.update',
+        'index'   => 'admin.products.index',
+        'create'  => 'admin.products.create',
+        'store'   => 'admin.products.store',
+        'show'    => 'admin.products.show',
+        'edit'    => 'admin.products.edit',
+        'update'  => 'admin.products.update',
         'destroy' => 'admin.products.destroy'
     ]);
     Route::post('products/{product}/images', [AdminProductController::class, 'uploadImages'])->name('admin.products.images');

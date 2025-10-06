@@ -2,10 +2,13 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "serve": "php artisan serve",
+        "dev-all": "concurrently \"npm run dev\" \"php artisan serve\""
     },
     "devDependencies": {
         "axios": "^1.1.2",
+        "concurrently": "^9.2.1",
         "laravel-vite-plugin": "^0.7.2",
         "vite": "^4.0.0"
     }

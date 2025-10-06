@@ -16,7 +16,7 @@ class BrandSeeder extends Seeder
             [
                 'name' => 'Hudson Furnishing',
                 'slug' => 'hudson-furnishing',
-                'logo' => 'brands/hudson-logo.png',
+                'logo' => 'brands/brand-1-logo-jpg',
             ],
             [
                 'name' => 'Nội Thất Hoàng Gia',

@@ -77,7 +77,7 @@
     <div class="col-xl-8 col-lg-7">
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Thống Kê Khách Truy Cập (7 Ngày Gần Nhất)</h6>
+                <h6 class="m-0 font-weight-bold text-light">Thống Kê Khách Truy Cập (7 Ngày Gần Nhất)</h6>
             </div>
             <div class="card-body">
                 <div class="chart-area">
@@ -91,7 +91,7 @@
     <div class="col-xl-4 col-lg-5">
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Thao Tác Nhanh</h6>
+                <h6 class="m-0 font-weight-bold text-light">Thao Tác Nhanh</h6>
             </div>
             <div class="card-body">
                 <div class="d-grid gap-2">
@@ -118,7 +118,7 @@
     <div class="col-lg-6">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Sản Phẩm Mới Nhất</h6>
+                <h6 class="m-0 font-weight-bold text-light">Sản Phẩm Mới Nhất</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -154,7 +154,7 @@
     <div class="col-lg-6">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Đánh Giá Mới Nhất</h6>
+                <h6 class="m-0 font-weight-bold text-light">Đánh Giá Mới Nhất</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
