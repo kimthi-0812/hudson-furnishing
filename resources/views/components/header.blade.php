@@ -1,7 +1,8 @@
 <header class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container">
         <a class="navbar-brand fw-bold" href="{{ route('home') }}">
-            <img src="{{ asset('images/logo.png') }}" alt="Hudson Furnishing" height="40">
+            <img src="{{ isset($siteSettings['logo']) ? asset('uploads/' . $siteSettings['logo']) : asset('images/logo.png') }}" 
+            alt="{{ $siteSettings['site_name'] ?? 'Hudson Furnishing' }}" height="40">
         </a>
         
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">

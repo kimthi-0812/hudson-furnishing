@@ -7,6 +7,7 @@ use App\Models\Material;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+
 class MaterialController extends Controller
 {
     public function index()
@@ -40,11 +41,9 @@ class MaterialController extends Controller
 
     public function show(Material $material)
     {
-        $material->load(['products' => function($query) {
-            $query->with(['section', 'category', 'brand', 'images'])->paginate(12);
-        }]);
+        $products= $material->products()->with(['section', 'category', 'brand', 'material', 'images'])->paginate(12);
         
-        return view('admin.materials.show', compact('material'));
+        return view('admin.materials.show', compact('material', 'products'));
     }
 
     public function edit(Material $material)

@@ -14,8 +14,15 @@ class OfferController extends Controller
         return view('admin.offers.index', compact('offers'));
     }
 
+    public function show(Offer $offer){
+        $products = $offer->products()->with(['section', 'category', 'brand', 'material', 'images'])->paginate(12);
+
+        return view('admin.offers.show', compact('offer', 'products'));
+    }
+
     public function create()
     {
+
         return view('admin.offers.create');
     }
 
@@ -28,7 +35,7 @@ class OfferController extends Controller
             'discount_value' => 'required|numeric|min:0',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            
             'status' => 'required|in:active,inactive',
         ]);
 
@@ -39,17 +46,13 @@ class OfferController extends Controller
             'discount_value' => $request->discount_value,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
-            'image' => $request->file('image') ? $request->file('image')->store('offers', 'public') : null,
+            
             'status' => $request->status,
         ]);
 
         return redirect()->route('admin.offers.index')->with('success', 'Offer created successfully!');
     }
 
-    public function show(Offer $offer)
-    {
-        return view('admin.offers.show', compact('offer'));
-    }
 
     public function edit(Offer $offer)
     {
@@ -65,7 +68,7 @@ class OfferController extends Controller
             'discount_value' => 'required|numeric|min:0',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            
             'status' => 'required|in:active,inactive',
         ]);
 
@@ -76,7 +79,7 @@ class OfferController extends Controller
             'discount_value' => $request->discount_value,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
-            'image' => $request->file('image') ? $request->file('image')->store('offers', 'public') : $offer->image,
+            
             'status' => $request->status,
         ]);
 

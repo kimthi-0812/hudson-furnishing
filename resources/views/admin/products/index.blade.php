@@ -12,12 +12,12 @@
 @section('content')
 <div class="card shadow">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Tất Cả Sản Phẩm</h6>
+        <h6 class="m-0 font-weight-bold text-light">Tất Cả Sản Phẩm</h6>
     </div>
     <div class="card-body">
         <!-- Search and Filter -->
         <div class="row mb-3">
-            <div class="col-md-6">
+            <div class="col-md-6 ">
                 <form method="GET" action="{{ route('admin.products.index') }}" class="d-flex">
                     <input type="text" name="search" class="form-control me-2" 
                            placeholder="Tìm kiếm sản phẩm..." value="{{ request('search') }}">
@@ -26,7 +26,7 @@
                     </button>
                 </form>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 d-flex align-items-center justify-content-end">
                 <form method="GET" action="{{ route('admin.products.index') }}" class="d-flex">
                     <select name="status" class="form-select me-2">
                         <option value="">Tất Cả Trạng Thái</option>
