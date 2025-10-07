@@ -122,6 +122,16 @@ body {
     flex-grow: 1;
 }
 
+/* Anchor price badge/footer at bottom of card with consistent padding */
+.card-badge-footer {
+    margin-top: auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: .75rem;
+    padding-top: .5rem;
+}
+
 .product-name {
     font-size: 1.1rem;
     font-weight: 600;

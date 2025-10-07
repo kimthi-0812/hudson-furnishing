@@ -117,17 +117,17 @@
         <div class="row">
             @foreach($activeOffers as $offer)
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
+                    <div class="card h-100 d-flex flex-column">
                         @if($offer->image)
                             <img src="{{ asset('uploads/offers/' . $offer->image) }}" 
                                  class="card-img-top" 
                                  alt="{{ $offer->title }}"
                                  style="height: 200px; object-fit: cover;">
                         @endif
-                        <div class="card-body">
+                        <div class="card-body d-flex flex-column flex-grow-1">
                             <h5 class="card-title">{{ $offer->title }}</h5>
                             <p class="card-text">{{ $offer->description }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
+                            <div class="card-badge-footer mt-auto">
                                 <span class="badge bg-danger fs-6">
                                     @if($offer->discount_type == 'percentage')
                                         {{ \App\Helpers\PriceHelper::formatPercentage($offer->discount_value) }} OFF
@@ -135,7 +135,7 @@
                                         {{ number_format($offer->discount_value, 0, ',', ',') }} ₫ OFF
                                     @endif
                                 </span>
-                                <small class="text-muted">
+                                <small class="text-muted text-end">
                                     Còn lại: {{ $offer->end_date->diffForHumans() }}
                                 </small>
                             </div>

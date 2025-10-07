@@ -19,18 +19,18 @@
     </div>
     <div class="product-info p-3 d-flex flex-column flex-grow-1">
         <h5 class="product-name mb-2">{{ $product->name }}</h5>
-        <div class="product-price mb-3">
-            @if($product->sale_price)
-                <span class="sale-price">{{ number_format($product->sale_price, 0, ',', ',') }} ₫</span>
-                <span class="original-price">{{ number_format($product->price, 0, ',', ',') }} ₫</span>
-            @else
-                <span class="price">{{ number_format($product->price, 0, ',', ',') }} ₫</span>
-            @endif
-        </div>
-        <div class="d-grid gap-2 mt-auto">
-            <a href="{{ route('products.show', $product->slug) }}" class="btn btn-primary">
+        <div class="card-badge-footer mt-auto">
+            <div class="product-price m-0">
+                @if($product->sale_price)
+                    <span class="sale-price">{{ number_format($product->sale_price, 0, ',', ',') }} ₫</span>
+                    <span class="original-price">{{ number_format($product->price, 0, ',', ',') }} ₫</span>
+                @else
+                    <span class="price">{{ number_format($product->price, 0, ',', ',') }} ₫</span>
+                @endif
+            </div>
+            <a href="{{ route('products.show', $product->slug) }}" class="btn btn-primary btn-sm">
                 Xem Chi Tiết
-                </a>
+            </a>
         </div>
     </div>
 </div>
