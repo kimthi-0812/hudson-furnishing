@@ -6,7 +6,7 @@
 @section('content')
 <div class="card shadow">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Chỉnh Sửa Sản Phẩm: {{ $product->name }}</h6>
+        <h6 class="m-0 font-weight-bold text-light">Chỉnh Sửa Sản Phẩm: {{ $product->name }}</h6>
     </div>
     <div class="card-body">
         <form method="POST" action="{{ route('admin.products.update', $product) }}" enctype="multipart/form-data">

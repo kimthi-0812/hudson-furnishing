@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Section;
+use App\Models\Product;
 
 class CategoryController extends Controller
 {
@@ -19,6 +20,14 @@ class CategoryController extends Controller
         return view('admin.categories.index', compact('categories'));
     }
 
+    public function show(Category $category){
+        $category->load('section');
+
+        $products = $category->products()->with(['section', 'category', 'brand', 'material', 'images'])->paginate(12);
+
+        return view('admin.categories.show', compact('category', 'products'));
+    }
+    
     /**
      * Show the form for creating a new category.
      */

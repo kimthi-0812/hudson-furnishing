@@ -31,7 +31,7 @@
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="contact-tab" data-bs-toggle="pill" data-bs-target="#contact" type="button" role="tab">
+                            <button class="nav-link text-primary" id="contact-tab" data-bs-toggle="pill" data-bs-target="#contact" type="button" role="tab">
                                 <i class="fas fa-address-book me-2"></i>Liên Hệ
                             </button>
                         </li>
@@ -101,6 +101,12 @@
                                                    placeholder="Nhập từ khóa website">
                                             <small class="form-text text-muted">Separate keywords with commas</small>
                                         </div>
+                                        <div class="mb-3">
+                                            <label for="logo" class="form-label">Logo website</label>
+                                            <input type="file" name="logo" id="logo" class="form-control" accept="image/*" onchange="previewLogo(event)">
+
+                                            
+                                        </div>
                                     </div>
                                 </div>
                                 
@@ -115,7 +121,7 @@
                                         
                                         <div class="preview-card p-3 bg-light rounded">
                                             <div class="d-flex align-items-center mb-2">
-                                                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="me-2" style="height: 32px;" onerror="this.src='{{ asset('images/placeholder.jpg') }}'">
+                                                <img src="{{ isset($siteSettings['logo']) ? asset('uploads/' . $siteSettings['logo']) : asset('images/logo.png') }}" alt="Logo" class="me-2" style="height: 32px;" onerror="this.src='{{ asset('images/placeholder.jpg') }}'">
                                                 <div>
                                                     <h6 class="mb-0" id="preview-name">{{ $settings['site_name'] ?? 'Hudson Furnishing' }}</h6>
                                                     <small class="text-muted" id="preview-tagline">{{ $settings['site_tagline'] ?? 'Nội thất cao cấp cho mọi không gian' }}</small>
@@ -274,20 +280,20 @@
                                             <small class="text-muted">Cách thức hiển thị liên kết mạng xã hội</small>
                                         </div>
                                         
-                                        <div class="social-links p-3 bg-light rounded">
-                                            <h6 class="mb-3">Theo Dõi Chúng Tôi</h6>
-                                            <div class="d-flex flex-wrap gap-2">
-                                                <a href="#" class="btn btn-outline-primary btn-sm">
-                                                    <i class="fab fa-facebook me-1"></i>Facebook
+                                        <div class="social-links p-2 bg-primary  rounded">
+                                            <h6 class="d-flex align-items-center mb-2 ms-2 text-light">Theo Dõi Chúng Tôi</h6>
+                                            <div class="d-flex flex-wrap gap-2 mt-2">
+                                                <a href="#" class="social-link  me-3 mb-2">
+                                                    <i class="fab fa-facebook me-0"></i>
                                                 </a>
-                                                <a href="#" class="btn btn-outline-info btn-sm">
-                                                    <i class="fab fa-twitter me-1"></i>Twitter
+                                                <a href="#" class="social-link me-3 mb-2">
+                                                    <i class="fab fa-twitter me-0"></i>
                                                 </a>
-                                                <a href="#" class="btn btn-outline-danger btn-sm">
-                                                    <i class="fab fa-instagram me-1"></i>Instagram
+                                                <a href="#" class="social-link me-3 mb-2">
+                                                    <i class="fab fa-instagram me-0"></i>
                                                 </a>
-                                                <a href="#" class="btn btn-outline-secondary btn-sm">
-                                                    <i class="fab fa-linkedin me-1"></i>LinkedIn
+                                                <a href="#" class="social-link me-3 mb-2">
+                                                    <i class="fab fa-linkedin me-0"></i>
                                                 </a>
                                             </div>
                                         </div>
@@ -443,7 +449,12 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="mt-4 text-end">
+                        <button type="submit" class="btn btn-primary" onclick="return confirm('Bạn có chắc chắn muốn áp dụng các thay đổi không?')">
+                            <i class="fas fa-save me-2"></i>Lưu Thay Đổi
+                        </button>
+                    </div>
+
                 </form>
             </div>
         </div>

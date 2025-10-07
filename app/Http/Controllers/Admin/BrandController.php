@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
 
 class BrandController extends Controller
 {
@@ -40,11 +42,10 @@ class BrandController extends Controller
 
     public function show(Brand $brand)
     {
-        $brand->load(['products' => function($query) {
-            $query->with(['section', 'category', 'material', 'images'])->paginate(12);
-        }]);
+
+        $products = $brand->products()->with(['section', 'category', 'brand', 'material', 'images'])->paginate(12);
         
-        return view('admin.brands.show', compact('brand'));
+        return view('admin.brands.show', compact('brand', 'products'));
     }
 
     public function edit(Brand $brand)

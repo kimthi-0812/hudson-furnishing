@@ -8,7 +8,7 @@
     <div class="col-lg-8">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Thông Tin Liên Hệ</h6>
+                <h6 class="m-0 font-weight-bold text-light">Thông Tin Liên Hệ</h6>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -85,7 +85,7 @@
         <!-- Update Status Form -->
         <div class="card shadow">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Cập Nhật Tình Trạng Liên Hệ</h6>
+                <h6 class="m-0 font-weight-bold text-light">Cập Nhật Tình Trạng Liên Hệ</h6>
             </div>
             <div class="card-body">
                 <form method="POST" action="{{ route('admin.contacts.update', $contact) }}">
@@ -123,7 +123,7 @@
     <div class="col-lg-4">
         <div class="card shadow">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Thống Kê Liên Hệ</h6>
+                <h6 class="m-0 font-weight-bold text-light">Thống Kê Liên Hệ</h6>
             </div>
             <div class="card-body">
                 <div class="row text-center">

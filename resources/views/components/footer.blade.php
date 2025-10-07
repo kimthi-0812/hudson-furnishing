@@ -3,23 +3,23 @@
         <div class="row">
             <div class="col-lg-4 mb-4">
                 <div class="footer-brand">
-                    <img src="{{ asset('images/logo.png') }}" alt="Hudson Furnishing" class="footer-logo mb-3">
-                    <h5 class="fw-bold mb-3">Hudson Furnishing</h5>
-                    <p class="text-light mb-4">Nội thất cao cấp cho mọi phòng trong ngôi nhà của bạn. Chất lượng thủ công gặp gỡ thiết kế hiện đại để tạo ra những không gian truyền cảm hứng.</p>
+                    <img src="{{ isset($siteSettings['logo']) ? asset('uploads/' . $siteSettings['logo']) : asset('images/logo.png') }}" alt="Hudson Furnishing" class="footer-logo mb-3">
+                    <h5 class="fw-bold mb-3">{{ $siteSettings['site_name'] ?? 'Hudson Furnishing' }}</h5>
+                    <p class="text-light mb-4">{{ $siteSettings['site_tagline'] ?? 'Nội thất cao cấp cho mọi phòng trong ngôi nhà của bạn. Chất lượng thủ công gặp gỡ thiết kế hiện đại để tạo ra những không gian truyền cảm hứng.'}}</p>
                     <div class="social-links">
-                        <a href="#" class="social-link me-3" title="Facebook">
+                        <a href="{{ $siteSettings['facebook_url'] ?? '#' }}" class="social-link me-3" title="Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="social-link me-3" title="Instagram">
+                        <a href="{{ $siteSettings['instagram_url'] ?? '#' }}" class="social-link me-3" title="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="social-link me-3" title="Twitter">
+                        <a href="{{ $siteSettings['twitter_url'] ?? '#' }}" class="social-link me-3" title="Twitter">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="social-link me-3" title="YouTube">
+                        <a href="{{ $siteSettings['youtube_url'] ?? '#' }}" class="social-link me-3" title="YouTube">
                             <i class="fab fa-youtube"></i>
                         </a>
-                        <a href="#" class="social-link" title="TikTok">
+                        <a href="{{ $siteSettings['tiktok_url'] ?? '#' }}" class="social-link" title="TikTok">
                             <i class="fab fa-tiktok"></i>
                         </a>
                     </div>

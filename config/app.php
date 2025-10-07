@@ -194,6 +194,14 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        //SettingServiceProvider::class
+        App\Providers\SettingServiceProvider::class,
+
+
+        //Cloudinary 
+
+        CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
+
 
     ],
 
