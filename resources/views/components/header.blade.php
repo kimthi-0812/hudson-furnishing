@@ -6,6 +6,7 @@
             <img src="{{ isset($siteSettings['logo']) && $siteSettings['logo']
                  ? Storage::url($siteSettings['logo']) 
                  : asset('images/logo.png') }}"
+            <img class="app-logo" src="{{ isset($siteSettings['logo']) ? asset('uploads/' . $siteSettings['logo']) : asset('images/logo.png') }}" 
             alt="{{ $siteSettings['site_name'] ?? 'Hudson Furnishing' }}" height="40">
         </a>
         
@@ -104,6 +105,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">
                             <i class="fas fa-sign-in-alt me-1"></i>Đăng Nhập
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">
+                            <i class="fas fa-user-plus me-1"></i>Đăng Ký
                         </a>
                     </li>
                 @endauth
