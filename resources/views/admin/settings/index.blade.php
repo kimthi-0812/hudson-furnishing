@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="card-body p-4">
-                <form method="POST" action="{{ route('admin.settings.update') }}">
+                <form method="POST" action="{{ route('admin.settings.update') }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     
@@ -31,7 +31,7 @@
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link text-primary" id="contact-tab" data-bs-toggle="pill" data-bs-target="#contact" type="button" role="tab">
+                            <button class="nav-link" id="contact-tab" data-bs-toggle="pill" data-bs-target="#contact" type="button" role="tab">
                                 <i class="fas fa-address-book me-2"></i>Liên Hệ
                             </button>
                         </li>
@@ -103,9 +103,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="logo" class="form-label">Logo website</label>
-                                            <input type="file" name="logo" id="logo" class="form-control" accept="image/*" onchange="previewLogo(event)">
-
-                                            
+                                            <input type="file" name="logo" id="logo" class="form-control" accept="image/*" onchange="previewLogo(event)">                                            
                                         </div>
                                     </div>
                                 </div>
@@ -121,7 +119,10 @@
                                         
                                         <div class="preview-card p-3 bg-light rounded">
                                             <div class="d-flex align-items-center mb-2">
-                                                <img src="{{ isset($siteSettings['logo']) ? asset('uploads/' . $siteSettings['logo']) : asset('images/logo.png') }}" alt="Logo" class="me-2" style="height: 32px;" onerror="this.src='{{ asset('images/placeholder.jpg') }}'">
+                                                <img src="{{ isset($siteSettings['logo']) && $siteSettings['logo']
+                                                        ? Storage::url($siteSettings['logo']) 
+                                                        : asset('images/logo.png') }}" 
+                                                alt="Logo" class="me-2" style="height: 32px;" onerror="this.src='{{ asset('images/placeholder.jpg') }}'">
                                                 <div>
                                                     <h6 class="mb-0" id="preview-name">{{ $settings['site_name'] ?? 'Hudson Furnishing' }}</h6>
                                                     <small class="text-muted" id="preview-tagline">{{ $settings['site_tagline'] ?? 'Nội thất cao cấp cho mọi không gian' }}</small>
@@ -129,8 +130,43 @@
                                             </div>
                                             <p class="small mb-0" id="preview-description">{{ Str::limit($settings['site_description'] ?? 'Hudson Furnishing cung cấp nội thất cao cấp cho mọi phòng trong ngôi nhà của bạn...', 100) }}</p>
                                         </div>
+
+                                        <hr>
+                                            <h5 class="mt-4 mb-3">Hero Carousel</h5>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Hình ảnh Carousel 1</label>
+                                                <input type="file" name="hero_image_1" class="form-control" accept="image/*">
+                                                @if(isset($siteSettings['hero_image_1']) && $siteSettings['hero_image_1'])
+                                                    <div class="mt-2">
+                                                        <img src="{{ Storage::url($siteSettings['hero_image_1']) }}" alt="Hero Image 1" class="img-fluid rounded shadow-sm" style="max-height: 200px;">
+                                                    </div>
+                                                @endif
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Hình ảnh Carousel 2</label>
+                                                <input type="file" name="hero_image_2" class="form-control" accept="image/*">
+                                                @if(isset($siteSettings['hero_image_2']) && $siteSettings['hero_image_2'])
+                                                    <div class="mt-2">
+                                                        <img src="{{ Storage::url($siteSettings['hero_image_2']) }}" alt="Hero Image 2" class="img-fluid rounded shadow-sm" style="max-height: 200px;">
+                                                    </div>
+                                                @endif
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Hình ảnh Carousel 3</label>
+                                                <input type="file" name="hero_image_3" class="form-control" accept="image/*">
+                                                @if(isset($siteSettings['hero_image_3']) && $siteSettings['hero_image_3'])
+                                                    <div class="mt-2">
+                                                        <img src="{{ Storage::url($siteSettings['hero_image_3']) }}" alt="Hero Image 3" class="img-fluid rounded shadow-sm" style="max-height: 200px;">
+                                                    </div>
+                                                @endif
+                                            </div>
                                     </div>
                                 </div>
+
+                                
                             </div>
                         </div>
                         
@@ -544,5 +580,17 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('preview-hours').textContent = text.substring(0, 30) + (text.length > 30 ? '...' : '');
     });
 });
+
+    // preview logo khi chọn file
+    function previewLogo(event) {
+        const input = event.target;
+        if (!input.files || !input.files[0]) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.querySelector('.preview-card img');
+            if (img) img.src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
 </script>
 @endsection

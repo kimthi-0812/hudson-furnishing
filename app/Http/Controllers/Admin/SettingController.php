@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SiteSetting;
+use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
@@ -39,6 +40,9 @@ class SettingController extends Controller
             'items_per_page' => 'nullable|integer|min:1|max:100',
             'maintenance_mode' => 'nullable|in:0,1',
             'logo' => 'nullable|image|max:2048',
+            'hero_image_1' => 'nullable|image|max:2048',
+            'hero_image_2' => 'nullable|image|max:2048',
+            'hero_image_3' => 'nullable|image|max:2048',
         ]);
 
         // Handle logo upload if present
@@ -47,14 +51,20 @@ class SettingController extends Controller
             $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $file->getClientOriginalName());
             $path = $file->storeAs('uploads', $filename, 'public');
 
+            // Delete the old logo if it exists
+            $oldLogo = SiteSetting::where('key', 'logo')->first();
+            if ($oldLogo) {
+                Storage::disk('public')->delete($oldLogo->value);
+            }
+
             // Save the logo filename as a setting
             SiteSetting::updateOrCreate(
                 ['key' => 'logo'],
-                ['value' => basename($path)]
+                ['value' => $path]
             );
         }
 
-        // Save all other inputs (except _token, _method, logo)
+        // lưu các setting khác (loại trừ token/method/logo)
         $except = ['_token', '_method', 'logo'];
         $data = $request->except($except);
 
@@ -70,7 +80,32 @@ class SettingController extends Controller
             );
         }
 
+        // Handle hero carousel images
+        foreach (['hero_image_1', 'hero_image_2', 'hero_image_3'] as $key) {
+            if ($request->hasFile($key) && $request->file($key)->isValid()) {
+                $file = $request->file($key);
+                $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $file->getClientOriginalName());
+                $path = $file->storeAs('uploads/hero', $filename, 'public');
+
+                // Xóa ảnh cũ nếu có
+                $oldImage = SiteSetting::where('key', $key)->first();
+                if ($oldImage) {
+                    Storage::disk('public')->delete($oldImage->value);
+                }
+
+                SiteSetting::updateOrCreate(
+                    ['key' => $key],
+                    ['value' => $path]
+                );
+            }
+        }
+
+
+        if (class_exists(\Illuminate\Support\Facades\Cache::class)) {
+        \Illuminate\Support\Facades\Cache::forget('site_settings');
+        }
+
         return redirect()->route('admin.settings.index')
-            ->with('success', 'Settings updated successfully.');
+            ->with('success', 'Cập nhật cài đặt thành công.');
     }
 }

@@ -1,7 +1,11 @@
 <header class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container">
         <a class="navbar-brand fw-bold" href="{{ route('home') }}">
-            <img src="{{ isset($siteSettings['logo']) ? asset('uploads/' . $siteSettings['logo']) : asset('images/logo.png') }}" 
+            @php use Illuminate\Support\Facades\Storage; @endphp
+
+            <img src="{{ isset($siteSettings['logo']) && $siteSettings['logo']
+                 ? Storage::url($siteSettings['logo']) 
+                 : asset('images/logo.png') }}"
             alt="{{ $siteSettings['site_name'] ?? 'Hudson Furnishing' }}" height="40">
         </a>
         
@@ -106,4 +110,5 @@
             </ul>
         </div>
     </div>
+
 </header>

@@ -4,20 +4,56 @@
 
 @section('content')
 <!-- Hero Section -->
-<section class="hero-section text-white py-5 fade-in" style="background-color: #2f3e46 !important;">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <h1 class="display-4 fw-bold mb-4 bounce-in">Biến Đổi Không Gian Của Bạn!</h1>
-                <p class="lead mb-4 slide-in">Khám phá bộ sưu tập nội thất cao cấp cho mọi phòng trong ngôi nhà của bạn. Chất lượng thủ công gặp gỡ thiết kế hiện đại.</p>
-                <a href="{{ route('products.index') }}" class="btn btn-secondary btn-lg bounce-in">Mua Ngay!</a>
-            </div>
-            <div class="col-lg-6">
-                <img src="{{ asset('images/HF_Home_1.jpg') }}" alt="Premium Furniture" class="img-fluid rounded shadow-lg fade-in">
-            </div>
+<section class="hero-section position-relative text-white d-flex align-items-center justify-content-center" style="min-height: 65vh; overflow: hidden;">
+    <!-- Carousel nền -->
+    <div id="heroCarousel" class="carousel slide carousel-fade position-absolute top-0 start-0 w-100 h-100" data-bs-ride="carousel" data-bs-pause="hover">
+        <div class="carousel-inner h-100">            
+           @foreach (['hero_image_1', 'hero_image_2', 'hero_image_3'] as $index => $key)
+                @if (!empty($siteSettings[$key]))
+                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                        <img 
+                            src="{{ Storage::url($siteSettings[$key]) }}" 
+                            class="d-block w-100 h-100" 
+                            alt="Hero Image {{ $index + 1 }}"
+                            style="object-fit: cover; max-height: 65vh; object-position: center ;"
+                        >
+                    </div>
+                @endif
+            @endforeach           
         </div>
     </div>
+
+    <!-- Nút điều hướng -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+
+    <!-- Dấu chấm dưới -->
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+
+    <!-- Lớp phủ mờ (overlay để chữ nổi bật hơn) -->
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(47, 62, 70, 0.1);"></div>
+
+    <!-- Nội dung chữ -->
+    <div class="container position-absolute bottom-0 start-50 translate-middle-x text-center z-2 mb-5">
+        <h1 class="display-4 fw-bold mb-4 bounce-in">Biến Đổi Không Gian Của Bạn!</h1>
+        <p class="lead mb-4 slide-in">
+            Khám phá bộ sưu tập nội thất cao cấp cho mọi phòng trong ngôi nhà của bạn.
+            Chất lượng thủ công gặp gỡ thiết kế hiện đại.
+        </p>
+        <a href="{{ route('products.index') }}" class="btn btn-secondary btn-lg bounce-in">Khám Phá Ngay!</a>
+    </div>
 </section>
+
 
 <!-- Featured Products Section -->
 <section class="py-5">
@@ -63,7 +99,7 @@
             @endforelse
         </div>
         
-        <div class="text-center mt-4">
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4 d-flex align-content-center text-center mt-4 ">
             <a href="{{ route('products.index') }}" class="btn btn-primary btn-lg">Xem Tất Cả Sản Phẩm</a>
         </div>
     </div>
