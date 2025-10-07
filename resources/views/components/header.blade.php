@@ -1,7 +1,7 @@
 <header class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container">
         <a class="navbar-brand fw-bold" href="{{ route('home') }}">
-            <img src="{{ isset($siteSettings['logo']) ? asset('uploads/' . $siteSettings['logo']) : asset('images/logo.png') }}" 
+            <img class="app-logo" src="{{ isset($siteSettings['logo']) ? asset('uploads/' . $siteSettings['logo']) : asset('images/logo.png') }}" 
             alt="{{ $siteSettings['site_name'] ?? 'Hudson Furnishing' }}" height="40">
         </a>
         
