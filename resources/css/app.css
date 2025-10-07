@@ -272,9 +272,13 @@ body {
 }
 
 .footer-logo {
-    height: 50px;
+    display: inline-block;
+    max-height: 50px;
     width: auto;
-    filter: brightness(0) invert(1);
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.4));
 }
 
 /* Social Links */
@@ -836,3 +840,36 @@ body {
         min-width: 32px;
     }
 }
+
+/* Logo clarity on dark backgrounds */
+.app-logo {
+    display: inline-block;
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.4));
+    image-rendering: -webkit-optimize-contrast;
+}
+
+/* Back to top button visual fixes */
+.btn-back-to-top {
+    width: 50px;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #3b6b75, #2f525a);
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(0,0,0,.2);
+}
+.btn-back-to-top i {
+    font-size: 18px;
+    line-height: 1;
+}
+
+@keyframes backToTopBounceIn {
+    0% { transform: translateY(10px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+.bounce-in { animation: backToTopBounceIn .2s ease-out; }

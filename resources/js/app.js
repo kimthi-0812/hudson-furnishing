@@ -288,8 +288,8 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     const backToTopButton = document.createElement('button');
     backToTopButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
-    backToTopButton.className = 'btn btn-primary position-fixed rounded-circle shadow-lg';
-    backToTopButton.style.cssText = 'bottom: 20px; right: 20px; z-index: 1000; display: none; width: 50px; height: 50px;';
+    backToTopButton.className = 'btn btn-back-to-top position-fixed shadow-lg';
+    backToTopButton.style.cssText = 'bottom: 20px; right: 20px; z-index: 1000; display: none;';
     backToTopButton.setAttribute('aria-label', 'Back to top');
     
     document.body.appendChild(backToTopButton);
