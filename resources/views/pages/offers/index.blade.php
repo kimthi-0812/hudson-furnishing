@@ -26,9 +26,9 @@
                         <div class="offer-details mb-3">
                             <span class="badge bg-danger fs-6">
                                 @if($offer->discount_type == 'percentage')
-                                    {{ $offer->discount_value }}% OFF
+                                    {{ \App\Helpers\PriceHelper::formatPercentage($offer->discount_value) }} OFF
                                 @else
-                                    ${{ number_format($offer->discount_value, 2) }} OFF
+                                    {{ number_format($offer->discount_value, 0, ',', ',') }} ₫ OFF
                                 @endif
                             </span>
                         </div>

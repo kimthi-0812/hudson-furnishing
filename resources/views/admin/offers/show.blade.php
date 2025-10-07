@@ -37,7 +37,11 @@
                 </p>
                 <p><strong>Giá Trị:</strong> 
                     <span class="text-danger font-weight-bold">
-                        {{ number_format($offer->value) }}{{ $offer->type == 'percentage' ? '%' : ' VNĐ' }}
+                        @if ($offer->type == 'percentage')
+                            {{ \App\Helpers\PriceHelper::formatPercentage($offer->value) }}
+                        @else
+                            {{ number_format($offer->value, 0, ',', ',') }} VNĐ
+                        @endif
                     </span>
                 </p>
                 <p><strong>Thời Gian Áp Dụng:</strong> 

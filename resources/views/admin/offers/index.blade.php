@@ -44,9 +44,9 @@
                             <td>{{ $offer->title }}</td>
                             <td>
                                 @if($offer->discount_type == 'percentage')
-                                    {{ $offer->discount_value }}%
+                                    {{ \App\Helpers\PriceHelper::formatPercentage($offer->discount_value) }}
                                 @else
-                                    ${{ number_format($offer->discount_value, 2) }}
+                                    {{ number_format($offer->discount_value, 0, ',', ',') }} ₫
                                 @endif
                             </td>
                             <td>
