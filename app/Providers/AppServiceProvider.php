@@ -34,7 +34,9 @@ class AppServiceProvider extends ServiceProvider
 
         // Share site settings with all views
         View::composer('*', function ($view) {
-            $siteSettings = SiteSetting::pluck('value', 'key')->toArray();
+            $siteSettings = cache()->rememberForever('siteSettings', function () {
+                return SiteSetting::pluck('value', 'key')->toArray();
+            });
             $view->with('siteSettings', $siteSettings);
         });
     }

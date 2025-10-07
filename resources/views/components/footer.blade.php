@@ -3,7 +3,10 @@
         <div class="row">
             <div class="col-lg-4 mb-4">
                 <div class="footer-brand">
-                    <img src="{{ isset($siteSettings['logo']) ? asset('uploads/' . $siteSettings['logo']) : asset('images/logo.png') }}" alt="Hudson Furnishing" class="footer-logo mb-3">
+                    <img src="{{ isset($siteSettings['logo']) && $siteSettings['logo']
+                            ? Storage::url($siteSettings['logo']) 
+                            : asset('images/logo.png') }}" 
+                    alt="Hudson Furnishing" class="footer-logo mb-3 " height="40">
                     <h5 class="fw-bold mb-3">{{ $siteSettings['site_name'] ?? 'Hudson Furnishing' }}</h5>
                     <p class="text-light mb-4">{{ $siteSettings['site_tagline'] ?? 'Nội thất cao cấp cho mọi phòng trong ngôi nhà của bạn. Chất lượng thủ công gặp gỡ thiết kế hiện đại để tạo ra những không gian truyền cảm hứng.'}}</p>
                     <div class="social-links">

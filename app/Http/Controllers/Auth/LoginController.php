@@ -25,6 +25,10 @@ class LoginController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+        ], [
+            'email.required' => 'Vui lòng nhập email của bạn.',
+            'email.email' => 'Địa chỉ email không hợp lệ.',
+            'password.required' => 'Vui lòng nhập mật khẩu.',
         ]);
 
         if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
@@ -39,7 +43,7 @@ class LoginController extends Controller
         }
 
         throw ValidationException::withMessages([
-            'email' => __('auth.failed'),
+            'email' => 'Email hoặc mật khẩu không đúng. Vui lòng thử lại!',
         ]);
     }
 
