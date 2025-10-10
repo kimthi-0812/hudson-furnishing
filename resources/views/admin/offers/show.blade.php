@@ -45,8 +45,8 @@
                     </span>
                 </p>
                 <p><strong>Thời Gian Áp Dụng:</strong> 
-                    Từ {{ \Carbon\Carbon::parse($offer->start_date)->format('H:i d/m/Y') }} 
-                    đến {{ \Carbon\Carbon::parse($offer->end_date)->format('H:i d/m/Y') }}
+                    Từ {{ \Carbon\Carbon::parse($offer->start_date)->format('d/m/Y H:i') }} 
+                    đến {{ \Carbon\Carbon::parse($offer->end_date)->format('d/m/Y H:i') }}
                 </p>
                 <hr>
                 <p><strong>Mô Tả:</strong> {{ $offer->description ?? 'Không có mô tả chi tiết' }}</p>

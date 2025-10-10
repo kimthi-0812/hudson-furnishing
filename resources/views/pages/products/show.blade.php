@@ -105,7 +105,7 @@
                                         </div>
                                     </div>
                                     <p class="card-text">{{ $review->comment }}</p>
-                                    <small class="text-muted">{{ $review->created_at->format('M d, Y') }}</small>
+                                    <small class="text-muted">{{ $review->created_at->format('d/m/Y') }}</small>
                                 </div>
                             </div>
                         </div>

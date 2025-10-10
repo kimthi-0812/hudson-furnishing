@@ -26,7 +26,7 @@
                                     {{ ucfirst($contact->status) }}
                                 </span>
                             </p>
-                            <p><strong>Date:</strong> {{ $contact->created_at->format('M d, Y H:i') }}</p>
+                            <p><strong>Date:</strong> {{ $contact->created_at->format('d/m/Y H:i') }}</p>
                         </div>
                         
                         @if($contact->notes)
@@ -140,8 +140,8 @@
                 </div>
                 
                 <div class="mt-3">
-                    <small class="text-muted">Nhận: {{ $contact->created_at->format('M d, Y H:i') }}</small><br>
-                    <small class="text-muted">Cập Nhật: {{ $contact->updated_at->format('M d, Y H:i') }}</small>
+                    <small class="text-muted">Nhận: {{ $contact->created_at->format('d/m/Y H:i') }}</small><br>
+                    <small class="text-muted">Cập Nhật: {{ $contact->updated_at->format('d/m/Y H:i') }}</small>
                 </div>
             </div>
         </div>

@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: hudson-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: hudson_furnishing
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - hudson-network
+
+  app:
+    build: .
+    container_name: hudson-furnishing-app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=hudson_furnishing
+      - DB_USERNAME=laravel
+      - DB_PASSWORD=laravel
+    depends_on:
+      - mysql
+    networks:
+      - hudson-network
+    volumes:
+      - ./storage:/app/storage
+
+volumes:
+  mysql_data:
+
+networks:
+  hudson-network:
+    driver: bridge

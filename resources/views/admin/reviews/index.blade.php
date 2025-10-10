@@ -47,7 +47,7 @@
                                     {{ $review->approved ? 'Đã Duyệt' : 'Đang Chờ' }}
                                 </span>
                             </td>
-                            <td>{{ $review->created_at->format('M d, Y') }}</td>
+                            <td>{{ $review->created_at->format('d/m/Y') }}</td>
                             <td>
                                 <div class="btn-group" role="group">
                                     @if(!$review->approved)

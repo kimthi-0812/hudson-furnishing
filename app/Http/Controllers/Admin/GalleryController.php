@@ -45,11 +45,7 @@ class GalleryController extends Controller
 
     public function destroy(ProductImage $image)
     {
-        // Delete file from storage
-        if (Storage::disk('public')->exists('products/' . $image->url)) {
-            Storage::disk('public')->delete('products/' . $image->url);
-        }
-
+        // Soft delete, không xóa file ngay
         $image->delete();
         return redirect()->route('admin.gallery.index')->with('success', 'Image deleted successfully!');
     }

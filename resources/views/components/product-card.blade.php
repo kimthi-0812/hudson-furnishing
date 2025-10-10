@@ -18,17 +18,23 @@
         @endif
     </div>
     <div class="product-info p-3 d-flex flex-column flex-grow-1">
-        <h5 class="product-name mb-2">{{ $product->name }}</h5>
-        <div class="card-badge-footer mt-auto">
-            <div class="product-price m-0">
-                @if($product->sale_price)
+        <h5 class="product-name mb-2">
+            <a href="{{ route('products.show', $product->slug) }}" class="text-decoration-none text-dark">
+                {{ $product->name }}
+            </a>
+        </h5>
+        <div class="product-price-section mb-3">
+            @if($product->sale_price)
+                <div class="d-flex flex-column">
                     <span class="sale-price">{{ number_format($product->sale_price, 0, ',', ',') }} ₫</span>
                     <span class="original-price">{{ number_format($product->price, 0, ',', ',') }} ₫</span>
-                @else
-                    <span class="price">{{ number_format($product->price, 0, ',', ',') }} ₫</span>
-                @endif
-            </div>
-            <a href="{{ route('products.show', $product->slug) }}" class="btn btn-primary btn-sm">
+                </div>
+            @else
+                <span class="price">{{ number_format($product->price, 0, ',', ',') }} ₫</span>
+            @endif
+        </div>
+        <div class="product-action mt-auto">
+            <a href="{{ route('products.show', $product->slug) }}" class="btn btn-primary btn-sm w-100 text-nowrap">
                 Xem Chi Tiết
             </a>
         </div>

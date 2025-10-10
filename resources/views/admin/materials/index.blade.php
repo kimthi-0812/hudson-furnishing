@@ -41,7 +41,7 @@
                             </td>
                             <td>{{ $material->name }}</td>
                             <td>{{ $material->products_count }}</td>
-                            <td>{{ $material->created_at->format('M d, Y') }}</td>
+                            <td>{{ $material->created_at->format('d/m/Y') }}</td>
                             <td>
                                 <div class="btn-group" role="group">
                                     <a href="{{ route('admin.materials.show', $material) }}" 

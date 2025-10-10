@@ -45,6 +45,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tổng Lượt Truy Cập</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ number_format($stats['total_visitors']) }}</div>
+                        <div class="text-xs text-muted">Khách duy nhất: {{ number_format($stats['unique_visitors'] ?? 0) }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -77,7 +78,15 @@
     <div class="col-xl-8 col-lg-7">
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-light">Thống Kê Khách Truy Cập (7 Ngày Gần Nhất)</h6>
+                <h6 class="m-0 font-weight-bold text-light">Thống Kê Khách Truy Cập<br><i>(7 Ngày Gần Nhất)</i></h6>
+                <div class="d-flex gap-3 mt-2">
+                    <small class="text-light">
+                        <i class="fas fa-circle text-info me-1"></i> Tổng Lượt Truy Cập
+                    </small>
+                    <small class="text-light">
+                        <i class="fas fa-circle text-danger me-1"></i> Lượt Truy Cập Duy Nhất
+                    </small>
+                </div>
             </div>
             <div class="card-body">
                 <div class="chart-area">
@@ -125,23 +134,23 @@
                     <table class="table table-sm">
                         <thead>
                             <tr>
-                                <th>Tên Sản Phẩm</th>
-                                <th>Mục Sản Phẩm</th>
-                                <th>Tình Trạng</th>
-                                <th>Tạo Lúc</th>
+                                <th style="width: 45%; white-space: nowrap;">Tên Sản Phẩm</th>
+                                <th style="width: 20%; white-space: nowrap;">Mục Sản Phẩm</th>
+                                <th style="width: 15%; white-space: nowrap;">Tình Trạng</th>
+                                <th style="width: 20%; white-space: nowrap;">Tạo Lúc</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($recentProducts as $product)
                                 <tr>
-                                    <td>{{ Str::limit($product->name, 20) }}</td>
+                                    <td>{{ $product->name }}</td>
                                     <td>{{ $product->section->name }}</td>
                                     <td>
                                         <span class="badge bg-{{ $product->status == 'active' ? 'success' : 'secondary' }}">
                                             {{ ucfirst($product->status) }}
                                         </span>
                                     </td>
-                                    <td>{{ $product->created_at->format('M d') }}</td>
+                                    <td>{{ $product->created_at->format('d/m/Y') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -161,17 +170,17 @@
                     <table class="table table-sm">
                         <thead>
                             <tr>
-                                <th>Sản Phẩm</th>
-                                <th>Xếp Hạng</th>
-                                <th>Tình Trạng</th>
-                                <th>Ngày Tạo</th>
+                                <th style="width: 45%; white-space: nowrap;">Sản Phẩm</th>
+                                <th style="width: 20%; white-space: nowrap;">Xếp Hạng</th>
+                                <th style="width: 15%; white-space: nowrap;">Tình Trạng</th>
+                                <th style="width: 20%; white-space: nowrap;">Ngày Tạo</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($recentReviews as $review)
                                 <tr>
-                                    <td>{{ Str::limit($review->product->name, 20) }}</td>
-                                    <td>
+                                    <td>{{ $review->product->name }}</td>
+                                    <td style="white-space: nowrap;">
                                         <div class="text-warning">
                                             @for($i = 1; $i <= 5; $i++)
                                                 <i class="fas fa-star{{ $i <= $review->rating ? '' : '-o' }}"></i>
@@ -183,7 +192,7 @@
                                             {{ $review->approved ? 'Approved' : 'Pending' }}
                                         </span>
                                     </td>
-                                    <td>{{ $review->created_at->format('M d') }}</td>
+                                    <td>{{ $review->created_at->format('d/m/Y') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -204,11 +213,11 @@ const visitorChart = new Chart(ctx, {
     data: {
         labels: [
             @foreach($visitorStats as $stat)
-                '{{ $stat->date->format("M d") }}',
+                '{{ $stat->date->format("d/m/Y") }}',
             @endforeach
         ],
         datasets: [{
-            label: 'Total Visits',
+            label: 'Tổng Lượt Truy Cập',
             data: [
                 @foreach($visitorStats as $stat)
                     {{ $stat->total_visits }},
@@ -218,7 +227,7 @@ const visitorChart = new Chart(ctx, {
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             tension: 0.1
         }, {
-            label: 'Unique Visits',
+            label: 'Lượt Truy Cập Duy Nhất',
             data: [
                 @foreach($visitorStats as $stat)
                     {{ $stat->unique_visits }},

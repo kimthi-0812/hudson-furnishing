@@ -33,7 +33,7 @@
                             </span>
                             <small class="text-muted text-end">
                                 <i class="fas fa-calendar-alt me-1"></i>
-                                Hạn Áp Dụng: {{ $offer->end_date->format('M d, Y') }}
+                                Hạn Áp Dụng: {{ $offer->end_date->format('d/m/Y') }}
                             </small>
                         </div>
                     </div>

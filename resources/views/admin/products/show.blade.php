@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                             <p class="mb-2">{{ $review->comment }}</p>
-                            <small class="text-muted">{{ $review->created_at->format('M d, Y') }}</small>
+                            <small class="text-muted">{{ $review->created_at->format('d/m/Y') }}</small>
                             <div class="mt-2">
                                 <span class="badge bg-{{ $review->approved ? 'success' : 'warning' }}">
                                     {{ $review->approved ? 'Đã Duyệt' : 'Đang Chờ' }}
@@ -145,8 +145,8 @@
                 </div>
                 
                 <div class="mt-3">
-                    <small class="text-muted">Tạo: {{ $product->created_at->format('M d, Y') }}</small><br>
-                    <small class="text-muted">Cập Nhật: {{ $product->updated_at->format('M d, Y') }}</small>
+                    <small class="text-muted">Tạo: {{ $product->created_at->format('d/m/Y') }}</small><br>
+                    <small class="text-muted">Cập Nhật: {{ $product->updated_at->format('d/m/Y') }}</small>
                 </div>
             </div>
         </div>

@@ -24,11 +24,12 @@ class LoginController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required',
+            'password' => ['required', 'string', 'min:8', new \App\Rules\StrongPassword()],
         ], [
             'email.required' => 'Vui lòng nhập email của bạn.',
             'email.email' => 'Địa chỉ email không hợp lệ.',
             'password.required' => 'Vui lòng nhập mật khẩu.',
+            'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
         ]);
 
         if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {

@@ -34,7 +34,7 @@
                                     {{ ucfirst($contact->status) }}
                                 </span>
                             </td>
-                            <td>{{ $contact->created_at->format('M d, Y') }}</td>
+                            <td>{{ $contact->created_at->format('d/m/Y') }}</td>
                             <td>
                                 <div class="btn-group" role="group">
                                     <a href="{{ route('admin.contacts.show', $contact) }}" 

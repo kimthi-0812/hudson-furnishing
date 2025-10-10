@@ -59,20 +59,25 @@
                 <tbody>
                     @forelse($products as $product)
                         <tr>
-                            <td>
-                                @if($product->images->count() > 0)
-                                    <img src="{{ asset('uploads/' . $product->images->first()->url) }}" 
-                                         alt="{{ $product->name }}" class="img-thumbnail admin-table-image">
-                                @else
-                                    <div class="bg-light d-flex align-items-center justify-content-center admin-table-image">
-                                        <i class="fas fa-image text-muted"></i>
-                                    </div>
-                                @endif
+                            <td class="text-center" style="width: 200px !important; padding: 1rem 0.5rem !important;">
+                                <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
+                                    @if($product->images->count() > 0)
+                                        <img src="{{ asset('uploads/' . $product->images->first()->url) }}" 
+                                             alt="{{ $product->name }}" 
+                                             class="img-thumbnail admin-table-image"
+                                             style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                                    @else
+                                        <div class="bg-light d-flex align-items-center justify-content-center" 
+                                             style="width: 80px; height: 80px; border-radius: 8px;">
+                                            <i class="fas fa-image text-muted"></i>
+                                        </div>
+                                    @endif
+                                </div>
                             </td>
-                            <td>{{ $product->name }}</td>
-                            <td>{{ $product->section->name }}</td>
-                            <td>{{ $product->category->name }}</td>
-                            <td>{{ $product->brand->name }}</td>
+                            <td style="word-wrap: break-word; white-space: normal; word-break: break-word; overflow-wrap: break-word; max-width: 200px;">{{ $product->name }}</td>
+                            <td style="word-wrap: break-word; white-space: normal; word-break: break-word; overflow-wrap: break-word; max-width: 150px;">{{ $product->section->name }}</td>
+                            <td style="word-wrap: break-word; white-space: normal; word-break: break-word; overflow-wrap: break-word; max-width: 150px;">{{ $product->category->name }}</td>
+                            <td style="word-wrap: break-word; white-space: normal; word-break: break-word; overflow-wrap: break-word; max-width: 120px;">{{ $product->brand->name }}</td>
                             <td>
                                 @if($product->sale_price)
                                     <span class="text-success">{{ number_format($product->sale_price, 0, ',', ',') }} ₫</span>

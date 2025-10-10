@@ -484,9 +484,10 @@ html body .pagination * {
 .admin-table td {
     text-align: center !important;
     vertical-align: middle !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
     padding: 12px 8px !important;
     font-size: 0.875rem !important;
     line-height: 1.4 !important;
@@ -522,11 +523,12 @@ html body .pagination * {
     vertical-align: middle !important;
 }
 
-/* Prevent text wrapping in specific columns */
+/* Allow text wrapping in specific columns */
 .admin-table td:nth-child(2) {
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
     max-width: 200px !important;
 }
 
@@ -696,7 +698,17 @@ html body .pagination * {
     width: 15% !important; /* Hành Động */
 }
 
-/* Products Table */
+/* Products Table - Override all text truncation */
+.admin-table.products-table th,
+.admin-table.products-table td {
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    text-overflow: unset !important;
+    overflow: visible !important;
+}
+
 .admin-table.products-table th:nth-child(1),
 .admin-table.products-table td:nth-child(1) {
     width: 12% !important; /* Hình ảnh */

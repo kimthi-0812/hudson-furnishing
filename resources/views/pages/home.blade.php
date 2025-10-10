@@ -79,7 +79,7 @@
                                  style="height: 200px; object-fit: cover;">
                         @endif
                         <div class="card-body">
-                            <h6 class="card-title">{{ $product->name }}</h6>
+                            <h6 class="card-title product-name-home">{{ $product->name }}</h6>
                             <p class="card-text text-muted">{{ $product->section->name }}</p>
                             <div class="d-flex justify-content-between align-items-end">
                                 <span class="fw-bold text-primary fs-5">@price($product->price)</span>

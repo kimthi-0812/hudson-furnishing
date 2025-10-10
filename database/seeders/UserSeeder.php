@@ -17,25 +17,25 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Admin User',
                 'email' => 'admin@hudsonfurnishing.com',
-                'password' => Hash::make('admin123'),
+                'password' => Hash::make('Admin123!'),
                 'role' => 'admin',
             ],
             [
                 'name' => 'Le Tan Buu',
                 'email' => 'buu.le@gmail.com',
-                'password' => Hash::make('password123'),
+                'password' => Hash::make('Password123!'),
                 'role' => 'user',
             ],
             [
                 'name' => 'Nguyen Thi Kim Thi',
                 'email' => 'thi.nguyen@gmail.com',
-                'password' => Hash::make('password123'),
+                'password' => Hash::make('Password123!'),
                 'role' => 'user',
             ],
             [
                 'name' => 'Nguyen Phuc Duy Anh',
                 'email' => 'duyanh@gmail.com',
-                'password' => Hash::make('password123'),
+                'password' => Hash::make('Password123!'),
                 'role' => 'user',
             ]            
         ];

@@ -41,7 +41,7 @@
                             </td>
                             <td>{{ $brand->name }}</td>
                             <td>{{ $brand->products_count }}</td>
-                            <td>{{ $brand->created_at->format('M d, Y') }}</td>
+                            <td>{{ $brand->created_at->format('d/m/Y') }}</td>
                             <td>
                                 <div class="btn-group" role="group">
                                     <a href="{{ route('admin.brands.show', $brand) }}" 

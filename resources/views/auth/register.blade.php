@@ -20,10 +20,12 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Họ và tên</label>
                             <input id="name" type="text" name="name" value="{{ old('name') }}"
-                                   class="form-control @error('name') is-invalid @enderror" required autofocus>
+                                   class="form-control @error('name') is-invalid @enderror" 
+                                   minlength="2" maxlength="255" required autofocus>
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                            <div class="form-text">Tối thiểu 2 ký tự, không được toàn là số</div>
                         </div>
 
                         <div class="mb-3">
@@ -38,10 +40,12 @@
                         <div class="mb-3">
                             <label for="password" class="form-label">Mật khẩu</label>
                             <input id="password" type="password" name="password"
-                                   class="form-control @error('password') is-invalid @enderror" required>
+                                   class="form-control @error('password') is-invalid @enderror" 
+                                   minlength="8" required>
                             @error('password')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                            <div class="form-text">Tối thiểu 8 ký tự, phải có chữ cái, không được toàn là số</div>
                         </div>
 
                         <div class="mb-3">

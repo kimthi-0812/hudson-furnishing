@@ -179,9 +179,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        // Delete associated images
+        // Soft delete associated images and product (không xóa file ngay)
         foreach ($product->images as $image) {
-            Storage::disk('public')->delete('products/' . $image->url);
             $image->delete();
         }
 
