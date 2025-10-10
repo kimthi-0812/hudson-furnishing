@@ -116,10 +116,11 @@
                             </div>
                         </div>
 
-                        <div class="d-flex gap-2 justify-content-center align-items-center mt-4">
-    <button type="submit" class="btn btn-primary flex-fill">Áp Dụng</button>
-    <a href="{{ route('products.index') }}" class="btn btn-outline-secondary flex-fill">Hủy</a>
-</div>
+                        <!--Reset Bộ Lộc-->
+                        <hr>
+                        <div class="d-flex gap-2 justify-content-center align-items-center mt-4">                            
+                            <a href="{{ route('products.index') }}" class="btn btn-primary flex-fill">Reset Bộ Lọc</a>
+                        </div>
 
                     </form>
                 </div>

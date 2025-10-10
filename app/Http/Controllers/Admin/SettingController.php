@@ -43,6 +43,7 @@ class SettingController extends Controller
             'hero_image_1' => 'nullable|image|max:2048',
             'hero_image_2' => 'nullable|image|max:2048',
             'hero_image_3' => 'nullable|image|max:2048',
+            'google_map' => 'nullable|string|max:1000',
         ]);
 
         // Handle logo upload if present
@@ -64,8 +65,9 @@ class SettingController extends Controller
             );
         }
 
+
         // lưu các setting khác (loại trừ token/method/logo)
-        $except = ['_token', '_method', 'logo'];
+        $except = ['_token', '_method', 'logo', 'google_map'];
         $data = $request->except($except);
 
         foreach ($data as $key => $value) {
@@ -78,6 +80,23 @@ class SettingController extends Controller
                 ['key' => $key],
                 ['value' => (string) $value]
             );
+        }
+
+        // Xử lý Google Map riêng
+        if ($request->filled('google_map')) {
+            $googleMap = $request->input('google_map');
+
+            // Nếu admin dán cả iframe, thì tách lấy src
+            if (preg_match('/src="([^"]+)"/', $googleMap, $matches)) {
+                $googleMap = $matches[1];
+            }
+
+            SiteSetting::updateOrCreate(
+                ['key' => 'google_map'],
+                ['value' => $googleMap]
+            );
+        } else {
+            SiteSetting::where('key', 'google_map')->delete();
         }
 
         // Handle hero carousel images

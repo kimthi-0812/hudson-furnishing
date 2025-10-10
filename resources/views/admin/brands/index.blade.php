@@ -5,14 +5,14 @@
 
 @section('page-actions')
     <a href="{{ route('admin.brands.create') }}" class="btn btn-primary">
-        <i class="fas fa-plus me-2"></i>Add New Brand
+        <i class="fas fa-plus me-2"></i>Thêm Thương Hiệu
     </a>
 @endsection
 
 @section('content')
 <div class="card shadow">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-light">All Brands</h6>
+        <h6 class="m-0 font-weight-bold text-light">Tất Cả Thương Hiệu</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -20,10 +20,10 @@
                 <thead>
                     <tr>
                         <th>Logo</th>
-                        <th>Name</th>
-                        <th>Products Count</th>
-                        <th>Created</th>
-                        <th>Actions</th>
+                        <th>Tên Thương Hiệu</th>
+                        <th>Số Lượng Sản Phẩm</th>
+                        <th>Ngày Tạo</th>
+                        <th>Hành Động</th>
                     </tr>
                 </thead>
                 <tbody>

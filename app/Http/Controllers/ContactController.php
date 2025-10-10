@@ -28,6 +28,11 @@ class ContactController extends Controller
             'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:20',
             'message' => 'required|string|max:1000',
+        ], [
+            'name.required' => 'Vui lòng nhập họ tên.',
+            'email.required' => 'Vui lòng nhập địa chỉ email hợp lệ.',
+            'phone.required' => 'Vui lòng nhập số điện thoại.',
+            'message.required' => 'Vui lòng nhập thông điệp của bạn.',
         ]);
 
         Contact::create([

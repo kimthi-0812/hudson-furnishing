@@ -94,24 +94,51 @@ class ProductController extends Controller
     /**
      * Display products by section.
      */
-    public function bySection($sectionSlug)
-    {
-        $section = Section::where('slug', $sectionSlug)->firstOrFail();
-        
-        $products = Product::with(['section', 'category', 'brand', 'material', 'images', 'reviews'])
-            ->whereHas('section', function($query) use ($sectionSlug) {
-                $query->where('slug', $sectionSlug);
-            })
-            ->where('status', 'active')
-            ->paginate(12);
+    public function bySection($sectionSlug, Request $request)
+{
+    $section = Section::where('slug', $sectionSlug)->firstOrFail();
 
-        // Get filter options
-        $categories = Category::where('section_id', $section->id)->get();
-        $brands = Brand::all();
-        $materials = Material::all();
+    $query = Product::with(['section', 'category', 'brand', 'material', 'images', 'reviews'])
+        ->whereHas('section', function($q) use ($sectionSlug) {
+            $q->where('slug', $sectionSlug);
+        })
+        ->where('status', 'active');
 
-        return view('pages.products.section', compact('products', 'section', 'categories', 'brands', 'materials'));
+    // Filter by category
+    if ($request->has('category') && $request->category) {
+        $query->where('category_id', $request->category);
     }
+
+    // Filter by brand
+    if ($request->has('brand') && $request->brand) {
+        $query->where('brand_id', $request->brand);
+    }
+
+    // Filter by material
+    if ($request->has('material') && $request->material) {
+        $query->where('material_id', $request->material);
+    }
+
+    // Filter by price
+    if ($request->has('min_price') && $request->min_price) {
+        $query->where('price', '>=', $request->min_price);
+    }
+    if ($request->has('max_price') && $request->max_price) {
+        $query->where('price', '<=', $request->max_price);
+    }
+
+    $products = $query->paginate(12);
+
+    // Lấy dữ liệu filter
+    $categories = Category::where('section_id', $section->id)->get();
+    $brands = Brand::all();
+    $materials = Material::all();
+
+    return view('pages.products.section', compact(
+        'products', 'section', 'categories', 'brands', 'materials'
+    ));
+}
+
 
     /**
      * Display the specified product.

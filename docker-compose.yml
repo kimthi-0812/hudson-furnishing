@@ -1,47 +1,73 @@
 version: '3.8'
 
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: hudson-mysql
-    restart: unless-stopped
+  # MariaDB Database
+  mariadb:
+    image: mariadb:10.11-jammy
+    container_name: mariadb_container
+    restart: always
     environment:
-      MYSQL_DATABASE: hudson_furnishing
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: laravel
-      MYSQL_PASSWORD: laravel
+      MYSQL_ROOT_PASSWORD: root_password_123
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: user_password_123
     ports:
       - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
     networks:
-      - hudson-network
+      - db_network
 
-  app:
-    build: .
-    container_name: hudson-furnishing-app
-    restart: unless-stopped
+  # phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin:5.2-apache
+    container_name: phpmyadmin_container
+    restart: always
+    depends_on:
+      - mariadb
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root_password_123
+      MYSQL_ROOT_PASSWORD: root_password_123
+    ports:
+      - "8084:80"
+    networks:
+      - db_network
+
+  # Laravel App
+  laravel:
+    image: laravelsail/php83-composer:latest
+    container_name: laravel_container
+    restart: always
+    depends_on:
+      - mariadb
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: mariadb
+      DB_PORT: 3306
+      DB_DATABASE: my_database
+      DB_USERNAME: root
+      DB_PASSWORD: root_password_123
     ports:
       - "8000:8000"
-    environment:
-      - APP_ENV=local
-      - APP_DEBUG=true
-      - DB_CONNECTION=mysql
-      - DB_HOST=mysql
-      - DB_PORT=3306
-      - DB_DATABASE=hudson_furnishing
-      - DB_USERNAME=laravel
-      - DB_PASSWORD=laravel
-    depends_on:
-      - mysql
-    networks:
-      - hudson-network
     volumes:
-      - ./storage:/app/storage
+      - .:/app
+    working_dir: /app
+    command: >
+      bash -c "
+        composer install &&
+        php artisan key:generate &&
+        php artisan migrate &&
+        php artisan serve --host=0.0.0.0 --port=8000
+      "
+    networks:
+      - db_network
 
 volumes:
-  mysql_data:
+  mariadb_data:
 
 networks:
-  hudson-network:
+  db_network:
     driver: bridge

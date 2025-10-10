@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Pagination\Paginator;
 use App\Models\SiteSetting;
+use App\Helpers\PriceHelper;
+use carbon\Carbon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         // Force Bootstrap 5 pagination view
         Paginator::defaultView('vendor.pagination.bootstrap-5');
         Paginator::defaultSimpleView('vendor.pagination.simple-bootstrap-5');
+        Carbon::setLocale('vi');
 
         // Register custom Blade directive for price formatting
         Blade::directive('price', function ($expression) {
@@ -39,5 +42,10 @@ class AppServiceProvider extends ServiceProvider
             });
             $view->with('siteSettings', $siteSettings);
         });
+
+        View::share('siteSettings', cache()->remember('site_settings', 3600, function () {
+            return SiteSetting::pluck('value', 'key')->toArray();
+        }));
+
     }
 }
