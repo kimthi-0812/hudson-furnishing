@@ -60,7 +60,7 @@ Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index
 
 // Contact Routes
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/contact', [ContactController::class, 'store'])->middleware('auth')->name('contact.store');
 
 // Review Routes
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
@@ -70,7 +70,9 @@ Route::post('/visitor-stats', [HomeController::class, 'incrementVisitor'])->name
 
 // Authentication Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/login', [LoginController::class, 'login']);
+Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Registration Routes

@@ -98,7 +98,7 @@
                 </div>
             @endforelse
         </div>
-        
+                
         <div class="col-lg-3 col-md-4 col-sm-6 mb-4 d-flex align-content-center text-center mt-4 ">
             <a href="{{ route('products.index') }}" class="btn btn-primary btn-lg">Xem Tất Cả Sản Phẩm</a>
         </div>

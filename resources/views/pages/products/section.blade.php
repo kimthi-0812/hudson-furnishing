@@ -8,65 +8,128 @@
         <!-- Sidebar Filters -->
         <div class="col-lg-3">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex align-items-center justify-content-between">
                     <h5>Bộ Lọc</h5>
+                    <i class="fa-solid fa-filter"></i>
                 </div>
                 <div class="card-body">
-                    <form method="GET" action="{{ route('products.section', $section->slug) }}">
-                        <!-- Category Filter -->
+                    <!-- ✅ Form luôn có section slug -->
+                    <form method="GET" action="{{ route('products.section', ['section' => $section->slug]) }}">
+                        
+                        <!-- Danh Mục -->
                         <div class="mb-3">
                             <label class="form-label">Danh Mục</label>
-                            <select name="category" class="form-select">
-                                <option value="">Tất Cả Danh Mục</option>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
-                                        {{ $category->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <!-- Brand Filter -->
-                        <div class="mb-3">
-                            <label class="form-label">Thương Hiệu</label>
-                            <select name="brand" class="form-select">
-                                <option value="">Tất Cả Thương Hiệu</option>
-                                @foreach($brands as $brand)
-                                    <option value="{{ $brand->id }}" {{ request('brand') == $brand->id ? 'selected' : '' }}>
-                                        {{ $brand->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <!-- Material Filter -->
-                        <div class="mb-3">
-                            <label class="form-label">Vật Liệu</label>
-                            <select name="material" class="form-select">
-                                <option value="">Tất Cả Vật Liệu</option>
-                                @foreach($materials as $material)
-                                    <option value="{{ $material->id }}" {{ request('material') == $material->id ? 'selected' : '' }}>
-                                        {{ $material->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <!-- Price Range -->
-                        <div class="mb-3">
-                            <label class="form-label">Khoảng Giá</label>
-                            <div class="row">
-                                <div class="col-6">
-                                    <input type="number" name="min_price" class="form-control" placeholder="Từ" value="{{ request('min_price') }}">
-                                </div>
-                                <div class="col-6">
-                                    <input type="number" name="max_price" class="form-control" placeholder="Đến" value="{{ request('max_price') }}">
-                                </div>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+                                    {{ request('category') ? $categories->firstWhere('id', request('category'))->name : 'Tất Cả Danh Mục' }}
+                                </button>
+                                <ul class="dropdown-menu w-100">
+                                    <li>
+                                        <a class="dropdown-item {{ request('category') == '' ? 'active' : '' }}" 
+                                           href="{{ route('products.section', ['section' => $section->slug]) }}">
+                                            Tất Cả Danh Mục
+                                        </a>
+                                    </li>
+                                    @foreach($categories as $category)
+                                        <li>
+                                            <a class="dropdown-item {{ request('category') == $category->id ? 'active' : '' }}"
+                                               href="{{ route('products.section', array_merge(['section' => $section->slug], request()->except('category','page'), ['category' => $category->id])) }}">
+                                                {{ $category->name }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100">Áp Dụng Bộ Lọc</button>
-                        <a href="{{ route('products.section', $section->slug) }}" class="btn btn-outline-secondary w-100 mt-2">Xóa Bộ Lọc</a>
+                        <!-- Thương Hiệu -->
+                        <div class="mb-3">
+                            <label class="form-label">Thương Hiệu</label>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+                                    {{ request('brand') ? $brands->firstWhere('id', request('brand'))->name : 'Tất Cả Thương Hiệu' }}
+                                </button>
+                                <ul class="dropdown-menu w-100">
+                                    <li>
+                                        <a class="dropdown-item {{ request('brand') == '' ? 'active' : '' }}" 
+                                           href="{{ route('products.section', ['section' => $section->slug]) }}">
+                                            Tất Cả Thương Hiệu
+                                        </a>
+                                    </li>
+                                    @foreach($brands as $brand)
+                                        <li>
+                                            <a class="dropdown-item {{ request('brand') == $brand->id ? 'active' : '' }}"
+                                               href="{{ route('products.section', array_merge(['section' => $section->slug], request()->except('brand','page'), ['brand' => $brand->id])) }}">
+                                                {{ $brand->name }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Vật Liệu -->
+                        <div class="mb-3">
+                            <label class="form-label">Vật Liệu</label>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+                                    {{ request('material') ? $materials->firstWhere('id', request('material'))->name : 'Tất Cả Vật Liệu' }}
+                                </button>
+                                <ul class="dropdown-menu w-100">
+                                    <li>
+                                        <a class="dropdown-item {{ request('material') == '' ? 'active' : '' }}" 
+                                           href="{{ route('products.section', ['section' => $section->slug]) }}">
+                                            Tất Cả Vật Liệu
+                                        </a>
+                                    </li>
+                                    @foreach($materials as $material)
+                                        <li>
+                                            <a class="dropdown-item {{ request('material') == $material->id ? 'active' : '' }}"
+                                               href="{{ route('products.section', array_merge(['section' => $section->slug], request()->except('material','page'), ['material' => $material->id])) }}">
+                                                {{ $material->name }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Khoảng giá -->
+                        <div class="mb-3">
+                            <label class="form-label">Khoảng Giá</label>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+                                    {{ request('min_price') ? request('min_price') . ' - ' . request('max_price') : 'Chọn khoảng giá' }}
+                                </button>
+                                <ul class="dropdown-menu w-100">
+                                    <li>
+                                        <a class="dropdown-item {{ !request('min_price') ? 'active' : '' }}" 
+                                           href="{{ route('products.section', ['section' => $section->slug]) }}">
+                                            Tất cả
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item {{ request('min_price') == 0 && request('max_price') == 1000000 ? 'active' : '' }}" 
+                                           href="{{ route('products.section', array_merge(['section' => $section->slug], ['min_price'=>0,'max_price'=>1000000])) }}">
+                                            0 - 1,000,000
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item {{ request('min_price') == 1000000 && request('max_price') == 5000000 ? 'active' : '' }}" 
+                                           href="{{ route('products.section', array_merge(['section' => $section->slug], ['min_price'=>1000000,'max_price'=>5000000])) }}">
+                                            1,000,000 - 5,000,000
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Reset Bộ Lọc -->
+                         <hr>
+                        <div class="d-flex gap-2 justify-content-center align-items-center mt-4">                            
+                            <a href="{{ route('products.section', ['section' => $section->slug]) }}" class="btn btn-primary flex-fill ">Reset Bộ Lọc</a>
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -75,17 +138,7 @@
         <!-- Products Grid -->
         <div class="col-lg-9">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h2>{{ $section->name }} Sản Phẩm</h2>
-                    <p class="text-muted">{{ $products->total() }} sản phẩm tìm thấy</p>
-                </div>
-                <div class="d-flex gap-2">
-                    <select class="form-select" style="width: auto;">
-                        <option value="name">Sắp Xếp Theo Tên</option>
-                        <option value="price">Sắp Xếp Theo Giá</option>
-                        <option value="created_at">Sắp Xếp Theo Ngày</option>
-                    </select>
-                </div>
+                <h2>{{ $section->name }} ({{ $products->total() }} sản phẩm)</h2>
             </div>
 
             <div class="row">
@@ -104,7 +157,7 @@
             </div>
 
             <!-- Pagination -->
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center mt-4">
                 <nav aria-label="Sản Phẩm Phân Trang">
                     {{ $products->appends(request()->query())->links() }}
                 </nav>

@@ -208,7 +208,7 @@ const visitorChart = new Chart(ctx, {
             @endforeach
         ],
         datasets: [{
-            label: 'Total Visits',
+            label: 'Tổng lượt truy cập',
             data: [
                 @foreach($visitorStats as $stat)
                     {{ $stat->total_visits }},
@@ -218,7 +218,7 @@ const visitorChart = new Chart(ctx, {
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             tension: 0.1
         }, {
-            label: 'Unique Visits',
+            label: 'số lượt truy cập',
             data: [
                 @foreach($visitorStats as $stat)
                     {{ $stat->unique_visits }},

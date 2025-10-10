@@ -10,6 +10,8 @@
 @endsection
 
 @section('content')
+@php use App\Helpers\StatusHelper; @endphp
+
 <div class="card shadow">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-light">Tất Cả Sản Phẩm</h6>
@@ -27,16 +29,29 @@
                 </form>
             </div>
             <div class="col-md-6 d-flex align-items-center justify-content-end">
-                <form method="GET" action="{{ route('admin.products.index') }}" class="d-flex">
-                    <select name="status" class="form-select me-2">
-                        <option value="">Tất Cả Trạng Thái</option>
-                        <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
-                        <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
-                    </select>
-                    <button type="submit" class="btn btn-outline-secondary">
-                        <i class="fas fa-filter"></i>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        {{ request('status') 
+                            ? (StatusHelper::getStatusOptions()[request('status')]['label'] ?? 'Không xác định') 
+                            : 'Tất Cả Trạng Thái' }}
                     </button>
-                </form>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item {{ request('status') === null || request('status') === '' ? 'active' : '' }}"
+                            href="{{ request()->fullUrlWithQuery(['status' => '', 'page' => 1]) }}">
+                                Tất Cả
+                            </a>
+                        </li>
+                        @foreach(StatusHelper::getStatusOptions() as $key => $option)
+                            <li>
+                                <a class="dropdown-item {{ request('status') === $key ? 'active' : '' }}"
+                                href="{{ request()->fullUrlWithQuery(['status' => $key, 'page' => 1]) }}">
+                                    {{ $option['label'] }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -45,15 +60,15 @@
             <table class="table table-bordered admin-table products-table">
                 <thead>
                     <tr>
-                        <th>Hình ảnh</th>
-                        <th>Tên Sản Phẩm</th>
-                        <th>Mục Sản Phẩm</th>
-                        <th>Loại Sản Phẩm</th>
-                        <th>Thương Hiệu</th>
-                        <th>Đơn Giá</th>
-                        <th>Tồn Kho</th>
-                        <th>Tình Trạng</th>
-                        <th>Hành Động</th>
+                        <th>Hình ảnh sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Khu vực</th>
+                        <th>Danh mục</th>
+                        <th>Thương hiệu</th>
+                        <th>Giá / Giá khuyến mãi</th>
+                        <th>Số lượng tồn</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,16 +90,20 @@
                             <td>{{ $product->brand->name }}</td>
                             <td>
                                 @if($product->sale_price)
-                                    <span class="text-success">{{ number_format($product->sale_price, 0, ',', ',') }} ₫</span>
-                                    <br><small class="text-muted">{{ number_format($product->price, 0, ',', ',') }} ₫</small>
+                                    <small class="text-muted">{{ number_format($product->price, 0, ',', ',') }} ₫</small>/
+                                    <span class="text-success">{{ number_format($product->sale_price, 0, ',', ',') }} ₫</span>                                    
                                 @else
                                     {{ number_format($product->price, 0, ',', ',') }} ₫
                                 @endif
                             </td>
                             <td>{{ $product->stock }}</td>
                             <td>
-                                <span class="badge bg-{{ $product->status == 'active' ? 'success' : 'secondary' }}">
-                                    {{ ucfirst($product->status) }}
+                                @php
+                                    $options = StatusHelper::getStatusOptions();
+                                    $status = $product->status;
+                                @endphp
+                                <span class="badge bg-{{ $options[$status]['class'] ?? 'warning' }}">
+                                    {{ $options[$status]['label'] ?? ucfirst($status) }}
                                 </span>
                             </td>
                             <td>

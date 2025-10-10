@@ -65,7 +65,7 @@
                                             </h6>
                                             <small class="text-muted">Cấu hình thông tin cơ bản của website</small>
                                         </div>
-                                        
+                                        <!-- site name -->
                                         <div class="mb-3">
                                             <label for="site_name" class="form-label">
                                                 <i class="fas fa-tag text-primary me-1"></i>Tên Website
@@ -74,7 +74,7 @@
                                                    value="{{ $settings['site_name'] ?? 'Hudson Furnishing' }}"
                                                    placeholder="Nhập tên website">
                                         </div>
-                                        
+                                        <!-- site tagline -->
                                         <div class="mb-3">
                                             <label for="site_tagline" class="form-label">
                                                 <i class="fas fa-quote-right text-primary me-1"></i>Tagline Website
@@ -83,7 +83,7 @@
                                                    value="{{ $settings['site_tagline'] ?? 'Nội thất cao cấp cho mọi không gian' }}"
                                                    placeholder="Nhập tagline website">
                                         </div>
-                                        
+                                        <!-- site description -->
                                         <div class="mb-3">
                                             <label for="site_description" class="form-label">
                                                 <i class="fas fa-align-left text-primary me-1"></i>Mô Tả Website
@@ -91,7 +91,7 @@
                                             <textarea class="form-control" id="site_description" name="site_description" rows="3" 
                                                       placeholder="Nhập mô tả website">{{ $settings['site_description'] ?? 'Hudson Furnishing cung cấp nội thất cao cấp cho mọi phòng trong ngôi nhà của bạn. Chất lượng thủ công gặp gỡ thiết kế hiện đại.' }}</textarea>
                                         </div>
-                                        
+                                        <!-- site keywords -->
                                         <div class="mb-3">
                                             <label for="site_keywords" class="form-label">
                                                 <i class="fas fa-tags text-primary me-1"></i>Từ Khóa Website
@@ -105,9 +105,17 @@
                                             <label for="logo" class="form-label">Logo website</label>
                                             <input type="file" name="logo" id="logo" class="form-control" accept="image/*" onchange="previewLogo(event)">                                            
                                         </div>
+                                        <!--google map -->
+                                        <div class="mb-3">
+                                            <label for="google_map" class="form-label">Google Map (iframe URL)</label>
+                                            <input type="text" name="google_map" class="form-control"
+                                                value="{{ $settings['google_map'] ?? '' }}">
+                                            <small class="form-text text-muted">Nhập URL iframe của Google Map</small>
+                                        </div>
                                     </div>
                                 </div>
                                 
+                                <!-- Settings Preview -->
                                 <div class="col-md-6">
                                     <div class="settings-preview">
                                         <div class="section-header mb-3">
@@ -130,7 +138,7 @@
                                             </div>
                                             <p class="small mb-0" id="preview-description">{{ Str::limit($settings['site_description'] ?? 'Hudson Furnishing cung cấp nội thất cao cấp cho mọi phòng trong ngôi nhà của bạn...', 100) }}</p>
                                         </div>
-
+                                        <!-- Hero Section -->
                                         <hr>
                                             <h5 class="mt-4 mb-3">Hero Carousel</h5>
 
@@ -164,9 +172,7 @@
                                                 @endif
                                             </div>
                                     </div>
-                                </div>
-
-                                
+                                </div>                                
                             </div>
                         </div>
                         
@@ -490,7 +496,6 @@
                             <i class="fas fa-save me-2"></i>Lưu Thay Đổi
                         </button>
                     </div>
-
                 </form>
             </div>
         </div>

@@ -33,13 +33,10 @@
                             </span>
                             <small class="text-muted text-end">
                                 <i class="fas fa-calendar-alt me-1"></i>
-                                Hạn Áp Dụng: {{ $offer->end_date->format('M d, Y') }}
+                                Hạn Áp Dụng: {{ $offer->end_date->translatedFormat('d M, Y') }}
                             </small>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="{{ route('products.index') }}" class="btn btn-danger w-100">Mua Ngay</a>
-                    </div>
+                    </div>                    
                 </div>
             </div>
         @empty

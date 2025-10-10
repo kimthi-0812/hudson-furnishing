@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Categories Management - Hudson Furnishing')
+@section('title', 'Quản Lý Danh Mục  - Hudson Furnishing')
 @section('page-title', 'Quản Lý Danh Mục')
 
 @section('page-actions')
@@ -20,10 +20,10 @@
                 <thead>
                     <tr>
                         <th>Tên Danh Mục</th>
-                        <th>Mục Sản Phẩm</th>
-                        <th>Số Lượng</th>
-                        <th>Tạo Lúc</th>
-                        <th>Hành Động</th>
+                        <th>Khu Vực</th>
+                        <th>Số Lượng Sản Phẩm</th>
+                        <th>Ngày Tạo</th>
+                        <th>Hành Tác</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,7 +32,7 @@
                             <td>{{ $category->name }}</td>
                             <td>{{ $category->section->name }}</td>
                             <td>{{ $category->products()->count() }}</td>
-                            <td>{{ $category->created_at->format('M d, Y') }}</td>
+                            <td>{{ $category->created_at->translatedFormat('d M, Y') }}</td>
                             <td>
                                 <div class="btn-group" role="group">
                                     <a href="{{ route('admin.categories.show', $category) }}" 

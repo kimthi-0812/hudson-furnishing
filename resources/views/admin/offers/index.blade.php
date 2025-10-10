@@ -54,8 +54,8 @@
                                     {{ ucfirst($offer->status) }}
                                 </span>
                             </td>
-                            <td>{{ $offer->start_date->format('M d, Y') }}</td>
-                            <td>{{ $offer->end_date->format('M d, Y') }}</td>
+                            <td>{{ $offer->start_date->translatedFormat('d M, Y') }}</td>
+                            <td>{{ $offer->end_date->translatedFormat('d M, Y') }}</td>
                             <td>
                                 <div class="btn-group" role="group">
                                     <a href="{{ route('admin.offers.show', $offer) }}" 

@@ -17,11 +17,26 @@ class ProductController extends Controller
     /**
      * Display a listing of products.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with(['section', 'category', 'brand', 'material', 'images'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(15);
+        // 1. Khởi tạo query
+        $query = Product::with(['section', 'category', 'brand', 'material', 'images']);
+
+        // 2. Lọc theo tên
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // 3. Lọc theo trạng thái
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        }
+
+        // 4. Sắp xếp theo ngày tạo giảm dần
+        $query->orderBy('created_at', 'desc');
+
+        // 5. Phân trang
+        $products = $query->paginate(15)->withQueryString();
 
         return view('admin.products.index', compact('products'));
     }
@@ -45,33 +60,61 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name'        => 'required|string|max:255',
             'description' => 'required|string',
-            'section_id' => 'required|exists:sections,id',
+            'section_id'  => 'required|exists:sections,id',
             'category_id' => 'required|exists:categories,id',
-            'brand_id' => 'required|exists:brands,id',
+            'brand_id'    => 'required|exists:brands,id',
             'material_id' => 'required|exists:materials,id',
-            'price' => 'required|numeric|min:0',
-            'sale_price' => 'nullable|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'featured' => 'boolean',
-            'status' => 'required|in:active,inactive',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'price'       => 'required|numeric|min:1',
+            'sale_price'  => 'nullable|numeric|min:1|lt:price',
+            'stock'       => 'required|integer|min:1',
+            'featured'    => 'boolean',
+            'status'      => 'required|in:active,inactive',
+            'images.*'    => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ],[
+            'name.required'        => 'Vui lòng nhập tên sản phẩm.',
+            'name.string'          => 'Tên sản phẩm phải là chuỗi ký tự.',
+            'name.max'             => 'Tên sản phẩm không được vượt quá 255 ký tự.',
+            'description.required' => 'Vui lòng nhập mô tả sản phẩm.',
+            'description.string'   => 'Mô tả sản phẩm phải là chuỗi ký tự.',
+            'section_id.required'  => 'Vui lòng chọn mục sản phẩm.',
+            'section_id.exists'    => 'Mục sản phẩm không tồn tại.',
+            'category_id.required' => 'Vui lòng chọn loại sản phẩm.',
+            'category_id.exists'   => 'Loại sản phẩm không tồn tại.',
+            'brand_id.required'    => 'Vui lòng chọn thương hiệu.',
+            'brand_id.exists'      => 'Thương hiệu không tồn tại.',
+            'material_id.required' => 'Vui lòng chọn chất liệu.',
+            'material_id.exists'   => 'Chất liệu không tồn tại.',
+            'price.required'       => 'Vui lòng nhập đơn giá.',
+            'price.numeric'        => 'Đơn giá phải là số.',
+            'price.min'            => 'Đơn giá phải lớn hơn 0.',
+            'sale_price.numeric'   => 'Giá khuyến mãi phải là số.',
+            'sale_price.min'       => 'Giá khuyến mãi phải lớn hơn 0.',
+            'sale_price.lt'        => 'Giá khuyến mãi phải nhỏ hơn đơn giá.',
+            'stock.required'       => 'Vui lòng nhập số lượng hàng tồn.',
+            'stock.integer'        => 'Số lượng hàng tồn phải là số nguyên.',
+            'stock.min'            => 'Số lượng hàng tồn phải lớn hơn 0.',
+            'status.required'      => 'Vui lòng chọn tình trạng sản phẩm.',
+            'status.in'            => 'Tình trạng sản phẩm không hợp lệ.',
+            'images.*.image'       => 'Tệp tải lên phải là hình ảnh.',
+            'images.*.mimes'       => 'Hình ảnh phải có định dạng: jpeg, png, jpg, gif.',
+            'images.*.max'         => 'Kích thước hình ảnh không được vượt quá 2MB.',
         ]);
 
         $product = Product::create([
-            'name' => $request->name,
+            'name'        => $request->name,
             'description' => $request->description,
-            'section_id' => $request->section_id,
+            'section_id'  => $request->section_id,
             'category_id' => $request->category_id,
-            'brand_id' => $request->brand_id,
+            'brand_id'    => $request->brand_id,
             'material_id' => $request->material_id,
-            'price' => $request->price,
-            'sale_price' => $request->sale_price,
-            'stock' => $request->stock,
-            'slug' => \Str::slug($request->name),
-            'featured' => $request->boolean('featured'),
-            'status' => $request->status,
+            'price'       => $request->price,
+            'sale_price'  => $request->sale_price,
+            'stock'       => $request->stock,
+            'slug'        => \Str::slug($request->name),
+            'featured'    => $request->boolean('featured'),
+            'status'      => $request->status,
         ]);
 
         // Handle image uploads
@@ -123,18 +166,46 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name'        => 'required|string|max:255',
             'description' => 'required|string',
-            'section_id' => 'required|exists:sections,id',
+            'section_id'  => 'required|exists:sections,id',
             'category_id' => 'required|exists:categories,id',
-            'brand_id' => 'required|exists:brands,id',
+            'brand_id'    => 'required|exists:brands,id',
             'material_id' => 'required|exists:materials,id',
-            'price' => 'required|numeric|min:0',
-            'sale_price' => 'nullable|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'featured' => 'boolean',
-            'status' => 'required|in:active,inactive',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'price'       => 'required|numeric|min:1|max:1000000000',
+            'sale_price'  => 'nullable|numeric|min:1|lt:price',
+            'stock'       => 'required|integer|min:1',
+            'featured'    => 'boolean',
+            'status'      => 'required|in:active,inactive',
+            'images.*'    => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required'        => 'Vui lòng nhập tên sản phẩm.',
+            'name.string'          => 'Tên sản phẩm phải là chuỗi ký tự.',
+            'name.max'             => 'Tên sản phẩm không được vượt quá 255 ký tự.',
+            'description.required' => 'Vui lòng nhập mô tả sản phẩm.',
+            'description.string'   => 'Mô tả sản phẩm phải là chuỗi ký tự.',
+            'section_id.required'  => 'Vui lòng chọn mục sản phẩm.',
+            'section_id.exists'    => 'Mục sản phẩm không tồn tại.',
+            'category_id.required' => 'Vui lòng chọn loại sản phẩm.',
+            'category_id.exists'   => 'Loại sản phẩm không tồn tại.',
+            'brand_id.required'    => 'Vui lòng chọn thương hiệu.',
+            'brand_id.exists'      => 'Thương hiệu không tồn tại.',
+            'material_id.required' => 'Vui lòng chọn chất liệu.',
+            'material_id.exists'   => 'Chất liệu không tồn tại.',
+            'price.required'       => 'Vui lòng nhập đơn giá.',
+            'price.numeric'        => 'Đơn giá phải là số.',
+            'price.min'            => 'Đơn giá phải lớn hơn 1.',
+            'sale_price.numeric'   => 'Giá khuyến mãi phải là số.',
+            'sale_price.min'       => 'Giá khuyến mãi phải lớn hơn 1.',
+            'sale_price.lt'        => 'Giá khuyến mãi phải nhỏ hơn đơn giá.',
+            'stock.required'       => 'Vui lòng nhập số lượng hàng tồn.',
+            'stock.integer'        => 'Số lượng hàng tồn phải là số nguyên.',
+            'stock.min'            => 'Số lượng hàng tồn phải lớn hơn 1.',
+            'status.required'      => 'Vui lòng chọn tình trạng sản phẩm.',
+            'status.in'            => 'Tình trạng sản phẩm không hợp lệ.',
+            'images.*.image'       => 'Tệp tải lên phải là hình ảnh.',
+            'images.*.mimes'       => 'Hình ảnh phải có định dạng: jpeg, png, jpg, gif.',
+            'images.*.max'         => 'Kích thước hình ảnh không được vượt quá 2MB.',
         ]);
 
         $product->update([

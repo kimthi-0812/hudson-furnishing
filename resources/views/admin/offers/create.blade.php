@@ -80,9 +80,12 @@
                     {{-- Trường Status --}}
                     <div class="form-group">
                         <label for="status">Trạng Thái (<span class="text-danger">*</span>)</label>
-                        <select name="status" id="status" class="form-control @error('status') is-invalid @enderror" required>
-                            <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Hoạt Động</option>
-                            <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Ngừng Hoạt Động</option>
+                        <select name="status" class="form-select">
+                            @foreach(StatusHelper::getStatusOptions() as $key => $option)
+                                <option value="{{ $key }}" {{ old('status') == $key ? 'selected' : '' }}>
+                                    {{ $option['label'] }}
+                                </option>
+                            @endforeach
                         </select>
                         @error('status')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>

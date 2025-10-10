@@ -5,18 +5,29 @@
 @section('content')
 <div class="container py-5">
     <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <div class="text-center mb-5">
+        <div class="col-lg-8 mx-auto border rounded p-4">
+            <div class="text-center mb-5 ">
                 <h1 class="display-4 fw-bold">Liên Hệ</h1>
                 <p class="lead text-muted">Chúng tôi sẵn sàng hỗ trợ bạn</p>
+                <p>Tư vấn về nội thất và yêu cầu hướng dẫn đặt hàng? <span class="fw-bold">Liên hệ ngay!</span></p>
             </div>
             
             <div class="row">
                 <div class="col-md-6">
-                    <h3>Liên Hệ</h3>
-                    <p>Tư vấn về nội thất và yêu cầu hướng dẫn đặt hàng? Liên hệ ngay!</p>
                     
+                    <!--map-->
+                    <div class="contact-map">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <strong>Bản đồ</strong>
+                        @if(!empty($siteSettings['google_map']))
+                        <div class="map-responsive">
+                            <iframe src="{{ $siteSettings['google_map'] }}" width="800" height="800" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                        @endif
+                    </div>
+                    <!--info-->
                     <div class="contact-info">
+                        <!--address-->
                         <div class="d-flex align-items-center mb-3">
                             <i class="fas fa-map-marker-alt text-primary me-3"></i>
                             <div>
@@ -24,7 +35,7 @@
                                 {!! nl2br(e($siteSettings['contact_address'] ?? '36/5 Đường D5, Quận Bình Thạnh, TP.HCM')) !!}
                             </div>
                         </div>
-                        
+                        <!--phone-->
                         <div class="d-flex align-items-center mb-3">
                             <i class="fas fa-phone text-primary me-3"></i>
                             <div>
@@ -33,6 +44,7 @@
                             </div>
                         </div>
                         
+                        <!--email-->
                         <div class="d-flex align-items-center mb-3">
                             <i class="fas fa-envelope text-primary me-3"></i>
                             <div>
@@ -40,7 +52,7 @@
                                 {{ $siteSettings['contact_email'] ?? 'info@hudsonfurnishing.com' }}
                             </div>
                         </div>
-                        
+                        <!--time-->
                         <div class="d-flex align-items-center mb-3">
                             <i class="fas fa-clock text-primary me-3"></i>
                             <div>
@@ -51,6 +63,7 @@
                     </div>
                 </div>
                 
+                <!--contact form-->
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
@@ -96,25 +109,50 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     const formData = new FormData(this);
     
     fetch('{{ route("contact.store") }}', {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert(data.message);
-            this.reset();
-        } else {
-            alert('Error sending message. Please try again.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error sending message. Please try again.');
-    });
+    method: 'POST',
+    body: formData,
+    headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    }
+        })
+        .then(response => {
+            if (response.status === 401) { // 401 = chưa đăng nhập
+                alert('Vui lòng đăng nhập trước khi gửi phản hồi.');
+                window.location.href = '{{ route("login") }}';
+                return;
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && data.success) {
+                alert(data.message);
+                document.getElementById('contactForm').reset();
+            } else if (data) {
+                alert('Đã có lỗi xảy ra. Vui lòng thử lại.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Đã có lỗi. Vui lòng thử lại.');
+        });
+
 });
 </script>
+
+<style>
+    .map-responsive {
+    overflow:hidden;
+    padding-bottom:56.25%;
+    position:relative;
+    height:0;
+}
+.map-responsive iframe {
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+}
+
+</style>
 @endpush
