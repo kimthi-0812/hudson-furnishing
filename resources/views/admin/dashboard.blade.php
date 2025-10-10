@@ -121,27 +121,31 @@
                 <h6 class="m-0 font-weight-bold text-light">Sản Phẩm Mới Nhất</h6>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-sm">
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0;">
                         <thead>
                             <tr>
-                                <th>Tên Sản Phẩm</th>
-                                <th>Mục Sản Phẩm</th>
-                                <th>Tình Trạng</th>
-                                <th>Tạo Lúc</th>
+                                <th style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; background-color: #f8f9fa; font-weight: 600; white-space: nowrap; text-align: left;">Tên Sản Phẩm</th>
+                                <th style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; background-color: #f8f9fa; font-weight: 600; white-space: nowrap; text-align: left;">Mục Sản Phẩm</th>
+                                <th style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; background-color: #f8f9fa; font-weight: 600; white-space: nowrap; text-align: left;">Tình Trạng</th>
+                                <th style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; background-color: #f8f9fa; font-weight: 600; white-space: nowrap; text-align: left;">Tạo Lúc</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($recentProducts as $product)
                                 <tr>
-                                    <td>{{ Str::limit($product->name, 20) }}</td>
-                                    <td>{{ $product->section->name }}</td>
-                                    <td>
-                                        <span class="badge bg-{{ $product->status == 'active' ? 'success' : 'secondary' }}">
+                                    <td style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; max-width: 200px; word-wrap: break-word; line-height: 1.2; vertical-align: middle;">
+                                        <div style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.2; max-height: 2.4em;">
+                                            {{ $product->name }}
+                                        </div>
+                                    </td>
+                                    <td style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; white-space: nowrap; vertical-align: middle;">{{ $product->section->name }}</td>
+                                    <td style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; white-space: nowrap; vertical-align: middle;">
+                                        <span class="badge bg-{{ $product->status == 'active' ? 'success' : 'secondary' }}" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
                                             {{ ucfirst($product->status) }}
                                         </span>
                                     </td>
-                                    <td>{{ $product->created_at->format('M d') }}</td>
+                                    <td style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; white-space: nowrap; font-size: 0.875rem; color: #6c757d; vertical-align: middle;">{{ $product->created_at->format('d/m/Y') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -154,36 +158,40 @@
     <div class="col-lg-6">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-light">Đánh Giá Mới Nhất</h6>
+                <h6 class="m-0 font-weight-bold text-light">Nhận Xét Mới Nhất</h6>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-sm">
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0;">
                         <thead>
                             <tr>
-                                <th>Sản Phẩm</th>
-                                <th>Xếp Hạng</th>
-                                <th>Tình Trạng</th>
-                                <th>Ngày Tạo</th>
+                                <th style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; background-color: #f8f9fa; font-weight: 600; white-space: nowrap; text-align: left;">Sản Phẩm</th>
+                                <th style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; background-color: #f8f9fa; font-weight: 600; white-space: nowrap; text-align: left;">Xếp Hạng</th>
+                                <th style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; background-color: #f8f9fa; font-weight: 600; white-space: nowrap; text-align: left;">Tình Trạng</th>
+                                <th style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; background-color: #f8f9fa; font-weight: 600; white-space: nowrap; text-align: left;">Ngày Tạo</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($recentReviews as $review)
                                 <tr>
-                                    <td>{{ Str::limit($review->product->name, 20) }}</td>
-                                    <td>
-                                        <div class="text-warning">
+                                    <td style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; max-width: 200px; word-wrap: break-word; line-height: 1.2; vertical-align: middle;">
+                                        <div style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.2; max-height: 2.4em;">
+                                            {{ $review->product->name }}
+                                        </div>
+                                    </td>
+                                    <td style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; white-space: nowrap; vertical-align: middle;">
+                                        <div class="text-warning" style="display: flex; align-items: center; gap: 1px; white-space: nowrap;">
                                             @for($i = 1; $i <= 5; $i++)
-                                                <i class="fas fa-star{{ $i <= $review->rating ? '' : '-o' }}"></i>
+                                                <i class="fas fa-star{{ $i <= $review->rating ? '' : '-o' }}" style="font-size: 0.875rem;"></i>
                                             @endfor
                                         </div>
                                     </td>
-                                    <td>
-                                        <span class="badge bg-{{ $review->approved ? 'success' : 'warning' }}">
+                                    <td style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; white-space: nowrap; vertical-align: middle;">
+                                        <span class="badge bg-{{ $review->approved ? 'success' : 'warning' }}" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
                                             {{ $review->approved ? 'Approved' : 'Pending' }}
                                         </span>
                                     </td>
-                                    <td>{{ $review->created_at->format('M d') }}</td>
+                                    <td style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; white-space: nowrap; font-size: 0.875rem; color: #6c757d; vertical-align: middle;">{{ $review->created_at->format('d/m/Y') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

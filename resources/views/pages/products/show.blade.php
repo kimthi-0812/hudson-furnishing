@@ -47,10 +47,14 @@
             
             <div class="product-price mb-3">
                 @if($product->sale_price)
-                    <span class="h3 text-danger">{{ number_format($product->sale_price, 0, ',', ',') }} ₫</span>
-                    <span class="h5 text-muted text-decoration-line-through ms-2">{{ number_format($product->price, 0, ',', ',') }} ₫</span>
+                    <div class="sale-price-display" style="display: flex; flex-direction: column; gap: 0.25rem;">
+                        <div class="sale-price-large" style="color: #8B0000; font-weight: 600; font-size: 2rem; line-height: 1.2; white-space: nowrap; display: block;">{{ number_format($product->sale_price, 0, ',', ',') }}<span class="currency" style="font-size: 0.9em; margin-left: 2px; white-space: nowrap;">₫</span></div>
+                        <div class="original-price-small" style="color: #6c757d; font-size: 1.2rem; text-decoration: line-through; white-space: nowrap; line-height: 1.2; display: block;">{{ number_format($product->price, 0, ',', ',') }}<span class="currency" style="font-size: 0.9em; margin-left: 2px; white-space: nowrap;">₫</span></div>
+                    </div>
                 @else
-                    <span class="h3">{{ number_format($product->price, 0, ',', ',') }} ₫</span>
+                    <div class="price-display" style="display: flex; flex-direction: column;">
+                        <div class="price-large" style="color: #8B0000; font-weight: 600; font-size: 2rem; line-height: 1.2; white-space: nowrap; display: block;">{{ number_format($product->price, 0, ',', ',') }}<span class="currency" style="font-size: 0.9em; margin-left: 2px; white-space: nowrap;">₫</span></div>
+                    </div>
                 @endif
             </div>
             
