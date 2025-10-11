@@ -6,7 +6,7 @@
             ? $product->images->random() 
             : $product->images->first();
     @endphp
-    <img src="{{ asset('uploads/' . $image->url) }}" 
+    <img src="{{ asset('uploads/products/' . $image->url) }}" 
          alt="{{ $product->name }}" class="img-fluid">
 @else
     <img src="{{ asset('images/default.jpg') }}" 
@@ -27,6 +27,21 @@
                 {{ $product->name }}
             </a>
         </h5>
+        
+        <!-- Stock status -->
+        <div class="product-stock mb-2">
+            @if($product->stock > 0)
+                <span class="text-success small">
+                    <i class="fas fa-check-circle me-1"></i>
+                    Còn Hàng ({{ $product->stock }})
+                </span>
+            @else
+                <span class="text-warning small">
+                    <i class="fas fa-exclamation-triangle me-1"></i>
+                    Tạm thời hết hàng
+                </span>
+            @endif
+        </div>
         
         <!-- Price section moved to bottom -->
         <div class="product-price-section mt-auto mb-3">

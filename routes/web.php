@@ -94,6 +94,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
         'destroy' => 'admin.products.destroy'
     ]);
     Route::post('products/{product}/images', [AdminProductController::class, 'uploadImages'])->name('admin.products.images');
+    Route::delete('products/{product}/images/{image}', [AdminProductController::class, 'deleteImage'])->name('admin.products.images.destroy');
     
     // Categories Management
     Route::resource('categories', AdminCategoryController::class)->names([

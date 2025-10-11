@@ -149,6 +149,33 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // Xử lý dữ liệu trước khi validate
+        $data = $request->all();
+        
+        // Loại bỏ dấu phẩy từ price và sale_price
+        if (isset($data['price'])) {
+            $data['price'] = str_replace(',', '', $data['price']);
+        }
+        if (isset($data['sale_price'])) {
+            $data['sale_price'] = str_replace(',', '', $data['sale_price']);
+        }
+        if (isset($data['stock'])) {
+            $data['stock'] = str_replace(',', '', $data['stock']);
+        }
+        
+        // Tự động chuyển status thành inactive nếu stock = 0
+        if (isset($data['stock']) && $data['stock'] == 0) {
+            $data['status'] = 'inactive';
+        }
+        
+        // Cấm chọn active khi stock = 0
+        if (isset($data['stock']) && $data['stock'] == 0 && isset($data['status']) && $data['status'] == 'active') {
+            $data['status'] = 'inactive';
+        }
+        
+        // Tạo request mới với dữ liệu đã xử lý
+        $request->merge($data);
+        
         $request->validate([
             'name'        => 'required|string|max:75',
             'description' => 'required|string',
@@ -156,9 +183,9 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'brand_id'    => 'required|exists:brands,id',
             'material_id' => 'required|exists:materials,id',
-            'price'       => 'required|numeric|min:1',
-            'sale_price'  => 'nullable|numeric|min:1|lt:price',
-            'stock'       => 'required|integer|min:1',
+            'price'       => 'required|numeric|min:1|max:1000000000',
+            'sale_price'  => 'nullable|numeric|min:1|max:1000000000|lt:price',
+            'stock'       => 'required|integer|min:0',
             'featured'    => 'boolean',
             'status'      => 'required|in:active,inactive',
             'images.*'    => 'image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -179,12 +206,14 @@ class ProductController extends Controller
             'price.required'       => 'Vui lòng nhập đơn giá.',
             'price.numeric'        => 'Đơn giá phải là số.',
             'price.min'            => 'Đơn giá phải lớn hơn 0.',
+            'price.max'            => 'Đơn giá không được vượt quá 1 tỷ VNĐ.',
             'sale_price.numeric'   => 'Giá khuyến mãi phải là số.',
             'sale_price.min'       => 'Giá khuyến mãi phải lớn hơn 0.',
+            'sale_price.max'       => 'Giá khuyến mãi không được vượt quá 1 tỷ VNĐ.',
             'sale_price.lt'        => 'Giá khuyến mãi phải nhỏ hơn đơn giá.',
             'stock.required'       => 'Vui lòng nhập số lượng hàng tồn.',
             'stock.integer'        => 'Số lượng hàng tồn phải là số nguyên.',
-            'stock.min'            => 'Số lượng hàng tồn phải lớn hơn 0.',
+            'stock.min'            => 'Số lượng hàng tồn không được âm.',
             'status.required'      => 'Vui lòng chọn tình trạng sản phẩm.',
             'status.in'            => 'Tình trạng sản phẩm không hợp lệ.',
             'images.*.image'       => 'Tệp tải lên phải là hình ảnh.',
@@ -255,6 +284,33 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        // Xử lý dữ liệu trước khi validate
+        $data = $request->all();
+        
+        // Loại bỏ dấu phẩy từ price và sale_price
+        if (isset($data['price'])) {
+            $data['price'] = str_replace(',', '', $data['price']);
+        }
+        if (isset($data['sale_price'])) {
+            $data['sale_price'] = str_replace(',', '', $data['sale_price']);
+        }
+        if (isset($data['stock'])) {
+            $data['stock'] = str_replace(',', '', $data['stock']);
+        }
+        
+        // Tự động chuyển status thành inactive nếu stock = 0
+        if (isset($data['stock']) && $data['stock'] == 0) {
+            $data['status'] = 'inactive';
+        }
+        
+        // Cấm chọn active khi stock = 0
+        if (isset($data['stock']) && $data['stock'] == 0 && isset($data['status']) && $data['status'] == 'active') {
+            $data['status'] = 'inactive';
+        }
+        
+        // Tạo request mới với dữ liệu đã xử lý
+        $request->merge($data);
+        
         $request->validate([
             'name'        => 'required|string|max:75',
             'description' => 'required|string',
@@ -263,8 +319,8 @@ class ProductController extends Controller
             'brand_id'    => 'required|exists:brands,id',
             'material_id' => 'required|exists:materials,id',
             'price'       => 'required|numeric|min:1|max:1000000000',
-            'sale_price'  => 'nullable|numeric|min:1|lt:price',
-            'stock'       => 'required|integer|min:1',
+            'sale_price'  => 'nullable|numeric|min:1|max:1000000000|lt:price',
+            'stock'       => 'required|integer|min:0',
             'featured'    => 'boolean',
             'status'      => 'required|in:active,inactive',
             'images.*'    => 'image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -284,13 +340,15 @@ class ProductController extends Controller
             'material_id.exists'   => 'Chất liệu không tồn tại.',
             'price.required'       => 'Vui lòng nhập đơn giá.',
             'price.numeric'        => 'Đơn giá phải là số.',
-            'price.min'            => 'Đơn giá phải lớn hơn 1.',
+            'price.min'            => 'Đơn giá phải lớn hơn 0.',
+            'price.max'            => 'Đơn giá không được vượt quá 1 tỷ VNĐ.',
             'sale_price.numeric'   => 'Giá khuyến mãi phải là số.',
-            'sale_price.min'       => 'Giá khuyến mãi phải lớn hơn 1.',
+            'sale_price.min'       => 'Giá khuyến mãi phải lớn hơn 0.',
+            'sale_price.max'       => 'Giá khuyến mãi không được vượt quá 1 tỷ VNĐ.',
             'sale_price.lt'        => 'Giá khuyến mãi phải nhỏ hơn đơn giá.',
             'stock.required'       => 'Vui lòng nhập số lượng hàng tồn.',
             'stock.integer'        => 'Số lượng hàng tồn phải là số nguyên.',
-            'stock.min'            => 'Số lượng hàng tồn phải lớn hơn 1.',
+            'stock.min'            => 'Số lượng hàng tồn không được âm.',
             'status.required'      => 'Vui lòng chọn tình trạng sản phẩm.',
             'status.in'            => 'Tình trạng sản phẩm không hợp lệ.',
             'images.*.image'       => 'Tệp tải lên phải là hình ảnh.',
@@ -376,5 +434,44 @@ class ProductController extends Controller
         }
 
         return response()->json(['success' => true, 'message' => 'Images uploaded successfully.']);
+    }
+
+    /**
+     * Delete a specific product image.
+     */
+    public function deleteImage(Request $request, Product $product, $imageId)
+    {
+        try {
+            $image = ProductImage::where('id', $imageId)
+                                ->where('product_id', $product->id)
+                                ->first();
+
+            if (!$image) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Image not found.'
+                ], 404);
+            }
+
+            // Delete the image file from storage
+            $imagePath = storage_path('app/public/uploads/products/' . $image->url);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+
+            // Delete the image record from database
+            $image->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Image deleted successfully.'
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error deleting image: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

@@ -10,7 +10,6 @@
 @endsection
 
 @section('content')
-@php use App\Helpers\StatusHelper; @endphp
 
 <div class="card shadow">
     <div class="card-header py-3">
@@ -28,7 +27,7 @@
                     ['type' => 'select', 'name' => 'brand', 'placeholder' => 'Tất cả thương hiệu', 'label' => 'Thương hiệu', 'options' => $brands->pluck('name', 'id')->toArray()],
                     ['type' => 'price_range', 'name' => 'price_range', 'label' => 'Khoảng giá'],
                     ['type' => 'stock_range', 'name' => 'stock_range', 'label' => 'Số lượng tồn'],
-                    ['type' => 'select', 'name' => 'status', 'placeholder' => 'Tất cả trạng thái', 'label' => 'Trạng thái', 'options' => StatusHelper::getStatusOptions()]
+                    ['type' => 'select', 'name' => 'status', 'placeholder' => 'Tất cả trạng thái', 'label' => 'Trạng thái', 'options' => \App\Helpers\StatusHelper::getStatusOptions()]
                 ]
             ]"
         />
@@ -55,7 +54,7 @@
                             <td class="text-center" style="padding: 1rem 0.5rem !important;">
                                 <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
                                     @if($product->images->count() > 0)
-                                        <img src="{{ asset('uploads/' . $product->images->first()->url) }}" 
+                                        <img src="{{ asset('uploads/products/' . $product->images->first()->url) }}" 
                                              alt="{{ $product->name }}" 
                                              class="img-thumbnail admin-table-image"
                                              style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
@@ -87,7 +86,7 @@
                             <td class="text-center">{{ $product->stock }}</td>
                             <td class="text-center">
                                 @php
-                                    $options = StatusHelper::getStatusOptions();
+                                    $options = \App\Helpers\StatusHelper::getStatusOptions();
                                     $status = $product->status;
                                 @endphp
                                 <span class="badge bg-{{ $options[$status]['class'] ?? 'warning' }}">
@@ -204,6 +203,41 @@
 .products-table th[style],
 .products-table td[style] {
     width: inherit !important;
+}
+
+/* Responsive badge status */
+.products-table .badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+    display: inline-block;
+    line-height: 1.2;
+    text-align: center;
+}
+
+/* Ensure status column allows wrapping */
+.products-table td:nth-child(8) {
+    white-space: normal;
+    word-wrap: break-word;
+    vertical-align: middle;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .products-table .badge {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.4rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .products-table .badge {
+        font-size: 0.65rem;
+        padding: 0.15rem 0.3rem;
+    }
 }
 </style>
 

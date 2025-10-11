@@ -33,7 +33,7 @@
             @forelse($images as $image)
                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                     <div class="card h-100">
-                        <img src="{{ asset('uploads/' . $image->url) }}" 
+                        <img src="{{ asset('uploads/products/' . $image->url) }}" 
                              class="card-img-top" 
                              alt="{{ $image->alt_text }}"
                              style="height: 200px; object-fit: cover;">

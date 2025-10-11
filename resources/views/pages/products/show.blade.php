@@ -11,7 +11,7 @@
                     <div class="carousel-inner">
                         @foreach($product->images as $index => $image)
                             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                <img src="{{ asset('uploads/' . $image->url) }}" 
+                                <img src="{{ asset('uploads/products/' . $image->url) }}" 
                                      class="d-block w-100" 
                                      alt="{{ $image->alt_text }}"
                                      style="height: 400px; object-fit: cover;">
@@ -69,9 +69,9 @@
                         Có Sẵn ({{ $product->stock }} sản phẩm)
                     </span>
                 @else
-                    <span class="text-danger">
-                        <i class="fas fa-times-circle me-1"></i>
-                        Hết Hàng
+                    <span class="text-warning">
+                        <i class="fas fa-exclamation-triangle me-1"></i>
+                        Sản phẩm tạm thời hết hàng
                     </span>
                 @endif
             </div>

@@ -9,7 +9,7 @@
         <h6 class="m-0 font-weight-bold text-light">Chỉnh Sửa Sản Phẩm: {{ $product->name }}</h6>
     </div>
     <div class="card-body">
-        <form method="POST" action="{{ route('admin.products.update', $product) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.products.update', $product) }}" enctype="multipart/form-data" id="productForm">
             @csrf
             @method('PUT')
             
@@ -96,8 +96,14 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="price" class="form-label">Đơn Giá *</label>
-                        <input type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" 
-                               id="price" name="price" value="{{ old('price', $product->price) }}" required>
+                        <x-number-format-input 
+                            name="price" 
+                            value="{{ old('price', $product->price) }}" 
+                            placeholder="Nhập giá bán"
+                            class="@error('price') is-invalid @enderror"
+                            id="price"
+                            required
+                        />
                         @error('price')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -105,8 +111,13 @@
                     
                     <div class="mb-3">
                         <label for="sale_price" class="form-label">Giá Sau Khi Giảm</label>
-                        <input type="number" step="0.01" class="form-control @error('sale_price') is-invalid @enderror" 
-                               id="sale_price" name="sale_price" value="{{ old('sale_price', $product->sale_price) }}">
+                        <x-number-format-input 
+                            name="sale_price" 
+                            value="{{ old('sale_price', $product->sale_price) }}" 
+                            placeholder="Nhập giá khuyến mãi"
+                            class="@error('sale_price') is-invalid @enderror"
+                            id="sale_price"
+                        />
                         @error('sale_price')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -114,8 +125,14 @@
                     
                     <div class="mb-3">
                         <label for="stock" class="form-label">Số Lượng Hàng Tồn *</label>
-                        <input type="number" class="form-control @error('stock') is-invalid @enderror" 
-                               id="stock" name="stock" value="{{ old('stock', $product->stock) }}" required>
+                        <x-number-format-input 
+                            name="stock" 
+                            value="{{ old('stock', $product->stock) }}" 
+                            placeholder="Nhập số lượng"
+                            class="@error('stock') is-invalid @enderror"
+                            id="stock"
+                            required
+                        />
                         @error('stock')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -151,10 +168,18 @@
             </div>
             
             <div class="mb-3">
-                <label for="images" class="form-label">Hình Ảnh Sản Phẩm *</label>
-                <input type="file" class="form-control @error('images.*') is-invalid @enderror" 
-                       id="images" name="images[]" multiple accept="image/*">
-                <div class="form-text">Bạn có thể chọn nhiều hình ảnh cùng lúc.</div>
+                <x-image-upload 
+                    name="images"
+                    label="Hình Ảnh Sản Phẩm"
+                    :multiple="true"
+                    :required="false"
+                    :maxFiles="5"
+                    acceptedTypes="image/*"
+                    maxSize="2MB"
+                    :existingImages="$product->images"
+                    deleteRoute="{{ route('admin.products.images.destroy', $product) }}"
+                    class="@error('images.*') is-invalid @enderror"
+                />
                 @error('images.*')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -190,6 +215,67 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Khởi tạo counter với giá trị ban đầu
     nameCounter.textContent = nameInput.value.length;
+    
+    // Handle form submission - convert formatted numbers to raw values
+    document.getElementById('productForm').addEventListener('submit', function(e) {
+        // Get all number format inputs and convert them to raw values
+        document.querySelectorAll('.number-format-input').forEach(function(input) {
+            if (input.value) {
+                // Create a hidden input with the raw numeric value
+                let hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = input.name;
+                hiddenInput.value = input.value.replace(/[^\d]/g, ''); // Remove all non-numeric characters
+                
+                // Replace the formatted input with hidden input
+                input.style.display = 'none';
+                input.parentNode.insertBefore(hiddenInput, input);
+            }
+        });
+    });
+    
+        // Auto-change status to inactive when stock = 0 and disable active option
+        const stockInput = document.getElementById('stock');
+        const statusSelect = document.getElementById('status');
+        
+        if (stockInput && statusSelect) {
+            // Check initial state on page load
+            const initialStockValue = parseInt(stockInput.value.replace(/[^\d]/g, ''));
+            const activeOption = statusSelect.querySelector('option[value="active"]');
+            
+            if (initialStockValue === 0) {
+                statusSelect.value = 'inactive';
+                statusSelect.style.backgroundColor = '#f8d7da';
+                statusSelect.style.color = '#721c24';
+                if (activeOption) {
+                    activeOption.disabled = true;
+                    activeOption.style.color = '#6c757d';
+                }
+            }
+            
+            stockInput.addEventListener('input', function() {
+                const stockValue = parseInt(this.value.replace(/[^\d]/g, ''));
+                
+                if (stockValue === 0) {
+                    // Set to inactive and disable active option
+                    statusSelect.value = 'inactive';
+                    statusSelect.style.backgroundColor = '#f8d7da';
+                    statusSelect.style.color = '#721c24';
+                    if (activeOption) {
+                        activeOption.disabled = true;
+                        activeOption.style.color = '#6c757d';
+                    }
+                } else {
+                    // Enable active option and reset styling
+                    statusSelect.style.backgroundColor = '';
+                    statusSelect.style.color = '';
+                    if (activeOption) {
+                        activeOption.disabled = false;
+                        activeOption.style.color = '';
+                    }
+                }
+            });
+        }
 });
 </script>
 @endsection

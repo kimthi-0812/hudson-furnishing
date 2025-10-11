@@ -3,7 +3,7 @@
     'filterConfig' => []
 ])
 
-<div class="card mb-4">
+<div class="card mb-4 standalone-filter">
     <div class="card-header">
         <h6 class="m-0 font-weight-bold text-primary">
             <i class="fas fa-filter me-2"></i>Bộ Lọc Nâng Cao
@@ -82,6 +82,32 @@
 </div>
 
 <style>
+/* Uniform sizing for all filter inputs */
+.standalone-filter .form-control,
+.standalone-filter .form-select {
+    height: 38px !important;
+    font-size: 14px !important;
+    padding: 0.375rem 0.75rem !important;
+    line-height: 1.5 !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 0.375rem !important;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+}
+
+.standalone-filter .form-control:focus,
+.standalone-filter .form-select:focus {
+    border-color: #80bdff !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+    outline: 0 !important;
+}
+
+.standalone-filter .form-label {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    margin-bottom: 0.5rem !important;
+    color: #495057 !important;
+}
+
 /* Date input styling */
 .date-input {
     position: relative;

@@ -24,7 +24,7 @@ class LoginController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'password' => ['required', 'string', 'min:8', new \App\Rules\StrongPassword()],
+            'password' => 'required|string|min:8',
         ], [
             'email.required' => 'Vui lòng nhập email của bạn.',
             'email.email' => 'Địa chỉ email không hợp lệ.',
