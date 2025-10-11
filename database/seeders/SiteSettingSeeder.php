@@ -45,7 +45,7 @@ class SiteSettingSeeder extends Seeder
             ],
             [
                 'key' => 'business_hours',
-                'value' => 'Monday - Friday: 9:00 AM - 7:00 PM, Saturday: 10:00 AM - 6:00 PM, Sunday: 12:00 PM - 5:00 PM',
+                'value' => "T2 - T6: 8:00 - 18:00\nT7: 9:00 - 17:00\nCN: Nghỉ",
                 'description' => 'Business operating hours',
             ],
             [

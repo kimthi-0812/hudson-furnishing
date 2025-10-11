@@ -24,12 +24,11 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'name' => ['required', 'string', 'min:2', 'max:255', new \App\Rules\NotAllNumbers()],
+            'name' => ['required', 'string', 'max:255', new \App\Rules\NotAllNumbers()],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'confirmed', new \App\Rules\StrongPassword()],
         ], [
             'name.required' => 'Vui lòng nhập họ và tên.',
-            'name.min' => 'Họ và tên phải có ít nhất 2 ký tự.',
             'name.max' => 'Họ và tên không được quá 255 ký tự.',
             'email.required' => 'Vui lòng nhập email.',
             'email.email' => 'Địa chỉ email không hợp lệ.',

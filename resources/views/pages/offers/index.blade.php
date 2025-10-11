@@ -24,14 +24,16 @@
                         <p class="card-text">{{ $offer->description }}</p>
                         
                         <div class="card-badge-footer mt-auto">
-                            <span class="badge bg-danger fs-6">
-                                @if($offer->discount_type == 'percentage')
-                                    {{ \App\Helpers\PriceHelper::formatPercentage($offer->discount_value) }} OFF
-                                @else
-                                    {{ number_format($offer->discount_value, 0, ',', ',') }} ₫ OFF
-                                @endif
-                            </span>
-                            <small class="text-muted text-end">
+                            <div class="mb-2">
+                                <span class="badge bg-danger fs-6">
+                                    @if($offer->discount_type == 'percentage')
+                                        {{ \App\Helpers\PriceHelper::formatPercentage($offer->discount_value) }} OFF
+                                    @else
+                                        {{ number_format($offer->discount_value, 0, ',', ',') }} ₫ OFF
+                                    @endif
+                                </span>
+                            </div>
+                            <small class="text-muted d-block">
                                 <i class="fas fa-calendar-alt me-1"></i>
                                 Hạn Áp Dụng: {{ $offer->end_date->translatedFormat('d M, Y') }}
                             </small>
