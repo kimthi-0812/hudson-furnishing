@@ -14,56 +14,30 @@ class BrandSeeder extends Seeder
     {
         $brands = [
             [
-                'name' => 'Hudson Furnishing',
-                'slug' => 'hudson-furnishing',
+                'name' => 'Hòa Phát',
+                'slug' => 'hoa-phat',
                 'logo' => 'brands/brand-1-logo-jpg',
             ],
             [
-                'name' => 'Nội Thất Hoàng Gia',
-                'slug' => 'noi-that-hoang-gia',
-                'logo' => 'brands/hoang-gia-logo.png',
+                'name' => 'Nhà Xinh',
+                'slug' => 'nha-xinh',
+                'logo' => 'brands/brand-2-logo-jpg',
             ],
             [
-                'name' => 'Thiết Kế Đông Dương',
-                'slug' => 'thiet-ke-dong-duong',
-                'logo' => 'brands/dong-duong-logo.png',
+                'name' => 'Baya',
+                'slug' => 'baya',
+                'logo' => 'brands/brand-3-logo-jpg',
             ],
             [
-                'name' => 'Nội Thất Cao Cấp',
-                'slug' => 'noi-that-cao-cap',
-                'logo' => 'brands/cao-cap-logo.png',
+                'name' => 'The One',
+                'slug' => 'the-one',
+                'logo' => 'brands/brand-4-logo-jpg',
             ],
             [
-                'name' => 'Thiết Kế Hiện Đại',
-                'slug' => 'thiet-ke-hien-dai',
-                'logo' => 'brands/hien-dai-logo.png',
-            ],
-            [
-                'name' => 'Nội Thất Gia Đình',
-                'slug' => 'noi-that-gia-dinh',
-                'logo' => 'brands/gia-dinh-logo.png',
-            ],
-            [
-                'name' => 'Thiết Kế Tối Giản',
-                'slug' => 'thiet-ke-toi-gian',
-                'logo' => 'brands/toi-gian-logo.png',
-            ],
-            [
-                'name' => 'Nội Thất Văn Phòng',
-                'slug' => 'noi-that-van-phong',
-                'logo' => 'brands/van-phong-logo.png',
-            ],
-            [
-                'name' => 'Thiết Kế Cổ Điển',
-                'slug' => 'thiet-ke-co-dien',
-                'logo' => 'brands/co-dien-logo.png',
-            ],
-            [
-                'name' => 'Nội Thất Trẻ Em',
-                'slug' => 'noi-that-tre-em',
-                'logo' => 'brands/tre-em-logo.png',
-            ],
-
+                'name' => '190 Furnishing',
+                'slug' => '190-furnishing',
+                'logo' => 'brands/brand-5-logo-jpg',
+            ],            
         ];
 
         foreach ($brands as $brand) {

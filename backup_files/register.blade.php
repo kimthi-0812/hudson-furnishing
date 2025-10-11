@@ -22,7 +22,6 @@
 
                         <!-- Họ tên -->
                         <div class="mb-3">
-
                             <label for="name" class="form-label">Họ và Tên</label>
                             <input type="text" 
                                 class="form-control @error('name') is-invalid @enderror" 
@@ -34,7 +33,6 @@
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                            <div class="form-text">Tối thiểu 3 ký tự, không được toàn là số</div>
                         </div>
 
                         <!-- Email -->
@@ -66,10 +64,10 @@
                                 id="togglePassword" tabindex="-1">
                                 <i class="fas fa-eye" id="togglePasswordIcon"></i>
                             </button>
+
                             @error('password')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
-                            <div class="form-text">Tối thiểu 8 ký tự, phải có chữ cái, không được toàn là số</div>
                         </div>
 
                         <!-- Xác nhận mật khẩu -->

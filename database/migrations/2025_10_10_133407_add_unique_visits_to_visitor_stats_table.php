@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('visitor_stats', function (Blueprint $table) {
-            $table->integer('unique_visits')->default(0)->after('total_visits');
+            if (!Schema::hasColumn('visitor_stats', 'unique_visits')) {
+                $table->integer('unique_visits')->default(0)->after('total_visits');
+            }
         });
     }
 

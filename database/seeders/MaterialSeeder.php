@@ -14,65 +14,56 @@ class MaterialSeeder extends Seeder
     {
         $materials = [
             [
-                'name' => 'Solid Oak',
-                'description' => 'Premium solid oak wood known for its durability and beautiful grain patterns.',
+                'name' => 'Gỗ Sồi',
+                'image' => 'solid-oak.jpg',
+                'description' => 'Gỗ sồi tự nhiên, bền đẹp, thích hợp cho nội thất cao cấp.',
             ],
             [
-                'name' => 'Mahogany',
-                'description' => 'Rich, dark mahogany wood with excellent durability and elegant appearance.',
+                'name' => 'Gỗ Tần Bì',
+                'image' => 'ash-wood.jpg',
+                'description' => 'Gỗ tần bì có vân đẹp, độ bền cao, thường dùng trong sản xuất đồ gỗ.',
             ],
             [
-                'name' => 'Walnut',
-                'description' => 'Dark walnut wood with distinctive grain patterns and natural beauty.',
+                'name' => 'Gỗ Thông',
+                'image' => 'pine-wood.jpg',
+                'description' => 'Gỗ thông nhẹ, dễ gia công, phù hợp cho các sản phẩm nội thất giá rẻ.',
             ],
             [
-                'name' => 'Cherry Wood',
-                'description' => 'Cherry wood with warm reddish-brown color that darkens over time.',
+                'name' => 'Gỗ Hương',
+                'image' => 'rosewood.jpg',
+                'description' => 'Gỗ hương quý hiếm, có mùi thơm đặc trưng, thường dùng cho đồ nội thất cao cấp.',
             ],
             [
-                'name' => 'Maple',
-                'description' => 'Light-colored maple wood known for its strength and smooth finish.',
+                'name' => 'Gỗ Căm Xe',
+                'image' => 'cam-xe-wood.jpg',
+                'description' => 'Gỗ căm xe cứng cáp, chịu lực tốt, thích hợp cho các sản phẩm nội thất ngoài trời.',
             ],
             [
-                'name' => 'Pine',
-                'description' => 'Affordable pine wood with natural knots and rustic appearance.',
+                'name' => 'Kim Loại',
+                'image' => 'metal.jpg',
+                'description' => 'Kim loại bền bỉ, thường dùng trong khung ghế và các chi tiết trang trí.',
             ],
             [
-                'name' => 'Leather',
-                'description' => 'Premium genuine leather upholstery for luxury furniture pieces.',
+                'name' => 'Nhựa',
+                'image' => 'plastic.jpg',
+                'description' => 'Nhựa đa dạng về màu sắc và kiểu dáng, thường dùng trong sản xuất ghế và bàn.',
             ],
             [
-                'name' => 'Fabric',
-                'description' => 'High-quality fabric upholstery in various colors and textures.',
+                'name' => 'Vải Bọc',
+                'image' => 'fabric-upholstery.jpg',
+                'description' => 'Vải bọc mềm mại, thoáng khí, thích hợp cho ghế sofa và ghế văn phòng.',
             ],
             [
-                'name' => 'Metal',
-                'description' => 'Sturdy metal construction including steel, aluminum, and iron.',
+                'name' => 'Da Thật',
+                'image' => 'genuine-leather.jpg',
+                'description' => 'Da thật cao cấp, bền đẹp theo thời gian, thường dùng cho ghế sofa và ghế xoay.',
             ],
             [
-                'name' => 'Glass',
-                'description' => 'Tempered glass components for modern and contemporary designs.',
+                'name' => 'Da Công Nghiệp',
+                'image' => 'faux-leather.jpg',
+                'description' => 'Da công nghiệp giá rẻ, dễ bảo quản, phù hợp cho các sản phẩm nội thất phổ thông.',
             ],
-            [
-                'name' => 'Marble',
-                'description' => 'Natural marble surfaces for elegant and sophisticated furniture.',
-            ],
-            [
-                'name' => 'Granite',
-                'description' => 'Durable granite surfaces perfect for high-traffic areas.',
-            ],
-            [
-                'name' => 'Bamboo',
-                'description' => 'Sustainable bamboo material for eco-friendly furniture options.',
-            ],
-            [
-                'name' => 'Rattan',
-                'description' => 'Natural rattan weaving for outdoor and casual furniture.',
-            ],
-            [
-                'name' => 'MDF',
-                'description' => 'Medium-density fiberboard for affordable and versatile furniture construction.',
-            ],
+            
         ];
 
         foreach ($materials as $material) {

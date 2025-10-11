@@ -127,7 +127,7 @@
             </div>
         </div>
 
-        <!-- Products Grid -->
+        <!-- product list -->
         <div class="col-lg-9">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2>Sản Phẩm ({{ $products->total() }} sản phẩm)</h2>

@@ -308,7 +308,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const backToTopButton = document.createElement("button");
     backToTopButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
     backToTopButton.className =
-        "btn btn-primary btn-back-to-top position-fixed rounded-circle shadow-lg";
+        "btn btn-primary btn-back-to-top position-fixed rounded-circle shadow-lg d-flex align-items-center justify-content-center";
     backToTopButton.style.cssText =
         "bottom: 20px; right: 20px; z-index: 1000; display: none; width: 50px; height: 50px;";
     backToTopButton.setAttribute("aria-label", "Back to top");

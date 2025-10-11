@@ -16,37 +16,38 @@ class SiteSettingSeeder extends Seeder
             [
                 'key' => 'site_name',
                 'value' => 'Hudson Furnishing',
-                'description' => 'The name of the website',
+                'description' => 'Tên của website',
             ],
             [
                 'key' => 'site_tagline',
-                'value' => 'Transform Your Space with Premium Furniture',
+                'value' => 'Chuyển Đổi Không Gian Sống Với Nội Thất Đẳng Cấp',
                 'description' => 'The tagline displayed on the website',
             ],
             [
                 'key' => 'site_logo',
                 'value' => 'uploads/logo/hudson-furnishing-logo.png',
-                'description' => 'Path to the site logo image',
+                'description' => 'Đường dẫn logo của website',
             ],
             [
                 'key' => 'contact_email',
                 'value' => 'info@hudsonfurnishing.com',
-                'description' => 'Main contact email address',
+                'description' => 'Địa chỉ email liên hệ chính',
             ],
             [
                 'key' => 'contact_phone',
-                'value' => '+1 (555) 123-4567',
+                'value' => '+84 909 909 909',
                 'description' => 'Main contact phone number',
             ],
             [
                 'key' => 'contact_address',
-                'value' => '123 Furniture Street, Design District, NY 10001',
-                'description' => 'Physical address of the business',
+                'value' => '36/5 Đường D5 Phường 25, Quận Bình Thạnh, TP.HCM',
+                'description' => 'Địa chỉ của doanh nghiệp',
             ],
             [
                 'key' => 'business_hours',
-                'value' => "T2 - T6: 8:00 - 18:00\nT7: 9:00 - 17:00\nCN: Nghỉ",
-                'description' => 'Business operating hours',
+                'value' => 'Thứ Hai - Thứ Sáu: 9:00 AM - 7:00 PM, Thứ Bảy: 10:00 AM - 6:00 PM, Chủ Nhật: 12:00 PM - 5:00 PM',
+                'description' => 'Giờ làm việc',
+
             ],
             [
                 'key' => 'social_facebook',
@@ -75,7 +76,7 @@ class SiteSettingSeeder extends Seeder
             ],
             [
                 'key' => 'ticker_text',
-                'value' => 'Welcome to Hudson Furnishing - Premium Furniture for Every Home',
+                'value' => 'Chào Mừng Đến Với Hudson Furnishing - Nơi Mang Đến Nội Thất Đẳng Cấp Cho Mọi Không Gian!',
                 'description' => 'Text to display in the ticker',
             ],
             [
@@ -105,12 +106,12 @@ class SiteSettingSeeder extends Seeder
             ],
             [
                 'key' => 'meta_title',
-                'value' => 'Hudson Furnishing - Premium Furniture Store',
+                'value' => 'Hubson Furnishing - Thương Hiệu Nội Thất Hàng Đầu',
                 'description' => 'Default meta title for SEO',
             ],
             [
                 'key' => 'meta_description',
-                'value' => 'Discover premium furniture for every room at Hudson Furnishing. Quality pieces for bedroom, living room, dining room, home office, and outdoor spaces.',
+                'value' => 'Khám Phá Nội Thất Cao Cấp Cho Mọi Không Gian Tại Hubson Furnishing. Những Món Đồ Chất Lượng Cho Phòng Ngủ, Phòng Khách, Phòng Ăn, Văn Phòng Tại Nhà Và Không Gian Ngoài Trời.',
                 'description' => 'Default meta description for SEO',
             ],
             [
@@ -130,12 +131,12 @@ class SiteSettingSeeder extends Seeder
             ],
             [
                 'key' => 'currency_symbol',
-                'value' => '$',
+                'value' => 'đ',
                 'description' => 'Currency symbol for pricing',
             ],
             [
                 'key' => 'currency_code',
-                'value' => 'USD',
+                'value' => 'VND',
                 'description' => 'Currency code for pricing',
             ],
             [

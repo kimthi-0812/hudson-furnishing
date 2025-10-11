@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->foreignId('section_id')->constrained()->onDelete('cascade');
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->foreignId('brand_id')->constrained()->onDelete('cascade');
-            $table->foreignId('material_id')->constrained()->onDelete('cascade');
+            $table->foreignId('section_id')->nullable()->constrained()->nullOnDelete()->onUpdate('cascade');
+            $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete()->onUpdate('cascade');
+            $table->foreignId('brand_id')->nullable()->constrained()->nullOnDelete()->onUpdate('cascade');
+            $table->foreignId('material_id')->nullable()->constrained()->nullOnDelete()->onUpdate('cascade');
             $table->decimal('price', 10, 2);
             $table->decimal('sale_price', 10, 2)->nullable();
             $table->integer('stock')->default(0);
@@ -26,6 +26,7 @@ return new class extends Migration
             $table->boolean('featured')->default(false);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
