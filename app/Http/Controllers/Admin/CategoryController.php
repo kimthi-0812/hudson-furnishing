@@ -13,11 +13,49 @@ class CategoryController extends Controller
     /**
      * Display a listing of categories.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::with('section')->orderBy('created_at', 'desc')->paginate(15);
+        $query = Category::with('section')->withCount('products');
 
-        return view('admin.categories.index', compact('categories'));
+        // Search by category name
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // Filter by section
+        if ($request->has('section') && $request->section != '') {
+            $query->where('section_id', $request->section);
+        }
+
+        // Filter by product count
+        if ($request->has('product_count') && $request->product_count != '') {
+            switch ($request->product_count) {
+                case '0':
+                    $query->having('products_count', '=', 0);
+                    break;
+                case '1-10':
+                    $query->having('products_count', '>=', 1)->having('products_count', '<=', 10);
+                    break;
+                case '11-50':
+                    $query->having('products_count', '>=', 11)->having('products_count', '<=', 50);
+                    break;
+                case '51+':
+                    $query->having('products_count', '>=', 51);
+                    break;
+            }
+        }
+
+        // Filter by creation date
+        if ($request->has('created_from') && $request->created_from != '') {
+            $query->whereDate('created_at', '>=', $request->created_from);
+        }
+
+        $query->orderBy('created_at', 'desc');
+        $categories = $query->paginate(15)->withQueryString();
+
+        $sections = Section::all();
+
+        return view('admin.categories.index', compact('categories', 'sections'));
     }
 
     public function show(Category $category){

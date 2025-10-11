@@ -8,9 +8,40 @@ use Illuminate\Http\Request;
 
 class OfferController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $offers = Offer::orderBy('created_at', 'desc')->paginate(15);
+        $query = Offer::query();
+
+        // Search by title
+        if ($request->has('search') && $request->search != '') {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        // Filter by discount type
+        if ($request->has('discount_type') && $request->discount_type != '') {
+            $query->where('discount_type', $request->discount_type);
+        }
+
+        // Filter by status
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        }
+
+        // Filter by start date
+        if ($request->has('start_date') && $request->start_date != '') {
+            $query->whereDate('start_date', '>=', $request->start_date);
+        }
+
+        // Filter by end date
+        if ($request->has('end_date') && $request->end_date != '') {
+            $query->whereDate('end_date', '<=', $request->end_date);
+        }
+
+        // Sort by creation date
+        $query->orderBy('created_at', 'desc');
+
+        $offers = $query->paginate(15)->withQueryString();
+        
         return view('admin.offers.index', compact('offers'));
     }
 

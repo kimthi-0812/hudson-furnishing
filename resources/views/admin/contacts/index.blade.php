@@ -9,6 +9,20 @@
         <h6 class="m-0 font-weight-bold text-light">Tất Cả Tin Nhắn Liên Hệ</h6>
     </div>
     <div class="card-body">
+        <!-- Standalone Filter -->
+        <x-standalone-filter 
+            :formAction="route('admin.contacts.index')" 
+            :filterConfig="[
+                'filters' => [
+                    ['type' => 'text', 'name' => 'search', 'placeholder' => 'Tìm tên, email...', 'label' => 'Tìm kiếm'],
+                    ['type' => 'select', 'name' => 'status', 'placeholder' => 'Tất cả', 'label' => 'Tình trạng', 'options' => ['new' => 'Mới', 'read' => 'Đã đọc', 'replied' => 'Đã trả lời']],
+                    ['type' => 'date', 'name' => 'created_from', 'label' => 'Từ ngày'],
+                    ['type' => 'date', 'name' => 'created_to', 'label' => 'Đến ngày']
+                ]
+            ]"
+        />
+
+        <!-- Contacts Table -->
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>

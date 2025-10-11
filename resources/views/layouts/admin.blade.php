@@ -90,6 +90,12 @@
                                 <i class="fas fa-cog me-2"></i>Cài Đặt
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white {{ request()->routeIs('admin.trash.*') ? 'active' : '' }}" 
+                               href="{{ route('admin.trash.index') }}">
+                                <i class="fas fa-trash me-2"></i>Thùng Rác
+                            </a>
+                        </li>
                     </ul>
                     
                     <hr class="text-white">

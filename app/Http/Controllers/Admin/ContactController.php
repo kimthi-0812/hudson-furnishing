@@ -8,9 +8,38 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $contacts = Contact::orderBy('created_at', 'desc')->paginate(15);
+        $query = Contact::query();
+
+        // Search by name, email, or phone
+        if ($request->has('search') && $request->search != '') {
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('email', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('phone', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        // Filter by status
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        }
+
+        // Filter by creation date from
+        if ($request->has('created_from') && $request->created_from != '') {
+            $query->whereDate('created_at', '>=', $request->created_from);
+        }
+
+        // Filter by creation date to
+        if ($request->has('created_to') && $request->created_to != '') {
+            $query->whereDate('created_at', '<=', $request->created_to);
+        }
+
+        $query->orderBy('created_at', 'desc');
+        $contacts = $query->paginate(15)->withQueryString();
+        
         return view('admin.contacts.index', compact('contacts'));
     }
 

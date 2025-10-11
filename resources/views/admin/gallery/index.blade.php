@@ -15,6 +15,20 @@
         <h6 class="m-0 font-weight-bold text-light">Tất Cả Hình Ảnh</h6>
     </div>
     <div class="card-body">
+        <!-- Standalone Filter -->
+        <x-standalone-filter 
+            :formAction="route('admin.gallery.index')" 
+            :filterConfig="[
+                'filters' => [
+                    ['type' => 'text', 'name' => 'search', 'placeholder' => 'Tìm tên sản phẩm...', 'label' => 'Tìm kiếm'],
+                    ['type' => 'select', 'name' => 'product', 'placeholder' => 'Tất cả sản phẩm', 'label' => 'Sản phẩm', 'options' => $products->pluck('name', 'id')->toArray()],
+                    ['type' => 'select', 'name' => 'is_primary', 'placeholder' => 'Tất cả', 'label' => 'Loại hình', 'options' => ['1' => 'Hình chính', '0' => 'Hình phụ']],
+                    ['type' => 'date', 'name' => 'created_from', 'label' => 'Từ ngày']
+                ]
+            ]"
+        />
+
+        <!-- Gallery Grid -->
         <div class="row">
             @forelse($images as $image)
                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4">

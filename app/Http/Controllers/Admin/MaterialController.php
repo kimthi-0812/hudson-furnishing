@@ -10,9 +10,41 @@ use Illuminate\Support\Str;
 
 class MaterialController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $materials = Material::withCount('products')->paginate(15);
+        $query = Material::withCount('products');
+
+        // Search by material name
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // Filter by product count
+        if ($request->has('product_count') && $request->product_count != '') {
+            switch ($request->product_count) {
+                case '0':
+                    $query->having('products_count', '=', 0);
+                    break;
+                case '1-10':
+                    $query->having('products_count', '>=', 1)->having('products_count', '<=', 10);
+                    break;
+                case '11-50':
+                    $query->having('products_count', '>=', 11)->having('products_count', '<=', 50);
+                    break;
+                case '51+':
+                    $query->having('products_count', '>=', 51);
+                    break;
+            }
+        }
+
+        // Filter by creation date
+        if ($request->has('created_from') && $request->created_from != '') {
+            $query->whereDate('created_at', '>=', $request->created_from);
+        }
+
+        $query->orderBy('created_at', 'desc');
+        $materials = $query->paginate(15)->withQueryString();
+        
         return view('admin.materials.index', compact('materials'));
     }
 

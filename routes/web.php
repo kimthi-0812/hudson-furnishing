@@ -161,4 +161,15 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     // Settings Management
     Route::get('settings', [SettingController::class, 'index'])->name('admin.settings.index');
     Route::put('settings', [SettingController::class, 'update'])->name('admin.settings.update');
+    
+    // Trash Management
+    Route::prefix('trash')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\TrashController::class, 'index'])->name('admin.trash.index');
+        Route::get('/{model}', [App\Http\Controllers\Admin\TrashController::class, 'show'])->name('admin.trash.show');
+        Route::post('/restore', [App\Http\Controllers\Admin\TrashController::class, 'restore'])->name('admin.trash.restore');
+        Route::post('/force-delete', [App\Http\Controllers\Admin\TrashController::class, 'forceDelete'])->name('admin.trash.force-delete');
+        Route::post('/bulk-restore', [App\Http\Controllers\Admin\TrashController::class, 'bulkRestore'])->name('admin.trash.bulk-restore');
+        Route::post('/bulk-force-delete', [App\Http\Controllers\Admin\TrashController::class, 'bulkForceDelete'])->name('admin.trash.bulk-force-delete');
+        Route::post('/cleanup', [App\Http\Controllers\Admin\TrashController::class, 'cleanup'])->name('admin.trash.cleanup');
+    });
 });

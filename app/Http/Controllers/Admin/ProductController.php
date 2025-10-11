@@ -32,13 +32,103 @@ class ProductController extends Controller
             $query->where('status', $request->status);
         }
 
-        // 4. Sắp xếp theo ngày tạo giảm dần
-        $query->orderBy('created_at', 'desc');
+        // 4. Lọc theo danh mục
+        if ($request->has('category') && $request->category != '') {
+            $query->where('category_id', $request->category);
+        }
 
-        // 5. Phân trang
+        // 5. Lọc theo thương hiệu
+        if ($request->has('brand') && $request->brand != '') {
+            $query->where('brand_id', $request->brand);
+        }
+
+        // 6. Lọc theo khu vực
+        if ($request->has('section') && $request->section != '') {
+            $query->where('section_id', $request->section);
+        }
+
+        // 7. Lọc theo chất liệu
+        if ($request->has('material') && $request->material != '') {
+            $query->where('material_id', $request->material);
+        }
+
+        // 8. Lọc theo khoảng giá
+        if ($request->has('price_range') && $request->price_range != '') {
+            $priceRange = explode('-', $request->price_range);
+            if (count($priceRange) == 2) {
+                $minPrice = $priceRange[0];
+                $maxPrice = $priceRange[1];
+                $query->where('price', '>=', $minPrice);
+                if ($maxPrice != '999999999') {
+                    $query->where('price', '<=', $maxPrice);
+                }
+            }
+        }
+
+        // 9. Lọc theo khoảng số lượng tồn
+        if ($request->has('stock_range') && $request->stock_range != '') {
+            $stockRange = explode('-', $request->stock_range);
+            if (count($stockRange) == 2) {
+                $minStock = $stockRange[0];
+                $maxStock = $stockRange[1];
+                $query->where('stock', '>=', $minStock);
+                if ($maxStock != '999999') {
+                    $query->where('stock', '<=', $maxStock);
+                }
+            } elseif ($request->stock_range == '0') {
+                $query->where('stock', '=', 0);
+            }
+        }
+
+        // 10. Lọc theo sản phẩm nổi bật
+        if ($request->has('featured') && $request->featured != '') {
+            $query->where('featured', $request->featured == '1');
+        }
+
+        // 11. Lọc theo ngày tạo
+        if ($request->has('date_from') && $request->date_from != '') {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+        if ($request->has('date_to') && $request->date_to != '') {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+
+        // 12. Lọc theo sản phẩm có khuyến mãi
+        if ($request->has('on_sale') && $request->on_sale == '1') {
+            $query->whereNotNull('sale_price')->where('sale_price', '>', 0);
+        }
+
+        // 13. Sắp xếp
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
+        
+        switch ($sortBy) {
+            case 'name':
+                $query->orderBy('name', $sortOrder);
+                break;
+            case 'price':
+                $query->orderBy('price', $sortOrder);
+                break;
+            case 'stock':
+                $query->orderBy('stock', $sortOrder);
+                break;
+            case 'created_at':
+                $query->orderBy('created_at', $sortOrder);
+                break;
+            default:
+                $query->orderBy('created_at', 'desc');
+        }
+
+        // 14. Phân trang
         $products = $query->paginate(15)->withQueryString();
 
-        return view('admin.products.index', compact('products'));
+        // 15. Lấy dữ liệu cho filter
+        $sections = Section::all();
+        $categories = Category::all();
+        $brands = Brand::all();
+        $materials = Material::all();
+
+        return view('admin.products.index', compact('products', 'sections', 'categories', 'brands', 'materials'));
     }
 
     /**

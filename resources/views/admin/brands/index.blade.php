@@ -15,6 +15,19 @@
         <h6 class="m-0 font-weight-bold text-light">Tất Cả Thương Hiệu</h6>
     </div>
     <div class="card-body">
+        <!-- Standalone Filter -->
+        <x-standalone-filter 
+            :formAction="route('admin.brands.index')" 
+            :filterConfig="[
+                'filters' => [
+                    ['type' => 'text', 'name' => 'search', 'placeholder' => 'Tìm tên thương hiệu...', 'label' => 'Tìm kiếm'],
+                    ['type' => 'select', 'name' => 'product_count', 'placeholder' => 'Tất cả', 'label' => 'Số sản phẩm', 'options' => ['0' => 'Không có sản phẩm', '1-10' => '1-10 sản phẩm', '11-50' => '11-50 sản phẩm', '51+' => 'Trên 50 sản phẩm']],
+                    ['type' => 'date', 'name' => 'created_from', 'label' => 'Từ ngày']
+                ]
+            ]"
+        />
+
+        <!-- Brands Table -->
         <div class="table-responsive">
             <table class="table table-bordered admin-table brands-table">
                 <thead>

@@ -9,10 +9,38 @@ use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $images = ProductImage::with('product')->orderBy('created_at', 'desc')->paginate(20);
-        return view('admin.gallery.index', compact('images'));
+        $query = ProductImage::with('product');
+
+        // Search by product name
+        if ($request->has('search') && $request->search != '') {
+            $query->whereHas('product', function($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        // Filter by product
+        if ($request->has('product') && $request->product != '') {
+            $query->where('product_id', $request->product);
+        }
+
+        // Filter by image type (primary/secondary)
+        if ($request->has('is_primary') && $request->is_primary != '') {
+            $query->where('is_primary', $request->is_primary == '1');
+        }
+
+        // Filter by creation date
+        if ($request->has('created_from') && $request->created_from != '') {
+            $query->whereDate('created_at', '>=', $request->created_from);
+        }
+
+        $query->orderBy('created_at', 'desc');
+        $images = $query->paginate(20)->withQueryString();
+
+        $products = \App\Models\Product::all();
+        
+        return view('admin.gallery.index', compact('images', 'products'));
     }
 
     public function store(Request $request)

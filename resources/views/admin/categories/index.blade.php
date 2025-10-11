@@ -15,6 +15,20 @@
         <h6 class="m-0 font-weight-bold text-light"> Tất Cả Danh Mục</h6>
     </div>
     <div class="card-body">
+        <!-- Standalone Filter -->
+        <x-standalone-filter 
+            :formAction="route('admin.categories.index')" 
+            :filterConfig="[
+                'filters' => [
+                    ['type' => 'text', 'name' => 'search', 'placeholder' => 'Tìm tên danh mục...', 'label' => 'Tìm kiếm'],
+                    ['type' => 'select', 'name' => 'section', 'placeholder' => 'Tất cả khu vực', 'label' => 'Khu vực', 'options' => $sections->pluck('name', 'id')->toArray()],
+                    ['type' => 'select', 'name' => 'product_count', 'placeholder' => 'Tất cả', 'label' => 'Số sản phẩm', 'options' => ['0' => 'Không có sản phẩm', '1-10' => '1-10 sản phẩm', '11-50' => '11-50 sản phẩm', '51+' => 'Trên 50 sản phẩm']],
+                    ['type' => 'date', 'name' => 'created_from', 'label' => 'Từ ngày']
+                ]
+            ]"
+        />
+
+        <!-- Categories Table -->
         <div class="table-responsive">
             <table class="table table-bordered admin-table categories-table">
                 <thead>

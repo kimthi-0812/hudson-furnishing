@@ -9,12 +9,28 @@
         <h6 class="m-0 font-weight-bold text-light">Tất Cả Đánh Giá</h6>
     </div>
     <div class="card-body">
+        <!-- Standalone Filter -->
+        <x-standalone-filter 
+            :formAction="route('admin.reviews.index')" 
+            :filterConfig="[
+                'filters' => [
+                    ['type' => 'text', 'name' => 'product', 'placeholder' => 'Tìm sản phẩm...', 'label' => 'Sản phẩm'],
+                    ['type' => 'text', 'name' => 'customer', 'placeholder' => 'Tìm khách hàng...', 'label' => 'Khách hàng'],
+                    ['type' => 'select', 'name' => 'rating', 'placeholder' => 'Tất cả', 'label' => 'Đánh giá', 'options' => ['1' => '1 sao', '2' => '2 sao', '3' => '3 sao', '4' => '4 sao', '5' => '5 sao']],
+                    ['type' => 'text', 'name' => 'comment', 'placeholder' => 'Tìm bình luận...', 'label' => 'Bình luận'],
+                    ['type' => 'select', 'name' => 'status', 'placeholder' => 'Tất cả', 'label' => 'Trạng thái', 'options' => ['approved' => 'Đã duyệt', 'pending' => 'Chờ duyệt']],
+                    ['type' => 'date', 'name' => 'created_from', 'label' => 'Từ ngày']
+                ]
+            ]"
+        />
+
+        <!-- Reviews Table -->
         <div class="table-responsive">
             <table class="table table-bordered admin-table" style="table-layout: fixed; width: 100%;">
                 <thead>
                     <tr>
-                        <th style="width: 18%; text-align: center !important;">Sản Phẩm</th>
-                        <th style="width: 15%; text-align: center !important;">Khách Hàng</th>
+                        <th style="width: 16%; text-align: center !important;">Sản Phẩm</th>
+                        <th style="width: 17%; text-align: center !important;">Khách Hàng</th>
                         <th style="width: 12%; text-align: center !important;">Đánh Giá</th>
                         <th style="width: 20%; text-align: center !important;">Bình Luận</th>
                         <th style="width: 12%; text-align: center !important;">Trạng Thái</th>
