@@ -18,7 +18,11 @@
                     <div class="mb-3">
                         <label for="name" class="form-label">Tên Sản Phẩm *</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" 
-                               id="name" name="name" value="{{ old('name', $product->name) }}" required>
+                               id="name" name="name" value="{{ old('name', $product->name) }}" 
+                               maxlength="75" placeholder="Nhập tên sản phẩm (tối đa 75 ký tự)" required>
+                        <div class="form-text">
+                            <span id="name-counter">0</span>/75 ký tự - Tên sản phẩm sẽ hiển thị tối đa 2 dòng trên product card
+                        </div>
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -163,4 +167,29 @@
         </form>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const nameInput = document.getElementById('name');
+    const nameCounter = document.getElementById('name-counter');
+    
+    // Cập nhật counter khi nhập
+    nameInput.addEventListener('input', function() {
+        const currentLength = this.value.length;
+        nameCounter.textContent = currentLength;
+        
+        // Thay đổi màu sắc khi gần đạt giới hạn
+        if (currentLength > 60) {
+            nameCounter.style.color = '#dc3545'; // Đỏ
+        } else if (currentLength > 50) {
+            nameCounter.style.color = '#ffc107'; // Vàng
+        } else {
+            nameCounter.style.color = '#6c757d'; // Xám
+        }
+    });
+    
+    // Khởi tạo counter với giá trị ban đầu
+    nameCounter.textContent = nameInput.value.length;
+});
+</script>
 @endsection

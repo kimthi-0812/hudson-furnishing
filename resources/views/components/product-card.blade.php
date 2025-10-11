@@ -22,7 +22,10 @@
     </div>
     <div class="product-info p-3 d-flex flex-column flex-grow-1">
         <h5 class="product-name mb-2" title="{{ $product->name }}">
-            {{ $product->name }}
+            <a href="{{ route('product.show', $product->slug) }}" 
+               style="color: #8B0000 !important; text-decoration: none !important; background: none !important; border: none !important; outline: none !important; box-shadow: none !important; font-weight: 600 !important; font-size: 1.1rem !important; display: inline !important; cursor: pointer !important;">
+                {{ $product->name }}
+            </a>
         </h5>
         
         <!-- Price section moved to bottom -->
@@ -37,9 +40,27 @@
         
         <!-- Button at the very bottom -->
         <div class="d-grid gap-2">
-            <a href="{{ route('products.show', $product->slug) }}" class="btn btn-primary">
+            <a href="{{ route('product.show', $product->slug) }}" class="btn btn-primary">
                 Xem Chi Tiết
             </a>
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Force override styling cho tất cả product name links
+    const productNameLinks = document.querySelectorAll('.product-name a, .product-name-home a');
+    productNameLinks.forEach(function(link) {
+        link.style.setProperty('color', '#8B0000', 'important');
+        link.style.setProperty('text-decoration', 'none', 'important');
+        link.style.setProperty('background', 'none', 'important');
+        link.style.setProperty('border', 'none', 'important');
+        link.style.setProperty('outline', 'none', 'important');
+        link.style.setProperty('box-shadow', 'none', 'important');
+        link.style.setProperty('font-weight', '600', 'important');
+        link.style.setProperty('display', 'inline', 'important');
+        link.style.setProperty('cursor', 'pointer', 'important');
+    });
+});
+</script>

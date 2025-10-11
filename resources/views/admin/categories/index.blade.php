@@ -32,7 +32,7 @@
                             <td>{{ $category->name }}</td>
                             <td>{{ $category->section->name }}</td>
                             <td>{{ $category->products()->count() }}</td>
-                            <td>{{ $category->created_at->translatedFormat('d M, Y') }}</td>
+                            <td>{{ $category->created_at->format('d/m/Y') }}</td>
                             <td>
                                 <div class="btn-group" role="group">
                                     <a href="{{ route('admin.categories.show', $category) }}" 

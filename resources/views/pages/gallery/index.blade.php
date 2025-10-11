@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <h6 class="card-title">{{ $image->product->name }}</h6>
                         <p class="card-text text-muted">{{ $image->product->section->name }}</p>
-                        <a href="{{ route('products.show', $image->product->slug) }}" class="btn btn-sm btn-outline-primary">Xem Sản Phẩm</a>
+                        <a href="{{ route('product.show', $image->product->slug) }}" class="btn btn-sm btn-outline-primary">Xem Sản Phẩm</a>
                     </div>
                 </div>
             </div>

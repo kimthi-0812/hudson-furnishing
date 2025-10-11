@@ -60,7 +60,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'        => 'required|string|max:255',
+            'name'        => 'required|string|max:75',
             'description' => 'required|string',
             'section_id'  => 'required|exists:sections,id',
             'category_id' => 'required|exists:categories,id',
@@ -75,7 +75,7 @@ class ProductController extends Controller
         ],[
             'name.required'        => 'Vui lòng nhập tên sản phẩm.',
             'name.string'          => 'Tên sản phẩm phải là chuỗi ký tự.',
-            'name.max'             => 'Tên sản phẩm không được vượt quá 255 ký tự.',
+            'name.max'             => 'Tên sản phẩm không được vượt quá 75 ký tự để đảm bảo hiển thị đẹp trên product card.',
             'description.required' => 'Vui lòng nhập mô tả sản phẩm.',
             'description.string'   => 'Mô tả sản phẩm phải là chuỗi ký tự.',
             'section_id.required'  => 'Vui lòng chọn mục sản phẩm.',
@@ -166,7 +166,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'name'        => 'required|string|max:255',
+            'name'        => 'required|string|max:75',
             'description' => 'required|string',
             'section_id'  => 'required|exists:sections,id',
             'category_id' => 'required|exists:categories,id',
@@ -181,7 +181,7 @@ class ProductController extends Controller
         ], [
             'name.required'        => 'Vui lòng nhập tên sản phẩm.',
             'name.string'          => 'Tên sản phẩm phải là chuỗi ký tự.',
-            'name.max'             => 'Tên sản phẩm không được vượt quá 255 ký tự.',
+            'name.max'             => 'Tên sản phẩm không được vượt quá 75 ký tự để đảm bảo hiển thị đẹp trên product card.',
             'description.required' => 'Vui lòng nhập mô tả sản phẩm.',
             'description.string'   => 'Mô tả sản phẩm phải là chuỗi ký tự.',
             'section_id.required'  => 'Vui lòng chọn mục sản phẩm.',

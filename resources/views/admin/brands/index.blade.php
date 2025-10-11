@@ -31,7 +31,7 @@
                         <tr>
                             <td>
                                 @if($brand->logo)
-                                    <img src="{{ asset('storage/' . $brand->logo) }}" 
+                                    <img src="{{ asset('uploads/brands/' . $brand->logo) }}" 
                                          alt="{{ $brand->name }}" class="img-thumbnail admin-table-image">
                                 @else
                                     <div class="bg-light d-flex align-items-center justify-content-center admin-table-image">

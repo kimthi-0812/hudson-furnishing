@@ -159,21 +159,94 @@ body {
     margin-bottom: 0.5rem;
     color: var(--primary-color);
     min-height: 2.5rem;
-    max-height: 3.5rem;
+    max-height: 2.8rem; /* Giới hạn 2 dòng */
     display: -webkit-box;
     -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Chỉ hiển thị 2 dòng */
     overflow: hidden;
     line-height: 1.4;
 }
 
-.product-name a {
-    color: inherit;
-    text-decoration: none;
+.product-name a,
+.product-name a:link,
+.product-name a:visited,
+.product-name a:hover,
+.product-name a:active,
+.product-name a:focus {
+    color: #8B0000 !important;
+    text-decoration: none !important;
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
-.product-name a:hover {
-    color: var(--secondary-color);
-    text-decoration: none;
+/* CSS cho tên sản phẩm trên trang home */
+.product-name-home {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+    min-height: 2rem;
+    max-height: 2.8rem; /* Giới hạn 2 dòng */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Chỉ hiển thị 2 dòng */
+    overflow: hidden;
+    line-height: 1.4;
+}
+
+.product-name-home a,
+.product-name-home a:link,
+.product-name-home a:visited,
+.product-name-home a:hover,
+.product-name-home a:active,
+.product-name-home a:focus {
+    color: #8B0000 !important;
+    text-decoration: none !important;
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* CSS với specificity cực cao để override mọi styling của link */
+.product-card .product-name a,
+.product-card .product-name a:link,
+.product-card .product-name a:visited,
+.product-card .product-name a:hover,
+.product-card .product-name a:active,
+.product-card .product-name a:focus {
+    all: unset !important;
+    color: #8B0000 !important;
+    text-decoration: none !important;
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    display: inline !important;
+    cursor: pointer !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+}
+
+.card .product-name-home a,
+.card .product-name-home a:link,
+.card .product-name-home a:visited,
+.card .product-name-home a:hover,
+.card .product-name-home a:active,
+.card .product-name-home a:focus {
+    all: unset !important;
+    color: #8B0000 !important;
+    text-decoration: none !important;
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    display: inline !important;
+    cursor: pointer !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
 }
 
 .product-price {
@@ -1298,3 +1371,40 @@ herosection
     100% { transform: translateY(0); opacity: 1; }
 }
 .bounce-in { animation: backToTopBounceIn .2s ease-out; }
+
+/* CSS CUỐI CÙNG - OVERRIDE MỌI THỨ */
+html body div.product-card div.product-info h5.product-name a,
+html body div.product-card div.product-info h5.product-name a:link,
+html body div.product-card div.product-info h5.product-name a:visited,
+html body div.product-card div.product-info h5.product-name a:hover,
+html body div.product-card div.product-info h5.product-name a:active,
+html body div.product-card div.product-info h5.product-name a:focus {
+    color: #8B0000 !important;
+    text-decoration: none !important;
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    display: inline !important;
+    cursor: pointer !important;
+}
+
+html body div.card div.card-body h6.card-title.product-name-home a,
+html body div.card div.card-body h6.card-title.product-name-home a:link,
+html body div.card div.card-body h6.card-title.product-name-home a:visited,
+html body div.card div.card-body h6.card-title.product-name-home a:hover,
+html body div.card div.card-body h6.card-title.product-name-home a:active,
+html body div.card div.card-body h6.card-title.product-name-home a:focus {
+    color: #8B0000 !important;
+    text-decoration: none !important;
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    display: inline !important;
+    cursor: pointer !important;
+}

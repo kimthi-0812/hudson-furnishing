@@ -10,16 +10,16 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered admin-table reviews-table">
+            <table class="table table-bordered admin-table" style="table-layout: fixed; width: 100%;">
                 <thead>
                     <tr>
-                        <th>Sản Phẩm</th>
-                        <th>Khách Hàng</th>
-                        <th>Đánh Giá</th>
-                        <th>Bình Luận</th>
-                        <th>Trạng Thái</th>
-                        <th>Ngày</th>
-                        <th>Hành Động</th>
+                        <th style="width: 18%; text-align: center !important;">Sản Phẩm</th>
+                        <th style="width: 15%; text-align: center !important;">Khách Hàng</th>
+                        <th style="width: 12%; text-align: center !important;">Đánh Giá</th>
+                        <th style="width: 20%; text-align: center !important;">Bình Luận</th>
+                        <th style="width: 12%; text-align: center !important;">Trạng Thái</th>
+                        <th style="width: 12%; text-align: center !important;">Ngày</th>
+                        <th style="width: 11%; text-align: center !important;">Hành Động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,7 +41,11 @@
                                     @endfor
                                 </div>
                             </td>
-                            <td>{{ Str::limit($review->comment, 100) }}</td>
+                            <td style="word-wrap: break-word; white-space: normal; word-break: break-word;">
+                                <div style="max-height: 100px; overflow-y: auto; padding: 5px;">
+                                    {{ $review->comment }}
+                                </div>
+                            </td>
                             <td>
                                 <span class="badge bg-{{ $review->approved ? 'success' : 'warning' }}">
                                     {{ $review->approved ? 'Đã Duyệt' : 'Đang Chờ' }}
@@ -49,12 +53,12 @@
                             </td>
                             <td>{{ $review->created_at->format('d/m/Y') }}</td>
                             <td>
-                                <div class="btn-group" role="group">
+                                <div class="d-flex justify-content-center gap-1">
                                     @if(!$review->approved)
                                         <form method="POST" action="{{ route('admin.reviews.approve', $review) }}" class="d-inline">
                                             @csrf
                                             @method('PATCH')
-                                            <button type="submit" class="btn btn-sm btn-outline-success">
+                                            <button type="submit" class="btn btn-sm btn-outline-success" title="Duyệt đánh giá">
                                                 <i class="fas fa-check"></i>
                                             </button>
                                         </form>
@@ -63,7 +67,7 @@
                                           class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa đánh giá này không?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Xóa đánh giá">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
@@ -88,4 +92,6 @@
         </div>
     </div>
 </div>
+
 @endsection
+%
