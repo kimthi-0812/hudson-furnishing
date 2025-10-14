@@ -12,6 +12,7 @@ use App\Models\Offer;
 use App\Models\Review;
 use App\Models\Contact;
 use App\Models\VisitorStat;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -34,6 +35,7 @@ class DashboardController extends Controller
             'new_contacts' => Contact::where('status', 'new')->count(),
             'total_visitors' => VisitorStat::sum('total_visits'),
             'unique_visitors' => VisitorStat::sum('unique_visits'),
+            'total_users' => User::count(), // ✅ thêm dòng này
         ];
 
         // Recent activities
@@ -57,6 +59,11 @@ class DashboardController extends Controller
             ->get()
             ->reverse();
 
-        return view('admin.dashboard', compact('stats', 'recentProducts', 'recentReviews', 'recentContacts', 'visitorStats'));
+        $recentUsers = User::with('role') // <- thêm with('role') để load quan hệ role
+                    ->latest()
+                    ->take(5)
+                    ->get();
+
+        return view('admin.dashboard', compact('stats', 'recentProducts', 'recentReviews', 'recentContacts', 'visitorStats', 'recentUsers'));
     }
 }

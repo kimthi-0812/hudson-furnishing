@@ -59,7 +59,7 @@
                                 class="text-decoration-none text-primary">Đăng Ký
                             </a>
                             
-                            {{-- <a href="{{ route('password.request') }}" class="text-decoration-none text-primary">Quên mật khẩu?</a> --}}
+                            <a href="{{ route('password.request') }}" class="text-decoration-none text-primary">Quên mật khẩu?</a> 
                             
                         </div>
                                 

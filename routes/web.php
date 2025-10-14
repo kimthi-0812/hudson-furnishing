@@ -22,6 +22,11 @@ use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Admin\VisitorStatsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,7 +71,7 @@ Route::post('/contact', [ContactController::class, 'store'])->middleware('auth')
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
 // Visitor Stats
-Route::post('/visitor-stats', [HomeController::class, 'incrementVisitor'])->name('visitor.increment');
+Route::post('/track-visitor', [VisitorController::class, 'track'])->name('visitor.track');
 
 // Authentication Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -78,6 +83,37 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 // Registration Routes
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
+
+// Profile Routes (Protected)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile/change-password', [ProfileController::class, 'editPassword'])->name('password.edit');
+    Route::post('/profile/change-password', [ProfileController::class, 'updatePassword'])->name('password.update');
+});
+
+// Password Reset Routes
+Route::middleware('guest')->prefix('password')->name('password.')->group(function () {
+
+    // Form gửi email quên mật khẩu
+    Route::get('/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])
+        ->name('request'); // route name: password.request
+        // URL: /password/forgot
+
+    // Gửi email reset mật khẩu
+    Route::post('/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+        ->name('email'); // route name: password.email
+        // URL: /password/forgot
+
+    // Form reset mật khẩu (link từ email)
+    Route::get('/reset/{token}', [ResetPasswordController::class, 'showResetForm'])
+        ->name('reset'); // route name: password.reset
+        // URL: /password/reset/{token}
+
+    // Submit reset mật khẩu
+    Route::post('/reset', [ResetPasswordController::class, 'reset'])
+        ->name('update'); // route name: password.update
+        // URL: /password/reset
+
+});
 
 // Admin Routes (Protected)
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
@@ -159,6 +195,10 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::patch('contacts/{contact}/replied', [AdminContactController::class, 'markAsReplied'])->name('admin.contacts.replied');
     Route::delete('contacts/{contact}', [AdminContactController::class, 'destroy'])->name('admin.contacts.destroy');
     
+    //visitor 
+    
+    Route::get('visitors', [VisitorStatsController::class, 'index'])->name('admin.visitors.index');
+
     // Settings Management
     Route::get('settings', [SettingController::class, 'index'])->name('admin.settings.index');
     Route::put('settings', [SettingController::class, 'update'])->name('admin.settings.update');
@@ -173,4 +213,14 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
         Route::post('/bulk-force-delete', [App\Http\Controllers\Admin\TrashController::class, 'bulkForceDelete'])->name('admin.trash.bulk-force-delete');
         Route::post('/cleanup', [App\Http\Controllers\Admin\TrashController::class, 'cleanup'])->name('admin.trash.cleanup');
     });
+
+    Route::resource('users', UserController::class) ->names([
+        'index'   => 'admin.users.index',
+        'create'  => 'admin.users.create',
+        'store'   => 'admin.users.store',
+        'show'    => 'admin.users.show',
+        'edit'    => 'admin.users.edit',
+        'update'  => 'admin.users.update',
+        'destroy' => 'admin.users.destroy'
+    ]);
 });

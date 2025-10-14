@@ -177,7 +177,8 @@
                     acceptedTypes="image/*"
                     maxSize="2MB"
                     :existingImages="$product->images"
-                    deleteRoute="{{ route('admin.products.images.destroy', $product) }}"
+                    deleteRoute="{{ url('admin/products/' . $product->id . '/images') }}"
+
                     class="@error('images.*') is-invalid @enderror"
                 />
                 @error('images.*')
@@ -186,8 +187,8 @@
             </div>
             
             <div class="text-end">
+                <button type="submit" class="btn btn-primary">Cập nhật Sản Phẩm</button>
                 <a href="{{ route('admin.products.index') }}" class="btn btn-secondary me-2">Hủy</a>
-                <button type="submit" class="btn btn-primary">Cập Nhật Sản Phẩm</button>
             </div>
         </form>
     </div>

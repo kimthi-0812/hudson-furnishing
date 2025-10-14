@@ -89,6 +89,12 @@
                                     <i class="fas fa-cog me-2"></i>Quản Trị
                                 </a></li>
                             @endif
+                            <a class="dropdown-item" href="{{ route('password.edit') }}">
+                                <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Đổi mật khẩu
+                            </a>
+                            <div class="dropdown-divider"></div>
+
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf

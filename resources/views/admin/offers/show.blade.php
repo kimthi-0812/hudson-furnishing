@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-md-3 text-center">
                 @if ($offer->image)
-                    <img src="{{ asset('storage/' . $offer->image) }}" alt="{{ $offer->title }} Image" class="img-fluid rounded" style="max-height: 200px; border: 1px solid #ccc;">
+                    <img src="{{ asset('storage/uploads/offers/' . $offer->image) }}" alt="{{ $offer->title }} Image" class="img-fluid rounded" style="max-height: 200px; border: 1px solid #ccc;">
                 @else
                     <p class="text-muted">Không có ảnh đại diện</p>
                 @endif

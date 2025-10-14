@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class VisitorStat extends Model
 {
     use HasFactory;
@@ -20,4 +21,5 @@ class VisitorStat extends Model
         'total_visits' => 'integer',
         'unique_visits' => 'integer',
     ];
+    
 }

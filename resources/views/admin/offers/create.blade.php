@@ -33,14 +33,14 @@
                     <div class="form-group">
                         <label for="title">Tiêu Đề Ưu Đãi (<span class="text-danger">*</span>)</label>
                         
-                        <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}" required>
+                        <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}" >
                         @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
                     {{-- Trường Description --}}
                     <div class="form-group">
                         <label for="description">Mô Tả</label>
-                        <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror" rows="3" required>{{ old('description') }}</textarea>
+                        <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror" rows="3" >{{ old('description') }}</textarea>
                         @error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
@@ -48,7 +48,7 @@
                     <div class="form-group">
                         <label for="start_date">Ngày Bắt Đầu (<span class="text-danger">*</span>)</label>
                         <input type="date" name="start_date" id="start_date" class="form-control @error('start_date') is-invalid @enderror" 
-                               value="{{ old('start_date') }}" required>
+                               value="{{ old('start_date') }}" >
                         @error('start_date')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
@@ -56,7 +56,7 @@
                     <div class="form-group">
                         <label for="end_date">Ngày Kết Thúc (<span class="text-danger">*</span>)</label>
                         <input type="date" name="end_date" id="end_date" class="form-control @error('end_date') is-invalid @enderror" 
-                               value="{{ old('end_date') }}" required>
+                               value="{{ old('end_date') }}" >
                         @error('end_date')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                     {{-- Trường Discount Type --}}
                     <div class="form-group">
                         <label for="discount_type">Loại Giảm Giá (<span class="text-danger">*</span>)</label>
-                        <select name="discount_type" id="discount_type" class="form-control @error('discount_type') is-invalid @enderror" required>
+                        <select name="discount_type" id="discount_type" class="form-control @error('discount_type') is-invalid @enderror" >
                             <option value="">-- Chọn Loại --</option>
                             <option value="percentage" {{ old('discount_type') == 'percentage' ? 'selected' : '' }}>Phần Trăm (%)</option>
                             <option value="fixed" {{ old('discount_type') == 'fixed' ? 'selected' : '' }}>Giá Trị Cố Định (VNĐ)</option>
@@ -82,7 +82,7 @@
                             placeholder="Nhập giá trị giảm"
                             class="@error('discount_value') is-invalid @enderror"
                             id="discount_value"
-                            required
+                            
                         />
                         @error('discount_value')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>

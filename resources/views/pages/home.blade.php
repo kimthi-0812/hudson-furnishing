@@ -68,7 +68,7 @@
                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                     <div class="card h-100">
                         @if($product->images->count() > 0)
-                            <img src="{{ asset('uploads/' . $product->images->first()->url) }}" 
+                            <img src="{{ asset('storage/uploads/' . $product->images->first()->url) }}" 
                                  class="card-img-top" 
                                  alt="{{ $product->name }}"
                                  style="height: 200px; object-fit: cover;">

@@ -6,70 +6,113 @@
 @section('content')
 <!-- Statistics Cards -->
 <div class="row mb-4">
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Tổng Sản Phẩm</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $stats['total_products'] }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-box fa-2x text-gray-300"></i>
+    {{-- Tổng sản phẩm --}}
+    @if(auth()->user()->isAdmin() || auth()->user()->isStaff())
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="{{ route('admin.products.index') }}" style="text-decoration: none;">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Tổng Sản Phẩm</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $stats['total_products'] }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-box fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
-    </div>
+    @endif
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Sản Phẩm Đang Bán</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $stats['active_products'] }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+    {{-- Sản phẩm đang bán --}}
+    @if(auth()->user()->isAdmin() || auth()->user()->isStaff())
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="{{ route('admin.products.index', ['status' => 'active']) }}" style="text-decoration: none;">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Sản Phẩm Đang Bán</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $stats['active_products'] }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
-    </div>
+    @endif
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tổng Lượt Truy Cập</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ number_format($stats['total_visitors']) }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-users fa-2x text-gray-300"></i>
+    {{-- Tổng lượt truy cập (chỉ admin) --}}
+    @if(auth()->user()->isAdmin())
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="{{ route('admin.visitors.index') }}" style="text-decoration: none;">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tổng Lượt Truy Cập</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ number_format($stats['total_visitors']) }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-users fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
-    </div>
+    @endif
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Đánh Giá Chờ Duyệt</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $stats['pending_reviews'] }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-star fa-2x text-gray-300"></i>
+    {{-- Đánh giá chờ duyệt (admin + staff) --}}
+    @if(auth()->user()->isAdmin() || auth()->user()->isStaff())
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="{{ route('admin.reviews.index', ['approved' => 0]) }}" style="text-decoration: none;">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Đánh Giá Chờ Duyệt</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $stats['pending_reviews'] }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-star fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
-    </div>
+    @endif
+
+    {{-- Tổng người dùng (chỉ admin) --}}
+    @if(auth()->user()->isAdmin())
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="{{ route('admin.users.index') }}" style="text-decoration: none;">
+                <div class="card border-left-dark shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">Tổng Người Dùng</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $stats['total_users'] }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-user fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    @endif
 </div>
+
+
 
 <!-- Charts Row -->
 <div class="row">
@@ -95,18 +138,26 @@
             </div>
             <div class="card-body">
                 <div class="d-grid gap-2">
-                    <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus me-2"></i>Thêm Sản Phẩm Mới
-                    </a>
-                    <a href="{{ route('admin.reviews.index') }}" class="btn btn-warning">
-                        <i class="fas fa-star me-2"></i>Xem Đánh Giá Chờ Duyệt
-                    </a>
-                    <a href="{{ route('admin.gallery.index') }}" class="btn btn-info">
-                        <i class="fas fa-images me-2"></i>Quản Lý Gallery
-                    </a>
-                    <a href="{{ route('admin.settings.index') }}" class="btn btn-secondary">
-                        <i class="fas fa-cog me-2"></i>Cài Đặt Website
-                    </a>
+                    @if(auth()->user()->isAdmin() || auth()->user()->isStaff())
+                        <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Thêm Sản Phẩm Mới
+                        </a>
+                        <a href="{{ route('admin.reviews.index') }}" class="btn btn-warning">
+                            <i class="fas fa-star me-2"></i>Xem Đánh Giá Chờ Duyệt
+                        </a>
+                    @endif
+
+                    @if(auth()->user()->isAdmin())
+                        <a href="{{ route('admin.gallery.index') }}" class="btn btn-info">
+                            <i class="fas fa-images me-2"></i>Quản Lý Gallery
+                        </a>
+                        <a href="{{ route('admin.settings.index') }}" class="btn btn-secondary">
+                            <i class="fas fa-cog me-2"></i>Cài Đặt Website
+                        </a>
+                        <a href="{{ route('admin.users.index') }}" class="btn btn-primary">
+                            <i class="fas fa-user me-2"></i>Quản Lý User
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -200,6 +251,11 @@
             </div>
         </div>
     </div>
+    
+</div>
+
+</div>
+
 </div>
 @endsection
 

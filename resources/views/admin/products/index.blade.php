@@ -54,7 +54,7 @@
                             <td class="text-center" style="padding: 1rem 0.5rem !important;">
                                 <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
                                     @if($product->images->count() > 0)
-                                        <img src="{{ asset('uploads/products/' . $product->images->first()->url) }}" 
+                                        <img src="{{ asset('storage/uploads/' . $product->images->first()->url) }}" 
                                              alt="{{ $product->name }}" 
                                              class="img-thumbnail admin-table-image"
                                              style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">

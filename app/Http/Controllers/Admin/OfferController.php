@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Offer;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class OfferController extends Controller
 {
@@ -59,16 +60,50 @@ class OfferController extends Controller
 
     public function store(Request $request)
     {
+        $request->merge([
+            'discount_value' => str_replace(',', '', $request->discount_value),
+        ]);
+
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:1000',
-            'discount_type' => 'required|in:percentage,fixed',
-            'discount_value' => 'required|numeric|min:0',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
-            
+            'discount_type' => ['required', 'in:percentage,fixed'],
+            'discount_value' => [
+                'required',
+                'numeric',
+                Rule::when($request->discount_type === 'percentage', ['min:1', 'max:100']),
+                Rule::when($request->discount_type === 'fixed', ['min:1000']),
+            ],
+            'start_date' => 'required|date|after_or_equal:today',
+            'end_date' => 'required|date|after:start_date',           
             'status' => 'required|in:active,inactive',
+        ],[
+            'title.required' => 'Tiêu đề ưu đãi không được để trống.',
+            'description.required' => 'Mô tả ưu đãi không được để trống.',
+            'discount_type.required' => 'Loại giảm giá không được để trống.',
+            'discount_value.required' => 'Giá trị giảm giá không được để trống.',
+            'discount_value.numeric' => 'Giá trị giảm giá phải là một số.',
+            'discount_value.min' => 'Giá trị giảm giá phải lớn hơn hoặc bằng 0.',
+            'discount_value.max' => 'Giá trị giảm giá không được vuien quá 100.',
+            'start_date.required' => 'Ngày bắt đầu không được để trống.',
+            'start_date.date' => 'Ngày bắt đầu không hợp lệ.',
+            'start_date.after_or_equal' => 'Ngày bắt đầu phải là ngày hôm nay hoặc sau đó.',
+            'end_date.required' => 'Ngày kết thúc không được để trống.',
+            'end_date.date' => 'Ngày kết thúc không hợp lệ.',
+            'end_date.after' => 'Ngày kết thúc phải sau ngày bắt đầu.',
+            'status.required' => 'Trạng thái không được để trống.',
+            'status.in' => 'Trạng thái không hợp lệ.',
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image');
+            // Nếu file gửi về là mảng do component => lấy file đầu tiên
+            if (is_array($imagePath)) {
+                $imagePath = $imagePath[0];
+            }
+            $imagePath = $imagePath->store('', 'public');
+        }
 
         $offer = Offer::create([
             'title' => $request->title,
@@ -76,10 +111,11 @@ class OfferController extends Controller
             'discount_type' => $request->discount_type,
             'discount_value' => $request->discount_value,
             'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            
+            'end_date' => $request->end_date,            
             'status' => $request->status,
+            'image' => $imagePath,
         ]);
+
 
         return redirect()->route('admin.offers.index')->with('success', 'Offer created successfully!');
     }
@@ -92,15 +128,39 @@ class OfferController extends Controller
 
     public function update(Request $request, Offer $offer)
     {
+        $request->merge([
+            'discount_value' => str_replace(',', '', $request->discount_value),
+        ]);
+
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:1000',
-            'discount_type' => 'required|in:percentage,fixed',
-            'discount_value' => 'required|numeric|min:0',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
-            
+            'discount_type' => ['required', 'in:percentage,fixed'],
+            'discount_value' => [
+                'required',
+                'numeric',
+                Rule::when($request->discount_type === 'percentage', ['min:1', 'max:100']),
+                Rule::when($request->discount_type === 'fixed', ['min:1000']),
+            ],
+            'start_date' => 'required|date|after_or_equal:today',
+            'end_date' => 'required|date|after:start_date',           
             'status' => 'required|in:active,inactive',
+        ],[
+            'title.required' => 'Tiêu đề ưu đãi không được để trống.',
+            'description.required' => 'Mô tả ưu đãi không được để trống.',
+            'discount_type.required' => 'Loại giảm giá không được để trống.',
+            'discount_value.required' => 'Giá trị giảm giá không được để trống.',
+            'discount_value.numeric' => 'Giá trị giảm giá phải là một số.',
+            'discount_value.min' => 'Giá trị giảm giá phải lớn hơn hoặc bằng 0.',
+            'discount_value.max' => 'Giá trị giảm giá không được vuien quá 100.',
+            'start_date.required' => 'Ngày bắt đầu không được để trống.',
+            'start_date.date' => 'Ngày bắt đầu không hợp lệ.',
+            'start_date.after_or_equal' => 'Ngày bắt đầu phải là ngày hôm nay hoặc sau đó.',
+            'end_date.required' => 'Ngày kết thúc không được để trống.',
+            'end_date.date' => 'Ngày kết thúc không hợp lệ.',
+            'end_date.after' => 'Ngày kết thúc phải sau ngày bắt đầu.',
+            'status.required' => 'Trạng thái không được để trống.',
+            'status.in' => 'Trạng thái không hợp lệ.',
         ]);
 
         $offer->update([

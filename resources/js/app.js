@@ -113,39 +113,39 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Review Form Handler
-document.addEventListener("DOMContentLoaded", function () {
-    const reviewForm = document.getElementById("reviewForm");
-    if (reviewForm) {
-        reviewForm.addEventListener("submit", function (e) {
-            e.preventDefault();
+// document.addEventListener("DOMContentLoaded", function () {
+//     const reviewForm = document.getElementById("reviewForm");
+//     if (reviewForm) {
+//         reviewForm.addEventListener("submit", function (e) {
+//             e.preventDefault();
 
-            const formData = new FormData(this);
+//             const formData = new FormData(this);
 
-            fetch("/reviews", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    "X-CSRF-TOKEN": document
-                        .querySelector('meta[name="csrf-token"]')
-                        .getAttribute("content"),
-                },
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.success) {
-                        alert(data.message);
-                        this.reset();
-                    } else {
-                        alert("Error submitting review. Please try again.");
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                    alert("Error submitting review. Please try again.");
-                });
-        });
-    }
-});
+//             fetch("/reviews", {
+//                 method: "POST",
+//                 body: formData,
+//                 headers: {
+//                     "X-CSRF-TOKEN": document
+//                         .querySelector('meta[name="csrf-token"]')
+//                         .getAttribute("content"),
+//                 },
+//             })
+//                 .then((response) => response.json())
+//                 .then((data) => {
+//                     if (data.success) {
+//                         alert(data.message);
+//                         this.reset();
+//                     } else {
+//                         alert("Error submitting review. Please try again.");
+//                     }
+//                 })
+//                 .catch((error) => {
+//                     console.error("Error:", error);
+//                     alert("Error submitting review. Please try again.");
+//                 });
+//         });
+//     }
+// });
 
 // Visitor Counter
 document.addEventListener("DOMContentLoaded", function () {

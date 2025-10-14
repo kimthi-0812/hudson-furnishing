@@ -62,7 +62,7 @@
                                 placeholder="Nhập mật khẩu"
                                 >
                             <button type="button"
-                                class="btn position-absolute top-50 end-0 translate-middle-y border-0 bg-transparent px-3 mt-3"
+                                class="btn position-absolute top-50 end-0 translate-middle-y border-0 bg-transparent px-3 mt-1"
                                 id="togglePassword" tabindex="-1">
                                 <i class="fas fa-eye" id="togglePasswordIcon"></i>
                             </button>

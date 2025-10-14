@@ -57,9 +57,13 @@
                         </div>
                         
                         <div class="product-status mb-3">
-                            <span class="badge bg-{{ $product->status == 'active' ? 'success' : 'secondary' }}">
-                                {{ ucfirst($product->status) }}
-                            </span>
+                            @php
+                                    $options = \App\Helpers\StatusHelper::getStatusOptions();
+                                    $status = $product->status;
+                                @endphp
+                                <span class="badge bg-{{ $options[$status]['class'] ?? 'warning' }}">
+                                    {{ $options[$status]['label'] ?? ucfirst($status) }}
+                                </span>
                             @if($product->featured)
                                 <span class="badge bg-warning ms-2">Nổi Bật</span>
                             @endif
@@ -72,7 +76,7 @@
                                 <div class="carousel-inner">
                                     @foreach($product->images as $index => $image)
                                         <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                            <img src="{{ asset('uploads/products/' . $image->url) }}" 
+                                            <img src="{{ asset('storage/uploads/' . $image->url) }}" 
                                                  class="d-block w-100" 
                                                  alt="{{ $image->alt_text }}"
                                                  style="height: 300px; object-fit: cover;">

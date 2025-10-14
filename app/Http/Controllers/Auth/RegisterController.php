@@ -25,8 +25,8 @@ class RegisterController extends Controller
     {
         $validated = $request->validate([
 
-            'name' => ['required', 'string', 'max:255', new \App\Rules\NotAllNumbers()],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'name' => ['required', 'string', 'max:255', new \App\Rules\NotAllNumbers(), 'min:3', new \App\Rules\TrimmedString()],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email', new \App\Rules\TrimmedString()],
             'password' => ['required', 'string', 'confirmed', new \App\Rules\StrongPassword()],
         ], [
             'name.required' => 'Vui lòng nhập họ và tên.',

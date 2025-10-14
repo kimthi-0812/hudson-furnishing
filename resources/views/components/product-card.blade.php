@@ -6,7 +6,7 @@
             ? $product->images->random() 
             : $product->images->first();
     @endphp
-    <img src="{{ asset('uploads/products/' . $image->url) }}" 
+    <img src="{{ asset('storage/uploads/' . $product->images->first()->url) }}" 
          alt="{{ $product->name }}" class="img-fluid">
 @else
     <img src="{{ asset('images/default.jpg') }}" 

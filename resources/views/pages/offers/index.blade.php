@@ -14,7 +14,7 @@
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card h-100 border-danger d-flex flex-column">
                     @if($offer->image)
-                        <img src="{{ asset('uploads/offers/' . $offer->image) }}" 
+                        <img src="{{ asset('storage/uploads/offers/' . $offer->image) }}" 
                              class="card-img-top" 
                              alt="{{ $offer->title }}"
                              style="height: 200px; object-fit: cover;">

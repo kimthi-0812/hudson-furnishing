@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-md-3 text-center">
                 @if ($brand->logo)
-                    <img src="{{ asset('storage/' . $brand->logo) }}" alt="{{ $brand->name }} Logo" class="img-fluid rounded" style="max-height: 150px; border: 1px solid #ccc;">
+                    <img src="{{ asset('storage/uploads/' . $brand->logo) }}" alt="{{ $brand->name }} Logo" class="img-fluid rounded" style="max-height: 150px; border: 1px solid #ccc;">
                 @else
                     <p class="text-muted">Không có Logo</p>
                 @endif

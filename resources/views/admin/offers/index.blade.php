@@ -48,7 +48,7 @@
                         <tr>
                             <td style="text-align: center !important;">
                                 @if($offer->image)
-                                    <img src="{{ asset('uploads/offers/' . $offer->image) }}" 
+                                    <img src="{{ asset('storage/uploads/offers/' . $offer->image) }}" 
                                          alt="{{ $offer->title }}" class="img-thumbnail admin-table-image">
                                 @else
                                     <div class="bg-light d-flex align-items-center justify-content-center admin-table-image">

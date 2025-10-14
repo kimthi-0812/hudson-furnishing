@@ -16,7 +16,7 @@
                     <form method="GET" action="{{ route('products.index') }}">
                         <!-- Section Filter -->
                         <div class="mb-3">
-                            <label class="form-label">Phòng/Khu Vực</label>
+                            <label class="form-label">Không Gian Sử Dụng</label>
                             <div class="dropdown">
                                 <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
                                     {{ request('section') ? $sections->firstWhere('slug', request('section'))->name : 'Tất Cả Phòng/Khu Vực' }}
@@ -24,7 +24,7 @@
                                 <ul class="dropdown-menu w-100">
                                     <li>
                                         <a class="dropdown-item {{ request('section') == '' ? 'active' : '' }}" href="{{ route('products.index', array_merge(request()->except('section', 'page'), ['section' => ''])) }}">
-                                            Tất Cả Phòng/Khu Vực
+                                            Tất Cả Không Gian
                                         </a>
                                     </li>
                                     @foreach($sections as $section)

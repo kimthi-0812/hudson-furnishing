@@ -33,19 +33,19 @@
                     {{-- Trường Title --}}
                     <div class="form-group">
                         <label for="title">Tiêu Đề Ưu Đãi (<span class="text-danger">*</span>)</label>
-                        <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title', $offer->title) }}" required>
+                        <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title', $offer->title) }}" >
                         @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
                     {{-- Trường Type --}}
                     <div class="form-group">
                         <label for="type">Loại Ưu Đãi (<span class="text-danger">*</span>)</label>
-                        <select name="discount_type" id="type" class="form-control @error('discount_type') is-invalid @enderror" required>
+                        <select name="discount_type" id="discount_type" class="form-control @error('discount_type') is-invalid @enderror" >
                             <option value="">-- Chọn Loại --</option>
-                            <option value="percentage" {{ old('type', $offer->type) == 'percentage' ? 'selected' : '' }}>Phần Trăm (%)</option>
-                            <option value="fixed" {{ old('type', $offer->type) == 'fixed' ? 'selected' : '' }}>Giá Trị Cố Định</option>
+                            <option value="percentage" {{ old('discount_type', $offer->type) == 'percentage' ? 'selected' : '' }}>Phần Trăm (%)</option>
+                            <option value="fixed" {{ old('discount_type', $offer->type) == 'fixed' ? 'selected' : '' }}>Giá Trị Cố Định</option>
                         </select>
-                        @error('type')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        @error('discount_type')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     
                     {{-- Trường Value --}}
@@ -57,7 +57,7 @@
                             placeholder="Nhập giá trị ưu đãi"
                             class="@error('discount_value') is-invalid @enderror"
                             id="value"
-                            required
+                            
                         />
                         @error('discount_value')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
@@ -68,7 +68,7 @@
                     <div class="form-group">
                         <label for="start_date">Ngày Bắt Đầu (<span class="text-danger">*</span>)</label>
                         <input type="date" name="start_date" id="start_date" class="form-control @error('start_date') is-invalid @enderror" 
-                               value="{{ old('start_date', \Carbon\Carbon::parse($offer->start_date)->format('Y-m-d')) }}" required>
+                               value="{{ old('start_date', \Carbon\Carbon::parse($offer->start_date)->format('d/m/Y')) }}" >
                         @error('start_date')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
@@ -76,7 +76,7 @@
                     <div class="form-group">
                         <label for="end_date">Ngày Kết Thúc (<span class="text-danger">*</span>)</label>
                         <input type="date" name="end_date" id="end_date" class="form-control @error('end_date') is-invalid @enderror" 
-                               value="{{ old('end_date', \Carbon\Carbon::parse($offer->end_date)->format('Y-m-d')) }}" required>
+                               value="{{ old('end_date', \Carbon\Carbon::parse($offer->end_date)->format('d/m/y')) }}" >
                         @error('end_date')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     
@@ -96,7 +96,7 @@
                     </div>
                     <div class="form-group">
                         <label for="status">Trạng Thái (<span class="text-danger">*</span>)</label>
-                        <select name="status" id="status" class="form-control @error('status') is-invalid @enderror" required>
+                        <select name="status" id="status" class="form-control @error('status') is-invalid @enderror" >
                             <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Hoạt Động</option>
                             <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Ngừng Hoạt Động</option>
                         </select>
