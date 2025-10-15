@@ -103,6 +103,12 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        if (auth()->id() == $user->id) {
+            return redirect()
+                ->route('admin.users.index')
+                ->with('error', 'Bạn không thể xóa chính mình!');
+        }
+
         $user->delete();
         return redirect()->route('admin.users.index')->with('success', 'Xóa người dùng thành công!');
     }

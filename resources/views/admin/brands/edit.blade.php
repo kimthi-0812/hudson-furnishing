@@ -7,9 +7,6 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-light">Chỉnh Sửa Thương Hiệu: {{ $brand->name }}</h6>
-        <a href="{{ route('admin.brands.index') }}" class="btn btn-info btn-sm">
-            <i class="fas fa-arrow-left"></i> Quay Lại Danh Sách
-        </a>
     </div>
     <div class="card-body">
 
@@ -49,33 +46,28 @@
 
             {{-- Trường Logo (logo) --}}
             <div class="form-group">
-                <label>Logo Hiện Tại</label>
-                <div class="mb-2">
-                    @if ($brand->logo)
-                        {{-- Giả định logo được lưu trong thư mục storage/app/public/brands --}}
-                        <img src="{{ asset('storage/' . $brand->logo) }}" alt="{{ $brand->name }} Logo" style="max-width: 150px; border: 1px solid #ccc;">
-                        <small class="d-block text-muted mt-1">File: {{ $brand->logo }}</small>
-                    @else
-                        <p class="text-muted">Chưa có logo.</p>
-                    @endif
-                </div>
-                
-                <label for="logo">Thay Đổi Logo</label>
-                <input 
-                    type="file" 
-                    name="logo" 
-                    id="logo" 
-                    class="form-control-file @error('logo') is-invalid @enderror"
-                >
-                <small class="form-text text-muted">Chọn file mới để thay đổi logo. Để trống nếu không muốn thay đổi.</small>
+                <div class="mb-3">
+                <x-image-upload 
+                    name="logo"
+                    label="Hình Ảnh Logo Thương Hiệu"
+                    :multiple="false"
+                    :required="false"
+                    :existingImages="[$brand->logo]" {{-- truyền mảng string path --}}
+                    acceptedTypes="logo"
+                    maxSize="2MB"
+                />
                 @error('logo')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
+                </div>
             </div>
             
-            <button type="submit" class="btn btn-primary mt-3">
+            <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary btn-sm">
                 <i class="fas fa-sync-alt"></i> Cập Nhật Thương Hiệu
             </button>
+            <a href="{{ route('admin.brands.index') }}" class="btn btn-secondary btn-sm"> Hủy</a>
+            </div>
         </form>
 
     </div>

@@ -102,7 +102,7 @@ class OfferController extends Controller
             if (is_array($imagePath)) {
                 $imagePath = $imagePath[0];
             }
-            $imagePath = $imagePath->store('', 'public');
+            $imagePath = $imagePath->store('uploads/offers', 'public');
         }
 
         $offer = Offer::create([
@@ -135,6 +135,7 @@ class OfferController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:1000',
+            'image' => 'nullable|image|max:2048',
             'discount_type' => ['required', 'in:percentage,fixed'],
             'discount_value' => [
                 'required',
@@ -148,6 +149,8 @@ class OfferController extends Controller
         ],[
             'title.required' => 'Tiêu đề ưu đãi không được để trống.',
             'description.required' => 'Mô tả ưu đãi không được để trống.',
+            'image.image' => 'Hình ảnh không hợp lệ.',
+            'image.max' => 'Hình ảnh không được lớn hơn 2MB.',
             'discount_type.required' => 'Loại giảm giá không được để trống.',
             'discount_value.required' => 'Giá trị giảm giá không được để trống.',
             'discount_value.numeric' => 'Giá trị giảm giá phải là một số.',
@@ -163,6 +166,23 @@ class OfferController extends Controller
             'status.in' => 'Trạng thái không hợp lệ.',
         ]);
 
+        // nếu không upload ảnh mới thì giữ nguyên ảnh cũ
+        $imagePath = $offer->image;
+
+        if ($request->hasFile('image')) {
+            $imageFile = $request->file('image');
+            if (is_array($imageFile)) {
+                $imageFile = $imageFile[0];
+            }
+
+            // Xóa ảnh cũ nếu có
+            if ($offer->image && \Storage::disk('public')->exists($offer->image)) {
+                \Storage::disk('public')->delete($offer->image);
+            }
+
+            $imagePath = $imageFile->store('uploads/offers', 'public');
+        }
+
         $offer->update([
             'title' => $request->title,
             'description' => $request->description,
@@ -170,8 +190,8 @@ class OfferController extends Controller
             'discount_value' => $request->discount_value,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
-            
             'status' => $request->status,
+            'image' => $imagePath,
         ]);
 
         return redirect()->route('admin.offers.index')->with('success', 'Offer updated successfully!');

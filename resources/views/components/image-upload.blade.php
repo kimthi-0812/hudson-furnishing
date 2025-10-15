@@ -51,10 +51,11 @@
                 @foreach($existingImages as $index => $image)
                     <div class="col-md-3 col-sm-4 col-6">
                         <div class="image-preview-card position-relative">
-                            <img src="{{ asset('storage/' . $image->url) }}" 
-                                 alt="{{ $image->alt_text ?? 'Product Image' }}"
-                                 class="img-fluid rounded border"
-                                 style="width: 100%; height: 120px; object-fit: cover;">
+                            <img src="{{ is_string($image) ? asset('storage/' . $image) : $image->url }}" 
+                                alt="{{ is_string($image) ? 'Logo' : ($image->alt_text ?? 'Product Image') }}"
+                                class="img-fluid rounded border"
+                                style="width: 100%; height: 120px; object-fit: cover;">
+
                             
                             @if($deleteRoute)
                                 <button type="button" 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Material;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 
 class MaterialController extends Controller
@@ -53,22 +54,35 @@ class MaterialController extends Controller
         return view('admin.materials.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request)    
     {
+        
         $request->validate([
             'name' => 'required|string|max:255|unique:materials',
             'description' => 'nullable|string|max:1000',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required' => 'Tên vật liệu không được để trống.',
+            'name.unique' => 'Tên vật liệu đã tồn tại. Vui lòng chọn tên khác.',
+            'image.image' => 'Tệp tải lên phải là một hình ảnh hợp lệ.',
+            'image.mimes' => 'Định dạng hình ảnh không hợp lệ. Chỉ chấp nhận: jpeg, png, jpg, gif.',
+            'image.max' => 'Kích thước hình ảnh không được vượt quá 2MB.',
         ]);
 
-        $material = Material::create([
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('uploads/materials', 'public');
+        }
+
+        Material::create([
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
             'description' => $request->description,
-            'image' => $request->file('image') ? $request->file('image')->store('materials', 'public') : null,
-        ]);
+            'image' => $imagePath,
+        ]);       
 
-        return redirect()->route('admin.materials.index')->with('success', 'Material created successfully!');
+        return redirect()
+            ->route('admin.materials.index')
+            ->with('success', 'Thêm vật liệu mới thành công!');
     }
 
     public function show(Material $material)
@@ -89,25 +103,37 @@ class MaterialController extends Controller
             'name' => 'required|string|max:255|unique:materials,name,' . $material->id,
             'description' => 'nullable|string|max:1000',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required' => 'Tên vật liệu không được để trống.',
+            'name.unique' => 'Tên vật liệu đã tồn tại. Vui lòng chọn tên khác.',
+            'image.image' => 'Tệp tải lên phải là một hình ảnh hợp lệ.',
+            'image.mimes' => 'Định dạng hình ảnh không hợp lệ. Chỉ chấp nhận: jpeg, png, jpg, gif.',
+            'image.max' => 'Kích thước hình ảnh không được vượt quá 2MB.',
         ]);
 
-        $material->update([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-            'description' => $request->description,
-            'image' => $request->file('image') ? $request->file('image')->store('materials', 'public') : $material->image,
-        ]);
+        $data = $request->only(['name', 'description']);
 
-        return redirect()->route('admin.materials.index')->with('success', 'Material updated successfully!');
+        if ($request->hasFile('image')) {
+            // Xóa ảnh cũ nếu có
+            if ($material->image && Storage::disk('public')->exists($material->image)) {
+                Storage::disk('public')->delete($material->image);
+            }
+
+            $data['image'] = $request->file('image')->store('uploads/materials', 'public');
+        }
+
+        $material->update($data);
+
+        return redirect()->route('admin.materials.index')->with('success', 'Cập nhật vật liệu thành công!');
     }
 
     public function destroy(Material $material)
     {
         if ($material->products()->count() > 0) {
-            return redirect()->route('admin.materials.index')->with('error', 'Cannot delete material with existing products!');
+            return redirect()->route('admin.materials.index')->with('error', 'Không thể xóa vật liệu có sản phẩm liên quan!');
         }
 
         $material->delete();
-        return redirect()->route('admin.materials.index')->with('success', 'Material deleted successfully!');
+        return redirect()->route('admin.materials.index')->with('success', 'Vật liệu đã được xóa thành công!');
     }
 }

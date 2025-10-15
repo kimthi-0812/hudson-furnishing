@@ -28,4 +28,9 @@ class ProductImage extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function getFullUrlAttribute()
+    {
+        return asset('storage/uploads/products/' . $this->url);
+    }
 }

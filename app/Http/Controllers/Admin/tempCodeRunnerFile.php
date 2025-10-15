@@ -151,19 +151,31 @@ class ProductController extends Controller
     {
         // Xử lý dữ liệu trước khi validate
         $data = $request->all();
-
-        // Loại bỏ dấu phẩy từ price, sale_price, stock
-        $data['price'] = isset($data['price']) ? str_replace(',', '', $data['price']) : 0;
-        $data['sale_price'] = isset($data['sale_price']) ? str_replace(',', '', $data['sale_price']) : null;
-        $data['stock'] = isset($data['stock']) ? str_replace(',', '', $data['stock']) : 0;
-
+        
+        // Loại bỏ dấu phẩy từ price và sale_price
+        if (isset($data['price'])) {
+            $data['price'] = str_replace(',', '', $data['price']);
+        }
+        if (isset($data['sale_price'])) {
+            $data['sale_price'] = str_replace(',', '', $data['sale_price']);
+        }
+        if (isset($data['stock'])) {
+            $data['stock'] = str_replace(',', '', $data['stock']);
+        }
+        
         // Tự động chuyển status thành inactive nếu stock = 0
-        if ($data['stock'] == 0) {
+        if (isset($data['stock']) && $data['stock'] == 0) {
             $data['status'] = 'inactive';
         }
-
+        
+        // Cấm chọn active khi stock = 0
+        if (isset($data['stock']) && $data['stock'] == 0 && isset($data['status']) && $data['status'] == 'active') {
+            $data['status'] = 'inactive';
+        }
+        
+        // Tạo request mới với dữ liệu đã xử lý
         $request->merge($data);
-
+        
         $request->validate([
             'name'        => 'required|string|max:75',
             'description' => 'required|string',
@@ -177,18 +189,38 @@ class ProductController extends Controller
             'featured'    => 'boolean',
             'status'      => 'required|in:active,inactive',
             'images.*'    => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ],[
+            'name.required'        => 'Vui lòng nhập tên sản phẩm.',
+            'name.string'          => 'Tên sản phẩm phải là chuỗi ký tự.',
+            'name.max'             => 'Tên sản phẩm không được vượt quá 75 ký tự để đảm bảo hiển thị đẹp trên product card.',
+            'description.required' => 'Vui lòng nhập mô tả sản phẩm.',
+            'description.string'   => 'Mô tả sản phẩm phải là chuỗi ký tự.',
+            'section_id.required'  => 'Vui lòng chọn mục sản phẩm.',
+            'section_id.exists'    => 'Mục sản phẩm không tồn tại.',
+            'category_id.required' => 'Vui lòng chọn loại sản phẩm.',
+            'category_id.exists'   => 'Loại sản phẩm không tồn tại.',
+            'brand_id.required'    => 'Vui lòng chọn thương hiệu.',
+            'brand_id.exists'      => 'Thương hiệu không tồn tại.',
+            'material_id.required' => 'Vui lòng chọn chất liệu.',
+            'material_id.exists'   => 'Chất liệu không tồn tại.',
+            'price.required'       => 'Vui lòng nhập đơn giá.',
+            'price.numeric'        => 'Đơn giá phải là số.',
+            'price.min'            => 'Đơn giá phải lớn hơn 0.',
+            'price.max'            => 'Đơn giá không được vượt quá 1 tỷ VNĐ.',
+            'sale_price.numeric'   => 'Giá khuyến mãi phải là số.',
+            'sale_price.min'       => 'Giá khuyến mãi phải lớn hơn 0.',
+            'sale_price.max'       => 'Giá khuyến mãi không được vượt quá 1 tỷ VNĐ.',
+            'sale_price.lt'        => 'Giá khuyến mãi phải nhỏ hơn đơn giá.',
+            'stock.required'       => 'Vui lòng nhập số lượng hàng tồn.',
+            'stock.integer'        => 'Số lượng hàng tồn phải là số nguyên.',
+            'stock.min'            => 'Số lượng hàng tồn không được âm.',
+            'status.required'      => 'Vui lòng chọn tình trạng sản phẩm.',
+            'status.in'            => 'Tình trạng sản phẩm không hợp lệ.',
+            'images.*.image'       => 'Tệp tải lên phải là hình ảnh.',
+            'images.*.mimes'       => 'Hình ảnh phải có định dạng: jpeg, png, jpg, gif.',
+            'images.*.max'         => 'Kích thước hình ảnh không được vượt quá 2MB.',
         ]);
 
-        // Tạo slug duy nhất
-        $nameSlug = \Str::slug($request->name);
-        $slug = $nameSlug;
-        $counter = 1;
-        while (Product::where('slug', $slug)->exists()) {
-            $slug = $nameSlug . '-' . $counter;
-            $counter++;
-        }
-
-        // Tạo product
         $product = Product::create([
             'name'        => $request->name,
             'description' => $request->description,
@@ -199,20 +231,20 @@ class ProductController extends Controller
             'price'       => $request->price,
             'sale_price'  => $request->sale_price,
             'stock'       => $request->stock,
-            'slug'        => $slug,
+            'slug'        => \Str::slug($request->name),
             'featured'    => $request->boolean('featured'),
             'status'      => $request->status,
         ]);
 
-        // Upload hình ảnh
+        // Handle image uploads
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
-                $filename = 'product-' . $product->id . '-' . ($index + 1) . '.' . $image->getClientOriginalExtension();
-                $image->storeAs('uploads/products', $filename, 'public'); // Lưu trong storage/app/public/uploads/products
+                $filename = time() . '_' . $index . '.' . $image->getClientOriginalExtension();
+                $image->storeAs('uploads/products', $filename, 'public');
 
                 ProductImage::create([
                     'product_id' => $product->id,
-                    'url' => 'products/' . $filename, // đường dẫn đúng để hiển thị
+                    'url' => $filename,
                     'alt_text' => $product->name . ' - Image ' . ($index + 1),
                     'is_primary' => $index === 0,
                     'sort_order' => $index + 1,
@@ -220,9 +252,8 @@ class ProductController extends Controller
             }
         }
 
-
         return redirect()->route('admin.products.index')
-            ->with('success', 'Sản phẩm đã được tạo thành công.');
+            ->with('success', 'Product created successfully.');
     }
 
     /**
@@ -255,16 +286,31 @@ class ProductController extends Controller
     {
         // Xử lý dữ liệu trước khi validate
         $data = $request->all();
-        $data['price'] = isset($data['price']) ? str_replace(',', '', $data['price']) : 0;
-        $data['sale_price'] = isset($data['sale_price']) ? str_replace(',', '', $data['sale_price']) : null;
-        $data['stock'] = isset($data['stock']) ? str_replace(',', '', $data['stock']) : 0;
-
-        if ($data['stock'] == 0) {
+        
+        // Loại bỏ dấu phẩy từ price và sale_price
+        if (isset($data['price'])) {
+            $data['price'] = str_replace(',', '', $data['price']);
+        }
+        if (isset($data['sale_price'])) {
+            $data['sale_price'] = str_replace(',', '', $data['sale_price']);
+        }
+        if (isset($data['stock'])) {
+            $data['stock'] = str_replace(',', '', $data['stock']);
+        }
+        
+        // Tự động chuyển status thành inactive nếu stock = 0
+        if (isset($data['stock']) && $data['stock'] == 0) {
             $data['status'] = 'inactive';
         }
-
+        
+        // Cấm chọn active khi stock = 0
+        if (isset($data['stock']) && $data['stock'] == 0 && isset($data['status']) && $data['status'] == 'active') {
+            $data['status'] = 'inactive';
+        }
+        
+        // Tạo request mới với dữ liệu đã xử lý
         $request->merge($data);
-
+        
         $request->validate([
             'name'        => 'required|string|max:75',
             'description' => 'required|string',
@@ -278,50 +324,73 @@ class ProductController extends Controller
             'featured'    => 'boolean',
             'status'      => 'required|in:active,inactive',
             'images.*'    => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required'        => 'Vui lòng nhập tên sản phẩm.',
+            'name.string'          => 'Tên sản phẩm phải là chuỗi ký tự.',
+            'name.max'             => 'Tên sản phẩm không được vượt quá 75 ký tự để đảm bảo hiển thị đẹp trên product card.',
+            'description.required' => 'Vui lòng nhập mô tả sản phẩm.',
+            'description.string'   => 'Mô tả sản phẩm phải là chuỗi ký tự.',
+            'section_id.required'  => 'Vui lòng chọn mục sản phẩm.',
+            'section_id.exists'    => 'Mục sản phẩm không tồn tại.',
+            'category_id.required' => 'Vui lòng chọn loại sản phẩm.',
+            'category_id.exists'   => 'Loại sản phẩm không tồn tại.',
+            'brand_id.required'    => 'Vui lòng chọn thương hiệu.',
+            'brand_id.exists'      => 'Thương hiệu không tồn tại.',
+            'material_id.required' => 'Vui lòng chọn chất liệu.',
+            'material_id.exists'   => 'Chất liệu không tồn tại.',
+            'price.required'       => 'Vui lòng nhập đơn giá.',
+            'price.numeric'        => 'Đơn giá phải là số.',
+            'price.min'            => 'Đơn giá phải lớn hơn 0.',
+            'price.max'            => 'Đơn giá không được vượt quá 1 tỷ VNĐ.',
+            'sale_price.numeric'   => 'Giá khuyến mãi phải là số.',
+            'sale_price.min'       => 'Giá khuyến mãi phải lớn hơn 0.',
+            'sale_price.max'       => 'Giá khuyến mãi không được vượt quá 1 tỷ VNĐ.',
+            'sale_price.lt'        => 'Giá khuyến mãi phải nhỏ hơn đơn giá.',
+            'stock.required'       => 'Vui lòng nhập số lượng hàng tồn.',
+            'stock.integer'        => 'Số lượng hàng tồn phải là số nguyên.',
+            'stock.min'            => 'Số lượng hàng tồn không được âm.',
+            'status.required'      => 'Vui lòng chọn tình trạng sản phẩm.',
+            'status.in'            => 'Tình trạng sản phẩm không hợp lệ.',
+            'images.*.image'       => 'Tệp tải lên phải là hình ảnh.',
+            'images.*.mimes'       => 'Hình ảnh phải có định dạng: jpeg, png, jpg, gif.',
+            'images.*.max'         => 'Kích thước hình ảnh không được vượt quá 2MB.',
         ]);
-
-        // Tạo slug duy nhất (bỏ qua chính sản phẩm)
-        $nameSlug = \Str::slug($request->name);
-        $slug = $nameSlug;
-        $counter = 1;
-        while (Product::where('slug', $slug)->where('id', '!=', $product->id)->exists()) {
-            $slug = $nameSlug . '-' . $counter;
-            $counter++;
-        }
 
         $product->update([
-            'name'        => $request->name,
+            'name' => $request->name,
             'description' => $request->description,
-            'section_id'  => $request->section_id,
+            'section_id' => $request->section_id,
             'category_id' => $request->category_id,
-            'brand_id'    => $request->brand_id,
+            'brand_id' => $request->brand_id,
             'material_id' => $request->material_id,
-            'price'       => $request->price,
-            'sale_price'  => $request->sale_price,
-            'stock'       => $request->stock,
-            'slug'        => $slug,
-            'featured'    => $request->boolean('featured'),
-            'status'      => $request->status,
+            'price' => $request->price,
+            'sale_price' => $request->sale_price,
+            'stock' => $request->stock,
+            'slug' => \Str::slug($request->name),
+            'featured' => $request->boolean('featured'),
+            'status' => $request->status,
         ]);
 
-        // Upload hình ảnh mới (nếu có)
+        // Handle additional image uploads
         if ($request->hasFile('images')) {
+            $existingImagesCount = $product->images()->count();
+            
             foreach ($request->file('images') as $index => $image) {
-                $filename = 'product-' . $product->id . '-' . ($index + 1) . '.' . $image->getClientOriginalExtension();
-                $image->storeAs('uploads/products', $filename, 'public'); // Lưu trong storage/app/public/uploads/products
+                $filename = time() . '_' . ($existingImagesCount + $index) . '.' . $image->getClientOriginalExtension();
+                $image->storeAs('uploads/products', $filename, 'public');
 
                 ProductImage::create([
                     'product_id' => $product->id,
-                    'url' => 'products/' . $filename, // đường dẫn đúng để hiển thị
-                    'alt_text' => $product->name . ' - Image ' . ($index + 1),
-                    'is_primary' => $index === 0,
-                    'sort_order' => $index + 1,
+                    'url' => $filename,
+                    'alt_text' => $product->name . ' - Image ' . ($existingImagesCount + $index + 1),
+                    'is_primary' => false,
+                    'sort_order' => $existingImagesCount + $index + 1,
                 ]);
             }
         }
 
         return redirect()->route('admin.products.index')
-            ->with('success', 'Đã cập nhật sản phẩm thành công.');
+            ->with('success', 'Product updated successfully.');
     }
 
     /**
@@ -337,7 +406,7 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('admin.products.index')
-            ->with('success', 'Sản phẩm đã được xóa.');
+            ->with('success', 'Product deleted successfully.');
     }
 
     /**
@@ -352,17 +421,18 @@ class ProductController extends Controller
         $existingImagesCount = $product->images()->count();
 
         foreach ($request->file('images') as $index => $image) {
-            $filename = 'product-' . $product->id . '-' . ($existingImagesCount + $index + 1) . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('uploads/products', $filename, 'public');
+            $filename = time() . '_' . ($existingImagesCount + $index) . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('public/uploads/products', $filename);
 
             ProductImage::create([
                 'product_id' => $product->id,
                 'url' => $filename,
                 'alt_text' => $product->name . ' - Image ' . ($existingImagesCount + $index + 1),
-                'is_primary' => $index === 0,
+                'is_primary' => false,
                 'sort_order' => $existingImagesCount + $index + 1,
             ]);
         }
+
         return response()->json(['success' => true, 'message' => 'Images uploaded successfully.']);
     }
 

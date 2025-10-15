@@ -8,10 +8,10 @@
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-light">Chi Tiết Thương Hiệu: {{ $brand->name }}</h6>
         <div>
-            <a href="{{ route('admin.brands.edit', $brand) }}" class="btn btn-warning btn-sm">
+            <a href="{{ route('admin.brands.edit', $brand) }}" class="btn btn-secondary btn-sm text-light">
                 <i class="fas fa-edit"></i> Chỉnh Sửa
             </a>
-            <a href="{{ route('admin.brands.index') }}" class="btn btn-info btn-sm">
+            <a href="{{ route('admin.brands.index') }}" class="btn btn-secondary btn-sm text-light">
                 <i class="fas fa-arrow-left"></i> Quay Lại Danh Sách
             </a>
         </div>
@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-md-3 text-center">
                 @if ($brand->logo)
-                    <img src="{{ asset('storage/uploads/' . $brand->logo) }}" alt="{{ $brand->name }} Logo" class="img-fluid rounded" style="max-height: 150px; border: 1px solid #ccc;">
+                    <img src="{{ asset('storage/' . $brand->logo) }}" alt="{{ $brand->name }} Logo" class="img-fluid rounded" style="max-height: 150px; border: 1px solid #ccc;">
                 @else
                     <p class="text-muted">Không có Logo</p>
                 @endif
@@ -65,7 +65,7 @@
                             <td>{{ $product->category->name ?? 'N/A' }}</td>
                             <td>{{ number_format($product->price) }} VNĐ</td>
                             <td>
-                                <a href="{{ route('admin.products.show', $product) }}" class="btn btn-sm btn-info">Xem</a>
+                                <a href="{{ route('admin.products.show', $product) }}" class="btn btn-sm btn-secondary text-light">Xem</a>
                             </td>
                         </tr>
                         @endforeach

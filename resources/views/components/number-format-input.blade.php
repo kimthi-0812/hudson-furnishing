@@ -56,114 +56,82 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Function to format number with thousands separator (integer only)
+
+    // --- Helper: format và bỏ định dạng ---
     function formatNumber(value) {
         if (!value) return '';
-        
-        // Remove all non-digit characters
-        let cleanValue = value.replace(/[^\d]/g, '');
-        
-        // Add thousands separator to integer part only
-        if (cleanValue) {
-            cleanValue = cleanValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        }
-        
-        return cleanValue;
+        const num = value.toString().replace(/[^\d]/g, '');
+        return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
-    
-    // Function to get numeric value (remove formatting)
+
     function getNumericValue(formattedValue) {
         return formattedValue.replace(/[^\d]/g, '');
     }
-    
-    // Apply to all number format inputs
+
+    // --- Áp dụng cho tất cả input có class number-format-input ---
     document.querySelectorAll('.number-format-input').forEach(function(input) {
-        // Format on input
+
+        // Khi người dùng nhập
         input.addEventListener('input', function(e) {
-            let cursorPosition = e.target.selectionStart;
-            let oldValue = e.target.value;
-            let newValue = formatNumber(e.target.value);
-            
-            // Update the input value
-            e.target.value = newValue;
-            
-            // Restore cursor position (adjust for added commas)
-            let addedCommas = (newValue.match(/,/g) || []).length - (oldValue.match(/,/g) || []).length;
-            let newCursorPosition = cursorPosition + addedCommas;
-            
-            // Ensure cursor position is within bounds
-            newCursorPosition = Math.min(newCursorPosition, newValue.length);
-            e.target.setSelectionRange(newCursorPosition, newCursorPosition);
-            
-            // Validate input
+            const rawValue = e.target.value.replace(/[^\d]/g, '');
+            const formatted = formatNumber(rawValue);
+            e.target.value = formatted;
             validateInput(e.target);
-            
-            // If this is a price field, re-validate sale_price
+
+            // Nếu là price thì validate lại sale_price
             if (e.target.name === 'price') {
                 const salePriceField = document.querySelector('input[name="sale_price"]');
-                if (salePriceField) {
-                    validateInput(salePriceField);
-                }
+                if (salePriceField) validateInput(salePriceField);
             }
         });
-        
-        // Format on blur (when user leaves the field)
+
+        // Khi rời khỏi input
         input.addEventListener('blur', function(e) {
             e.target.value = formatNumber(e.target.value);
             validateInput(e.target);
-            
-            // If this is a price field, re-validate sale_price
+
             if (e.target.name === 'price') {
                 const salePriceField = document.querySelector('input[name="sale_price"]');
-                if (salePriceField) {
-                    validateInput(salePriceField);
-                }
+                if (salePriceField) validateInput(salePriceField);
             }
         });
-        
-        // Format on focus (when user enters the field)
+
+        // Khi focus lại (đảm bảo format đúng)
         input.addEventListener('focus', function(e) {
             e.target.value = formatNumber(e.target.value);
         });
-        
-        // Prevent non-numeric characters (except comma)
+
+        // Chặn ký tự không phải số
         input.addEventListener('keypress', function(e) {
-            let char = String.fromCharCode(e.which);
+            const char = String.fromCharCode(e.which);
             if (!/[0-9]/.test(char) && e.which !== 8 && e.which !== 9 && e.which !== 27) {
                 e.preventDefault();
             }
         });
-        
-        // Handle paste event
+
+        // Xử lý paste (dán)
         input.addEventListener('paste', function(e) {
             setTimeout(() => {
                 e.target.value = formatNumber(e.target.value);
             }, 0);
         });
     });
-    
-    // Function to get raw numeric value from formatted input (for form submission)
-    window.getFormattedInputValue = function(inputElement) {
-        return getNumericValue(inputElement.value);
-    };
-    
-    // Function to validate a single input
+
+    // --- Validate dữ liệu ---
     function validateInput(input) {
         const numericValue = getNumericValue(input.value);
         const isStockField = input.name === 'stock';
         const isSalePriceField = input.name === 'sale_price';
         const isDiscountField = input.name === 'discount_value';
-        
+
         if (numericValue && !isNaN(numericValue)) {
             const numValue = parseFloat(numericValue);
             let isValid = true;
             let errorMessage = '';
-            
-            // Check discount field with different rules for percentage vs fixed
+
             if (isDiscountField) {
                 const discountTypeField = document.querySelector('select[name="discount_type"]');
                 if (discountTypeField && discountTypeField.value === 'percentage') {
-                    // For percentage: only check > 0 and <= 75
                     if (numValue <= 0) {
                         isValid = false;
                         errorMessage = 'Tỷ lệ giảm giá phải lớn hơn 0%';
@@ -172,7 +140,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         errorMessage = 'Tỷ lệ giảm giá không được vượt quá 75%';
                     }
                 } else {
-                    // For fixed value: check >= 1000 and <= 1 billion
                     if (numValue < 1000) {
                         isValid = false;
                         errorMessage = 'Giá trị giảm phải tối thiểu 1,000 VNĐ';
@@ -182,24 +149,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             } else {
-                // For other fields (stock, sale_price, price)
                 const minValue = isStockField ? 0 : 1000;
-                const maxValue = 1000000000; // 1 tỷ
-                
+                const maxValue = 1000000000;
+
                 if (numValue < minValue) {
                     isValid = false;
-                    if (isStockField) {
-                        errorMessage = 'Số lượng hàng tồn không được âm';
-                    } else {
-                        errorMessage = 'Giá trị phải tối thiểu 1,000 VNĐ';
-                    }
+                    errorMessage = isStockField
+                        ? 'Số lượng hàng tồn không được âm'
+                        : 'Giá trị phải tối thiểu 1,000 VNĐ';
                 } else if (numValue > maxValue) {
                     isValid = false;
                     errorMessage = 'Giá trị không được vượt quá 1 tỷ VNĐ';
                 }
             }
-            
-            // Check sale price vs regular price
+
             if (isSalePriceField && isValid) {
                 const priceField = document.querySelector('input[name="price"]');
                 if (priceField && priceField.value) {
@@ -210,50 +173,41 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             }
-            
+
             if (isValid) {
                 input.classList.remove('is-invalid');
                 input.classList.add('is-valid');
-                input.title = ''; // Clear error message
+                input.title = '';
             } else {
                 input.classList.remove('is-valid');
                 input.classList.add('is-invalid');
                 input.title = errorMessage;
             }
+
         } else if (!numericValue) {
             input.classList.remove('is-valid', 'is-invalid');
-            input.title = ''; // Clear error message
+            input.title = '';
         } else {
             input.classList.remove('is-valid');
             input.classList.add('is-invalid');
             input.title = 'Vui lòng nhập số hợp lệ';
         }
     }
-    
-    // Auto-format existing values on page load and validate
+
+    // --- Format và validate khi load trang ---
     document.querySelectorAll('.number-format-input').forEach(function(input) {
-        if (input.value) {
-            input.value = formatNumber(input.value);
-        }
+        if (input.value) input.value = formatNumber(input.value);
         validateInput(input);
     });
-    
-    // Force re-validate all inputs after a short delay to ensure DOM is ready
-    setTimeout(function() {
-        document.querySelectorAll('.number-format-input').forEach(function(input) {
-            validateInput(input);
-        });
-    }, 100);
-    
-    // Re-validate discount_value when discount_type changes
+
+    // --- Revalidate khi thay đổi loại giảm giá ---
     const discountTypeField = document.querySelector('select[name="discount_type"]');
     if (discountTypeField) {
         discountTypeField.addEventListener('change', function() {
             const discountValueField = document.querySelector('input[name="discount_value"]');
-            if (discountValueField) {
-                validateInput(discountValueField);
-            }
+            if (discountValueField) validateInput(discountValueField);
         });
     }
+
 });
 </script>

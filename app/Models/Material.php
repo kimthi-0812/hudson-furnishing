@@ -15,6 +15,7 @@ class Material extends Model
     protected $fillable = [
         'name',
         'description',
+        'image',
     ];
 
     public function products(): HasMany

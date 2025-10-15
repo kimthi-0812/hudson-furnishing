@@ -7,9 +7,6 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-light">Tạo Ưu Đãi Mới</h6>
-        <a href="{{ route('admin.offers.index') }}" class="btn btn-info btn-sm">
-            <i class="fas fa-arrow-left"></i> Quay Lại Danh Sách
-        </a>
     </div>
     <div class="card-body">
         
@@ -113,10 +110,13 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-icon-split mt-3">
+            <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary btn-sm text-light">
                 <span class="icon text-white-50"><i class="fas fa-plus"></i></span>
                 <span class="text">Tạo Ưu Đãi</span>
             </button>
+            <a href="{{ route('admin.offers.index') }}" class="btn btn-secondary btn-sm text-light">Hủy</a>
+            </div>
         </form>
     </div>
 </div>

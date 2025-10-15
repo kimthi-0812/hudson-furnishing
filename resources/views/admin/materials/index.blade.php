@@ -40,11 +40,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($materials as $material)
+                    @forelse ($materials as $material)
                         <tr>
                             <td>
                                 @if($material->image)
-                                    <img src="{{ asset('uploads/materials/' . $material->image) }}" 
+                                    <img src="{{ asset('storage/' . $material->image) }}" 
                                          alt="{{ $material->name }}" class="img-thumbnail admin-table-image">
                                 @else
                                     <div class="bg-light d-flex align-items-center justify-content-center admin-table-image">

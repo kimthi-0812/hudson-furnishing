@@ -8,10 +8,10 @@
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-light">Chi Tiết Vật Liệu: {{ $material->name }}</h6>
         <div>
-            <a href="{{ route('admin.materials.edit', $material) }}" class="btn btn-warning btn-sm">
+            <a href="{{ route('admin.materials.edit', $material) }}" class="btn btn-secondary btn-sm text-light">
                 <i class="fas fa-edit"></i> Chỉnh Sửa
             </a>
-            <a href="{{ route('admin.materials.index') }}" class="btn btn-info btn-sm">
+            <a href="{{ route('admin.materials.index') }}" class="btn btn-secondary btn-sm text-light">
                 <i class="fas fa-arrow-left"></i> Quay Lại Danh Sách
             </a>
         </div>
@@ -69,7 +69,7 @@
                             <td>{{ $product->brand->name ?? 'N/A' }}</td>
                             <td>{{ number_format($product->price) }} VNĐ</td>
                             <td>
-                                <a href="{{ route('admin.products.show', $product) }}" class="btn btn-sm btn-info">Xem</a>
+                                <a href="{{ route('admin.products.show', $product) }}" class="btn btn-sm btn-secondary text-light">Xem</a>
                             </td>
                         </tr>
                         @endforeach

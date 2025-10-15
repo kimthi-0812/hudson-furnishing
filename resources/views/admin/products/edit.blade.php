@@ -186,9 +186,9 @@
                 @enderror
             </div>
             
-            <div class="text-end">
-                <button type="submit" class="btn btn-primary">Cập nhật Sản Phẩm</button>
-                <a href="{{ route('admin.products.index') }}" class="btn btn-secondary me-2">Hủy</a>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary btn-sm">Cập nhật Sản Phẩm</button>
+                <a href="{{ route('admin.products.index') }}" class="btn btn-secondary btn-sm">Hủy</a>
             </div>
         </form>
     </div>

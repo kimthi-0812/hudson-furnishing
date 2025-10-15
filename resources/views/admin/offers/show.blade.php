@@ -8,10 +8,10 @@
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-light">Thông Tin Chi Tiết Ưu Đãi: {{ $offer->title }}</h6>
         <div>
-            <a href="{{ route('admin.offers.edit', $offer) }}" class="btn btn-warning btn-sm">
+            <a href="{{ route('admin.offers.edit', $offer) }}" class="btn btn-secondary btn-sm text-light">
                 <i class="fas fa-edit"></i> Chỉnh Sửa
             </a>
-            <a href="{{ route('admin.offers.index') }}" class="btn btn-info btn-sm">
+            <a href="{{ route('admin.offers.index') }}" class="btn btn-secondary btn-sm text-light">
                 <i class="fas fa-arrow-left"></i> Quay Lại Danh Sách
             </a>
         </div>
@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-md-3 text-center">
                 @if ($offer->image)
-                    <img src="{{ asset('storage/uploads/offers/' . $offer->image) }}" alt="{{ $offer->title }} Image" class="img-fluid rounded" style="max-height: 200px; border: 1px solid #ccc;">
+                    <img src="{{ asset('storage/' . $offer->image) }}" alt="{{ $offer->title }} Image" class="img-fluid rounded" style="max-height: 200px; border: 1px solid #ccc;">
                 @else
                     <p class="text-muted">Không có ảnh đại diện</p>
                 @endif

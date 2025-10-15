@@ -4,8 +4,8 @@
 @section('page-title', 'Chi Tiết Sản Phẩm')
 
 @section('page-actions')
-    <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-primary">
-        <i class="fas fa-edit me-2"></i>Chỉnh Sửa Sản Phẩm
+    <a href="{{ route('admin.products.index', $product) }}" class="btn btn-primary">
+        <i class="fas fa-arrow-left me-2"></i>Quay Lại Sản Phẩm
     </a>
 @endsection
 

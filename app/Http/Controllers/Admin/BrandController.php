@@ -7,6 +7,7 @@ use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\Storage;
 
 
 class BrandController extends Controller
@@ -60,16 +61,29 @@ class BrandController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:brands',
-            'description' => 'nullable|string|max:1000',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required' => 'Tên thương hiệu không được để trống.',
+            'name.unique' => 'Tên thương hiệu đã tồn tại.',
+            'logo.image' => 'File tải lên phải là hình ảnh.',
+            'logo.mimes' => 'Hình ảnh phải có định dạng: jpeg, png, jpg, gif.',
+            'logo.max' => 'Kích thước hình ảnh không được vượt quá 2MB.',
         ]);
 
         $brand = Brand::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-            'description' => $request->description,
-            'logo' => $request->file('logo') ? $request->file('logo')->store('brands', 'public') : null,
-        ]);
+        'name' => $request->name,
+        'slug' => Str::slug($request->name),
+    ]);
+
+    // Nếu có file logo thì lưu
+    if ($request->hasFile('logo')) {
+        $file = $request->file('logo');
+        $filename = 'brands/' . $brand->id . '-' . time() . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('public', $filename);
+
+        $brand->logo = $filename;
+        $brand->save();
+    }
 
         return redirect()->route('admin.brands.index')->with('success', 'Brand created successfully!');
     }
@@ -93,17 +107,37 @@ class BrandController extends Controller
             'name' => 'required|string|max:255|unique:brands,name,' . $brand->id,
             'description' => 'nullable|string|max:1000',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required' => 'Tên thương hiệu không được để trống.',
+            'name.unique' => 'Tên thương hiệu đã tồn tại.',
+            'logo.image' => 'File tải lên phải là hình ảnh.',
+            'logo.mimes' => 'Hình ảnh phải có định dạng: jpeg, png, jpg, gif.',
+            'logo.max' => 'Kích thước hình ảnh không được vượt quá 2MB.',
         ]);
 
-        $brand->update([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-            'description' => $request->description,
-            'logo' => $request->file('logo') ? $request->file('logo')->store('brands', 'public') : $brand->logo,
-        ]);
+        // Cập nhật các trường cơ bản
+        $brand->name = $request->name;
+        $brand->slug = Str::slug($request->name);
+
+        // Nếu có file logo mới thì lưu và cập nhật
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $filename = 'brands/' . $brand->id . '-' . time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public', $filename);
+
+            // Xóa file logo cũ nếu có
+            if ($brand->logo && Storage::disk('public')->exists($brand->logo)) {
+                Storage::disk('public')->delete($brand->logo);
+            }
+
+            $brand->logo = $filename;
+        }
+
+        $brand->save();
 
         return redirect()->route('admin.brands.index')->with('success', 'Brand updated successfully!');
     }
+
 
     public function destroy(Brand $brand)
     {

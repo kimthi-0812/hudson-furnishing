@@ -5,7 +5,7 @@
 
 <div class="card mb-4 standalone-filter">
     <div class="card-header">
-        <h6 class="m-0 font-weight-bold text-primary">
+        <h6 class="m-0 font-weight-bold text-light">
             <i class="fas fa-filter me-2"></i>Bộ Lọc Nâng Cao
         </h6>
     </div>

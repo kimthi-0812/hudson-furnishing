@@ -7,9 +7,6 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-light">Thêm Thương Hiệu Mới</h6>
-        <a href="{{ route('admin.brands.index') }}" class="btn btn-info btn-sm">
-            <i class="fas fa-arrow-left"></i> Quay Lại Danh Sách
-        </a>
     </div>
     <div class="card-body">
         
@@ -47,22 +44,30 @@
 
             {{-- Trường Logo (logo) --}}
             <div class="form-group">
-                <label for="logo">Logo Thương Hiệu</label>
-                <input 
-                    type="file" 
-                    name="logo" 
-                    id="logo" 
-                    class="form-control-file @error('logo') is-invalid @enderror"
-                >
-                <small class="form-text text-muted">Tùy chọn. Chỉ chấp nhận các file hình ảnh.</small>
-                @error('logo')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <div class="mb-3">
+                    <x-image-upload 
+                        name="logo"
+                        label="Hình Ảnh Logo Thương Hiệu"
+                        :multiple="false"
+                        :required="false"
+                        :existingImages="[]"  {{-- chưa có ảnh nào --}}
+                        acceptedTypes="logo"
+                        maxSize="2MB"
+                    />
+                    @error('logo')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
             </div>
             
-            <button type="submit" class="btn btn-primary mt-3">
+            <div class="text-end">
+                <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary btn-sm">
                 <i class="fas fa-save"></i> Lưu Thương Hiệu
             </button>
+            <a href="{{ route('admin.brands.index') }}" class="btn btn-secondary btn-sm"> Hủy</a>
+                </div>
+            </div>
         </form>
 
     </div>

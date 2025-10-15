@@ -38,8 +38,10 @@
             </div>
             
             <div class="text-end">
-                <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary me-2">Hủy</a>
+                <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-primary">Tạo Danh Mục</button>
+                <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary me-2">Hủy</a>
+                </div>
             </div>
         </form>
     </div>
