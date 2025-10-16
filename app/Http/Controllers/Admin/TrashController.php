@@ -23,8 +23,9 @@ class TrashController extends Controller
     {
         $trashedItems = SoftDeleteService::getAllTrashedItems();
         $statistics = SoftDeleteService::getTrashStatistics();
+        $modelNames = SoftDeleteService::getModelNames();
         
-        return view('admin.trash.index', compact('trashedItems', 'statistics'));
+        return view('admin.trash.index', compact('trashedItems', 'statistics', 'modelNames'));
     }
 
     /**
@@ -40,8 +41,9 @@ class TrashController extends Controller
         
         $modelClass = $models[$model];
         $items = $modelClass::onlyTrashed()->paginate(15);
+        $modelNames = SoftDeleteService::getModelNames();
         
-        return view('admin.trash.show', compact('items', 'model', 'modelClass'));
+        return view('admin.trash.show', compact('items', 'model', 'modelClass', 'modelNames'));
     }
 
     /**
