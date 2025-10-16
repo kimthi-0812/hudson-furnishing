@@ -11,6 +11,8 @@ class Gallery extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $table = 'gallery';
+
     protected $fillable = [
         'title',
         'description',

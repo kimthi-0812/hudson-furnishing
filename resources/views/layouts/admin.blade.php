@@ -89,6 +89,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-white {{ request()->routeIs('admin.about.*') ? 'active' : '' }}" 
+                               href="{{ route('admin.about.index') }}">
+                                <i class="fas fa-info-circle me-2"></i>Trang Giới Thiệu
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-white {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}" 
                                href="{{ route('admin.settings.index') }}">
                                 <i class="fas fa-cog me-2"></i>Cài Đặt
@@ -154,8 +160,6 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom Admin JS -->
-    <script src="{{ asset('js/admin.js') }}"></script>
     
     @stack('scripts')
 </body>

@@ -11,6 +11,9 @@ use App\Models\Brand;
 use App\Models\Material;
 use App\Models\ProductImage;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -120,7 +123,7 @@ class ProductController extends Controller
         }
 
         // 14. Phân trang
-        $products = $query->paginate(15)->withQueryString();
+        $products = $query->paginate(15);
 
         // 15. Lấy dữ liệu cho filter
         $sections = Section::all();
@@ -145,6 +148,15 @@ class ProductController extends Controller
     }
 
     /**
+     * Get categories by section ID for AJAX
+     */
+    public function getCategoriesBySection($sectionId)
+    {
+        $categories = Category::where('section_id', $sectionId)->get();
+        return response()->json($categories);
+    }
+
+    /**
      * Store a newly created product.
      */
     public function store(Request $request)
@@ -152,9 +164,10 @@ class ProductController extends Controller
         // Xử lý dữ liệu trước khi validate
         $data = $request->all();
 
-        // Loại bỏ dấu phẩy từ price, sale_price, stock
+        // Loại bỏ dấu phẩy từ price, sale_price, stock, discount_value
         $data['price'] = isset($data['price']) ? str_replace(',', '', $data['price']) : 0;
         $data['sale_price'] = isset($data['sale_price']) ? str_replace(',', '', $data['sale_price']) : null;
+        $data['discount_value'] = isset($data['discount_value']) ? str_replace(',', '', $data['discount_value']) : null;
         $data['stock'] = isset($data['stock']) ? str_replace(',', '', $data['stock']) : 0;
 
         // Tự động chuyển status thành inactive nếu stock = 0
@@ -164,57 +177,127 @@ class ProductController extends Controller
 
         $request->merge($data);
 
+        // Debug: Log request data
+        Log::info('Product creation request:', [
+            'has_primary_image' => $request->hasFile('primary_image'),
+            'has_images' => $request->hasFile('images'),
+            'files' => $request->allFiles(),
+            'all_data' => $request->except(['_token'])
+        ]);
+
         $request->validate([
             'name'        => 'required|string|max:75',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
+            'specifications' => 'required|string',
             'section_id'  => 'required|exists:sections,id',
             'category_id' => 'required|exists:categories,id',
             'brand_id'    => 'required|exists:brands,id',
             'material_id' => 'required|exists:materials,id',
             'price'       => 'required|numeric|min:1|max:1000000000',
             'sale_price'  => 'nullable|numeric|min:1|max:1000000000|lt:price',
+            'discount_type' => 'nullable|in:percent,amount',
+            'discount_value' => 'nullable|numeric|min:0|max:1000000000',
             'stock'       => 'required|integer|min:0',
             'featured'    => 'boolean',
             'status'      => 'required|in:active,inactive',
-            'images.*'    => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'primary_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Tạo slug duy nhất
-        $nameSlug = \Str::slug($request->name);
+        $nameSlug = Str::slug($request->name);
         $slug = $nameSlug;
         $counter = 1;
+        
+        // Đảm bảo slug duy nhất
         while (Product::where('slug', $slug)->exists()) {
             $slug = $nameSlug . '-' . $counter;
             $counter++;
+            
+            // Prevent infinite loop
+            if ($counter > 1000) {
+                $slug = $nameSlug . '-' . time();
+                break;
+            }
         }
 
-        // Tạo product
-        $product = Product::create([
-            'name'        => $request->name,
-            'description' => $request->description,
-            'section_id'  => $request->section_id,
-            'category_id' => $request->category_id,
-            'brand_id'    => $request->brand_id,
-            'material_id' => $request->material_id,
-            'price'       => $request->price,
-            'sale_price'  => $request->sale_price,
-            'stock'       => $request->stock,
-            'slug'        => $slug,
-            'featured'    => $request->boolean('featured'),
-            'status'      => $request->status,
-        ]);
+        // Tạo product với transaction
+        try {
+            $product = DB::transaction(function () use ($request, $slug) {
+                return Product::create([
+                    'name'        => $request->name,
+                    'description' => $request->description ?: '',
+                    'specifications' => $request->specifications,
+                    'section_id'  => $request->section_id,
+                    'category_id' => $request->category_id,
+                    'brand_id'    => $request->brand_id,
+                    'material_id' => $request->material_id,
+                    'price'       => $request->price,
+                    'sale_price'  => $request->sale_price,
+                    'discount_type' => $request->discount_type,
+                    'discount_value' => $request->discount_value,
+                    'stock'       => $request->stock,
+                    'slug'        => $slug,
+                    'featured'    => $request->boolean('featured'),
+                    'status'      => $request->status,
+                ]);
+            });
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Nếu vẫn bị duplicate slug, thử lại với timestamp
+            if (str_contains($e->getMessage(), 'products_slug_unique')) {
+                $slug = $nameSlug . '-' . time() . '-' . rand(1000, 9999);
+                $product = Product::create([
+                    'name'        => $request->name,
+                    'description' => $request->description ?: '',
+                    'specifications' => $request->specifications,
+                    'section_id'  => $request->section_id,
+                    'category_id' => $request->category_id,
+                    'brand_id'    => $request->brand_id,
+                    'material_id' => $request->material_id,
+                    'price'       => $request->price,
+                    'sale_price'  => $request->sale_price,
+                    'discount_type' => $request->discount_type,
+                    'discount_value' => $request->discount_value,
+                    'stock'       => $request->stock,
+                    'slug'        => $slug,
+                    'featured'    => $request->boolean('featured'),
+                    'status'      => $request->status,
+                ]);
+            } else {
+                throw $e;
+            }
+        }
 
-        // Upload hình ảnh
+        // Upload ảnh chính
+        if ($request->hasFile('primary_image')) {
+            $primaryImage = $request->file('primary_image');
+            $primaryFilename = 'product-' . $product->id . '-primary.' . $primaryImage->getClientOriginalExtension();
+            $primaryImage->storeAs('uploads/products', $primaryFilename, 'public');
+            
+            // Update product với primary image
+            $product->update(['primary_image' => $primaryFilename]);
+            
+            // Tạo ProductImage cho primary
+            ProductImage::create([
+                'product_id' => $product->id,
+                'url' => $primaryFilename,
+                'alt_text' => $product->name . ' - Primary Image',
+                'is_primary' => true,
+                'sort_order' => 0,
+            ]);
+        }
+
+        // Upload hình ảnh bổ sung
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
-                $filename = 'product-' . $product->id . '-' . ($index + 1) . '.' . $image->getClientOriginalExtension();
-                $image->storeAs('uploads/products', $filename, 'public'); // Lưu trong storage/app/public/uploads/products
+                $filename = 'product-' . $product->id . '-additional-' . ($index + 1) . '.' . $image->getClientOriginalExtension();
+                $image->storeAs('uploads/products', $filename, 'public');
 
                 ProductImage::create([
                     'product_id' => $product->id,
-                    'url' => 'products/' . $filename, // đường dẫn đúng để hiển thị
-                    'alt_text' => $product->name . ' - Image ' . ($index + 1),
-                    'is_primary' => $index === 0,
+                    'url' => $filename,
+                    'alt_text' => $product->name . ' - Additional Image ' . ($index + 1),
+                    'is_primary' => false, // Không phải ảnh chính
                     'sort_order' => $index + 1,
                 ]);
             }
@@ -281,7 +364,7 @@ class ProductController extends Controller
         ]);
 
         // Tạo slug duy nhất (bỏ qua chính sản phẩm)
-        $nameSlug = \Str::slug($request->name);
+        $nameSlug = Str::slug($request->name);
         $slug = $nameSlug;
         $counter = 1;
         while (Product::where('slug', $slug)->where('id', '!=', $product->id)->exists()) {

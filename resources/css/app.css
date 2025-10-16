@@ -872,10 +872,27 @@ body {
 
 .card-header {
     background: linear-gradient(135deg, var(--primary-color), #4a7c8a);
-    color: white;
+    color: white !important;
     border-radius: 15px 15px 0 0 !important;
     border: none;
     padding: 1.5rem;
+}
+
+.card-header h6,
+.card-header h5,
+.card-header h4,
+.card-header h3,
+.card-header h2,
+.card-header h1 {
+    color: white !important;
+}
+
+.card-header .text-primary {
+    color: white !important;
+}
+
+.card-header i {
+    color: white !important;
 }
 
 /* Form Enhancements */
@@ -1031,6 +1048,41 @@ body {
     box-shadow: 2px 0 10px rgba(51, 92, 103, 0.1);
 }
 
+/* Admin Card Headers - Force White Text */
+.admin-content .card-header {
+    background: linear-gradient(135deg, var(--primary-color), #4a7c8a) !important;
+    color: white !important;
+}
+
+.admin-content .card-header * {
+    color: white !important;
+}
+
+.admin-content .card-header h1,
+.admin-content .card-header h2,
+.admin-content .card-header h3,
+.admin-content .card-header h4,
+.admin-content .card-header h5,
+.admin-content .card-header h6 {
+    color: white !important;
+}
+
+.admin-content .card-header .text-primary,
+.admin-content .card-header .text-secondary,
+.admin-content .card-header .text-info,
+.admin-content .card-header .text-warning,
+.admin-content .card-header .text-danger,
+.admin-content .card-header .text-success {
+    color: white !important;
+}
+
+.admin-content .card-header i,
+.admin-content .card-header .fas,
+.admin-content .card-header .far,
+.admin-content .card-header .fab {
+    color: white !important;
+}
+
 .admin-sidebar .nav-link {
     color: white;
     padding: 1rem 1.5rem;
@@ -1153,6 +1205,7 @@ body {
 }
 .bg-primary {
     background: linear-gradient(135deg, var(--primary-color), #4a7c8a) !important;
+    color: white !important;
 }
 .border-primary {
     border-color: var(--primary-color) !important;
@@ -1371,6 +1424,46 @@ herosection
     100% { transform: translateY(0); opacity: 1; }
 }
 .bounce-in { animation: backToTopBounceIn .2s ease-out; }
+
+/* About Page Text Visibility Fix */
+.about-values-section {
+    background: linear-gradient(135deg, var(--primary-color), #4a7c8a) !important;
+    color: white !important;
+}
+
+.about-values-section h2,
+.about-values-section h3,
+.about-values-section h4,
+.about-values-section h5,
+.about-values-section h6 {
+    color: white !important;
+}
+
+.about-values-section p,
+.about-values-section span,
+.about-values-section div {
+    color: white !important;
+}
+
+.about-values-section .text-muted {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Fix for mission, vision, values cards */
+.mission-vision-values .card-body h4,
+.mission-vision-values .card-body p {
+    color: #333 !important;
+}
+
+/* Fix for our values section */
+.our-values-section .bg-primary.text-white {
+    background: linear-gradient(135deg, var(--primary-color), #4a7c8a) !important;
+    color: white !important;
+}
+
+.our-values-section .bg-primary.text-white i {
+    color: white !important;
+}
 
 /* CSS CUỐI CÙNG - OVERRIDE MỌI THỨ */
 html body div.product-card div.product-info h5.product-name a,
