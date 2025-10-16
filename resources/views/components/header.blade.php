@@ -75,7 +75,17 @@
             
             <!-- Phần đăng nhập/đăng ký hoặc thông tin người dùng -->
             <ul class="navbar-nav flex-nowrap">
-                @auth                    
+                @auth
+                    @if(auth()->user()->isAdmin())
+                        <!-- Nút quản trị riêng biệt -->
+                        <li class="nav-item">
+                            <a class="nav-link admin-icon px-2" href="{{ route('admin.dashboard') }}" title="Quản Trị">
+                                <i class="fas fa-cog"></i>
+                                <span class="d-md-none ms-1">Quản Trị</span>
+                            </a>
+                        </li>
+                    @endif
+                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle px-2" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user"></i>
@@ -84,14 +94,9 @@
                         <ul class="dropdown-menu dropdown-menu-end shadow">
                             <li><h6 class="dropdown-header">{{ auth()->user()->name }}</h6></li>
                             <li><hr class="dropdown-divider"></li>
-                            @if(auth()->user()->isAdmin())
-                                <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">
-                                    <i class="fas fa-cog me-2"></i>Quản Trị
-                                </a></li>
-                            @endif
-                            <a class="dropdown-item" href="{{ route('password.edit') }}">
-                                <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Đổi mật khẩu
+                            <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                <i class="fas fa-user-edit fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Thông tin cá nhân
                             </a>
                             <div class="dropdown-divider"></div>
 
@@ -153,6 +158,36 @@
 
     .navbar-collapse {
         width: 100%;
+    }
+}
+
+/* CSS cho icon admin */
+.admin-icon {
+    color: #6c757d !important;
+    padding: 0.5rem !important;
+    border-radius: 50% !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+}
+
+.admin-icon:hover {
+    color: #007bff !important;
+    background-color: rgba(0, 123, 255, 0.1) !important;
+    transform: rotate(90deg) !important;
+}
+
+.admin-icon i {
+    font-size: 1.1rem !important;
+}
+
+/* Responsive cho mobile */
+@media (max-width: 767.98px) {
+    .admin-icon {
+        padding: 0.375rem 0.5rem !important;
+    }
+    
+    .admin-icon:hover {
+        transform: none !important;
     }
 }
 
