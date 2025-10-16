@@ -13,7 +13,7 @@ class HomeController extends Controller
     /**
      * Display the homepage.
      */
-    public function index()
+    public function index(Request $request)
     {
         $featuredProducts = Product::with(['section', 'category', 'brand', 'material', 'images'])
             ->where('featured', true)
@@ -27,9 +27,38 @@ class HomeController extends Controller
             ->limit(5)
             ->get();
 
+        // Lấy danh mục được chọn hoặc mặc định là Sofa
+        $selectedCategoryId = $request->get('category_id');
+        if (!$selectedCategoryId) {
+            // Tìm danh mục Sofa mặc định
+            $sofaCategory = \App\Models\Category::where('name', 'LIKE', '%Sofa%')->first();
+            $selectedCategoryId = $sofaCategory ? $sofaCategory->id : null;
+        }
+
+        // Lấy sản phẩm của danh mục được chọn
+        $selectedCategory = null;
+        $categoryProducts = collect();
+        if ($selectedCategoryId) {
+            $selectedCategory = \App\Models\Category::with(['section'])->find($selectedCategoryId);
+            if ($selectedCategory) {
+                $categoryProducts = \App\Models\Product::with(['section', 'category', 'brand', 'material', 'images'])
+                    ->where('category_id', $selectedCategoryId)
+                    ->where('status', 'active')
+                    ->limit(8)
+                    ->get();
+            }
+        }
+
+        // Lấy danh sách tất cả danh mục có sản phẩm để hiển thị trong dropdown
+        $allCategories = \App\Models\Category::whereHas('products', function($query) {
+                $query->where('status', 'active');
+            })
+            ->orderBy('name')
+            ->get();
+
         $siteSettings = SiteSetting::pluck('value', 'key')->toArray();
 
-        return view('pages.home', compact('featuredProducts', 'activeOffers', 'siteSettings'));
+        return view('pages.home', compact('featuredProducts', 'activeOffers', 'selectedCategory', 'categoryProducts', 'allCategories', 'siteSettings'));
     }
 
     /**

@@ -104,9 +104,119 @@
             @endforelse
         </div>
                 
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-4 d-flex align-content-center text-center mt-4 ">
+        <div class="col-12 text-center mt-4">
             <a href="{{ route('products.index') }}" class="btn btn-primary btn-lg">Xem Tất Cả Sản Phẩm</a>
         </div>
+    </div>
+</section>
+
+<!-- Products by Category Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold">Sản Phẩm Theo Danh Mục</h2>
+            <p class="lead text-muted">Khám phá sản phẩm theo danh mục yêu thích</p>
+        </div>
+        
+        <!-- Category Filter -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-8">
+                <div class="category-filter">
+                    <form method="GET" action="{{ route('home') }}" id="categoryFilterForm">
+                        <div class="input-group input-group-lg">
+                            <label class="input-group-text" for="categorySelect">
+                                <i class="fas fa-filter me-2"></i>Chọn danh mục:
+                            </label>
+                            <select class="form-select" id="categorySelect" name="category_id" onchange="document.getElementById('categoryFilterForm').submit();">
+                                <option value="">-- Chọn danh mục --</option>
+                                @foreach($allCategories as $category)
+                                    <option value="{{ $category->id }}" 
+                                            {{ $selectedCategory && $selectedCategory->id == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }} ({{ $category->products_count ?? $category->products()->where('status', 'active')->count() }} sản phẩm)
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        @if($selectedCategory && $categoryProducts->count() > 0)
+            <div class="mb-4">
+                <div class="category-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="h2 fw-bold mb-1">{{ $selectedCategory->name }}</h3>
+                            <p class="mb-0">{{ $selectedCategory->section->name }} • {{ $categoryProducts->count() }} sản phẩm</p>
+                        </div>
+                        <a href="{{ route('products.index', ['category' => $selectedCategory->id]) }}" class="btn btn-outline-primary btn-lg">
+                            Xem Tất Cả <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    @foreach($categoryProducts as $product)
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                            <div class="card h-100 product-card">
+                                @if($product->primary_image)
+                                    <img src="{{ asset('storage/uploads/' . $product->primary_image) }}" 
+                                         class="card-img-top" 
+                                         alt="{{ $product->name }}"
+                                         style="height: 200px; object-fit: cover;">
+                                @elseif($product->images->count() > 0)
+                                    <img src="{{ asset('storage/uploads/' . $product->images->first()->url) }}" 
+                                         class="card-img-top" 
+                                         alt="{{ $product->name }}"
+                                         style="height: 200px; object-fit: cover;">
+                                @else
+                                    <img src="{{ asset('images/placeholder.jpg') }}" 
+                                         class="card-img-top" 
+                                         alt="{{ $product->name }}"
+                                         style="height: 200px; object-fit: cover;">
+                                @endif
+                                
+                                <div class="card-body d-flex flex-column">
+                                    <h6 class="card-title product-name-home mb-2">
+                                        <a href="{{ route('product.show', $product->slug) }}" 
+                                           style="color: #8B0000 !important; text-decoration: none !important;">
+                                            {{ $product->name }}
+                                        </a>
+                                    </h6>
+                                    <p class="card-text text-muted small mb-2">{{ $product->section->name }}</p>
+                                    
+                                    <div class="mt-auto">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="fw-bold text-primary fs-5">@price($product->price)</span>
+                                            @if($product->sale_price && $product->sale_price < $product->price)
+                                                <span class="badge bg-danger">Sale</span>
+                                            @endif
+                                        </div>
+                                        <a href="{{ route('product.show', $product->slug) }}" 
+                                           class="btn btn-outline-primary btn-sm w-100">
+                                            Xem Chi Tiết
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @elseif($selectedCategory)
+            <div class="text-center py-5">
+                <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                <h4>Không có sản phẩm nào</h4>
+                <p class="text-muted">Danh mục "{{ $selectedCategory->name }}" hiện tại chưa có sản phẩm nào.</p>
+            </div>
+        @else
+            <div class="text-center py-5">
+                <i class="fas fa-filter fa-3x text-muted mb-3"></i>
+                <h4>Chọn danh mục để xem sản phẩm</h4>
+                <p class="text-muted">Vui lòng chọn một danh mục từ dropdown bên trên để xem sản phẩm.</p>
+            </div>
+        @endif
     </div>
 </section>
 
@@ -223,6 +333,118 @@ document.addEventListener('DOMContentLoaded', function() {
 @keyframes slideIn {
     from { transform: translateX(-100px); opacity: 0; }
     to { transform: translateX(0); opacity: 1; }
+}
+
+/* Products by Category Styles */
+.product-card {
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.product-card .card-img-top {
+    transition: all 0.3s ease;
+}
+
+.product-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.product-card .card-body {
+    padding: 1.25rem;
+}
+
+.product-card .btn {
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.product-card .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,123,255,0.3);
+}
+
+.badge {
+    font-size: 0.75rem;
+    padding: 0.5em 0.75em;
+    border-radius: 20px;
+}
+
+.category-section {
+    margin-bottom: 4rem;
+}
+
+.category-title {
+    position: relative;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.category-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
+}
+
+/* Category Filter Styles */
+.category-filter {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.input-group-text {
+    background: linear-gradient(135deg, var(--primary-color), #4a7c8a);
+    color: white;
+    border: none;
+    font-weight: 600;
+    border-radius: 10px 0 0 10px;
+}
+
+.form-select {
+    border: 2px solid #e9ecef;
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(51, 92, 103, 0.25);
+}
+
+.category-header {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-left: 5px solid var(--primary-color);
+}
+
+.category-header h3 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.category-header p {
+    color: #6c757d;
+    margin-bottom: 0;
 }
 </style>
 @endpush
