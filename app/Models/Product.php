@@ -18,12 +18,16 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
+        'specifications',
+        'primary_image',
         'section_id',
         'category_id',
         'brand_id',
         'material_id',
         'price',
         'sale_price',
+        'discount_type',
+        'discount_value',
         'stock',
         'slug',
         'featured',
@@ -33,6 +37,7 @@ class Product extends Model
     protected $casts = [
         'price' => 'decimal:2',
         'sale_price' => 'decimal:2',
+        'discount_value' => 'decimal:2',
         'featured' => 'boolean',
     ];
 
@@ -56,11 +61,10 @@ class Product extends Model
         return $this->belongsTo(Material::class);
     }
 
-    public function offers(): BelongsToMany
-{
-    
-    return $this->belongsToMany(Offer::class, 'offer_products');
-}
+    public function offers()
+    {
+        return $this->belongsToMany(Offer::class, 'offer_products');
+    }
 
     public function images(): HasMany
     {

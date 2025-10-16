@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class SoftDeleteService
 {
@@ -22,6 +23,23 @@ class SoftDeleteService
             'sections' => \App\Models\Section::class,
             'reviews' => \App\Models\Review::class,
             'contacts' => \App\Models\Contact::class,
+        ];
+    }
+
+    /**
+     * Get Vietnamese names for models
+     */
+    public static function getModelNames(): array
+    {
+        return [
+            'products' => 'Sản phẩm',
+            'categories' => 'Danh mục',
+            'brands' => 'Thương hiệu',
+            'materials' => 'Vật liệu',
+            'offers' => 'Ưu đãi',
+            'sections' => 'Khu vực',
+            'reviews' => 'Đánh giá',
+            'contacts' => 'Liên hệ',
         ];
     }
 
@@ -76,7 +94,42 @@ class SoftDeleteService
         $item = $modelClass::withTrashed()->find($id);
         
         if ($item) {
-            return $item->forceDelete();
+            try {
+                // Handle specific models with foreign key constraints
+                if ($modelClass === \App\Models\Product::class) {
+                    // Force delete all related images first (including soft deleted ones)
+                    $images = $item->images()->withTrashed()->get();
+                    foreach ($images as $image) {
+                        $image->forceDelete();
+                    }
+                    
+                    // Delete files from storage
+                    if ($item->primary_image) {
+                        $filePath = storage_path('app/public/uploads/products/' . $item->primary_image);
+                        if (file_exists($filePath)) {
+                            unlink($filePath);
+                        }
+                    }
+                    
+                    // Delete additional image files
+                    foreach ($item->images as $image) {
+                        if ($image->url) {
+                            $filePath = storage_path('app/public/uploads/' . $image->url);
+                            if (file_exists($filePath)) {
+                                unlink($filePath);
+                            }
+                        }
+                    }
+                }
+                
+                return $item->forceDelete();
+            } catch (\Exception $e) {
+                Log::error('Force delete failed for ' . $modelClass . ' ID: ' . $id, [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                return false;
+            }
         }
         
         return false;

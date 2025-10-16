@@ -19,14 +19,14 @@
     </label>
     
     <!-- Upload Area -->
-    <div class="upload-area border border-2 border-dashed rounded-3 p-4 text-center mb-3" 
-         style="border-color: #dee2e6; background-color: #f8f9fa;">
-        <div class="upload-content">
-            <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
-            <h5 class="text-muted mb-2">Kéo thả hình ảnh vào đây</h5>
-            <p class="text-muted mb-3">hoặc</p>
-            <label for="{{ $name }}" class="btn btn-primary">
-                <i class="fas fa-plus me-2"></i>Chọn hình ảnh
+    <div class="upload-area border border-2 border-dashed rounded-3 p-3 text-center mb-3" 
+         style="border-color: #dee2e6; background-color: #f8f9fa; min-height: 120px;">
+        <div class="upload-content d-flex flex-column justify-content-center h-100">
+            <i class="fas fa-cloud-upload-alt fa-2x text-muted mb-2"></i>
+            <h6 class="text-muted mb-2">Kéo thả hình ảnh vào đây</h6>
+            <p class="text-muted mb-2 small">hoặc</p>
+            <label for="{{ $name }}" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus me-1"></i>Chọn hình ảnh
             </label>
             <input type="file" 
                    id="{{ $name }}" 
@@ -35,8 +35,8 @@
                    {{ $multiple ? 'multiple' : '' }}
                    accept="{{ $acceptedTypes }}"
                    {{ $required ? 'required' : '' }}>
-            <div class="mt-2">
-                <small class="text-muted">
+            <div class="mt-1">
+                <small class="text-muted small">
                     Tối đa {{ $maxFiles }} hình, mỗi hình không quá {{ $maxSize }}
                 </small>
             </div>
@@ -101,6 +101,7 @@
 .image-upload-component .upload-area {
     transition: all 0.3s ease;
     cursor: pointer;
+    min-height: 120px !important;
 }
 
 .image-upload-component .upload-area:hover {
@@ -111,7 +112,7 @@
 .image-upload-component .upload-area.dragover {
     border-color: #0d6efd !important;
     background-color: #e7f1ff !important;
-    transform: scale(1.02);
+    transform: scale(1.01);
 }
 
 .image-preview-card {
@@ -203,12 +204,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // File input change
     fileInput.addEventListener('change', function(e) {
+        console.log('File input changed, files:', e.target.files.length);
         const files = Array.from(e.target.files);
-        handleFiles(files);
+        if (files.length > 0) {
+            handleFiles(files);
+        }
     });
 
     // Handle selected files
     function handleFiles(files) {
+        console.log('Handling files:', files.length);
+        
         const validFiles = files.filter(file => {
             // Check file type
             if (!file.type.startsWith('image/')) {
@@ -225,7 +231,10 @@ document.addEventListener('DOMContentLoaded', function() {
             return true;
         });
 
-        if (validFiles.length === 0) return;
+        if (validFiles.length === 0) {
+            console.log('No valid files found');
+            return;
+        }
 
         // Check max files limit
         if (selectedFiles.length + validFiles.length > {{ $maxFiles }}) {
@@ -233,9 +242,19 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        // Add new files to existing selection
         selectedFiles = [...selectedFiles, ...validFiles];
+        console.log('Selected files updated:', selectedFiles.length);
+        
+        // Update preview and global storage
         updatePreview();
         updateFileInput();
+        
+        // Clear the input after successful handling
+        setTimeout(() => {
+            fileInput.value = '';
+            console.log('File input cleared');
+        }, 100);
     }
 
     // Update preview
@@ -276,9 +295,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update file input
     function updateFileInput() {
-        const dt = new DataTransfer();
-        selectedFiles.forEach(file => dt.items.add(file));
-        fileInput.files = dt.files;
+        // Store files globally for form submission
+        window.selectedAdditionalFiles = selectedFiles;
+        console.log('Additional files updated:', selectedFiles.length, 'files stored globally');
+        
+        // Also update the actual file input for fallback
+        if (selectedFiles.length > 0) {
+            const dt = new DataTransfer();
+            selectedFiles.forEach(file => dt.items.add(file));
+            fileInput.files = dt.files;
+            console.log('File input updated with', dt.files.length, 'files');
+        }
     }
 
     // Delete existing image

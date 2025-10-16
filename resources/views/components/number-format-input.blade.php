@@ -5,7 +5,8 @@
     'class' => '',
     'id' => null,
     'required' => false,
-    'disabled' => false
+    'disabled' => false,
+    'maxlength' => null
 ])
 
 <input 
@@ -17,6 +18,7 @@
     @if($id) id="{{ $id }}" @endif
     @if($required) required @endif
     @if($disabled) disabled @endif
+    @if($maxlength) maxlength="{{ $maxlength }}" @endif
     data-thousands-separator=","
     data-decimal-separator="."
     autocomplete="off"
@@ -73,7 +75,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Khi người dùng nhập
         input.addEventListener('input', function(e) {
-            const rawValue = e.target.value.replace(/[^\d]/g, '');
+            let rawValue = e.target.value.replace(/[^\d]/g, '');
+            
+            // Giới hạn số ký tự nếu có maxlength
+            const maxLength = e.target.getAttribute('maxlength');
+            
+            if (maxLength && rawValue.length > parseInt(maxLength)) {
+                rawValue = rawValue.substring(0, parseInt(maxLength));
+            }
+            
             const formatted = formatNumber(rawValue);
             e.target.value = formatted;
             validateInput(e.target);
