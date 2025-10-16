@@ -63,8 +63,12 @@
                                 </div>
                             </td>
                             <td>
-                                <span class="badge bg-{{ $review->approved ? 'success' : 'warning' }}">
-                                    {{ $review->approved ? 'Đã Duyệt' : 'Đang Chờ' }}
+                                @php
+                                    $options = \App\Helpers\StatusHelper::getReviewStatusOption();
+                                    $status = $review->approved;
+                                @endphp
+                                <span class="badge bg-{{ $options[$status]['class'] ?? 'warning' }}">
+                                    {{ $options[$status]['label'] ?? ucfirst($status) }}
                                 </span>
                             </td>
                             <td>{{ $review->created_at->format('d/m/Y') }}</td>

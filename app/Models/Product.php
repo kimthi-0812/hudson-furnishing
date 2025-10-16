@@ -18,6 +18,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
+        'full_description',
         'section_id',
         'category_id',
         'brand_id',
@@ -57,10 +58,10 @@ class Product extends Model
     }
 
     public function offers(): BelongsToMany
-{
-    
-    return $this->belongsToMany(Offer::class, 'offer_products');
-}
+    {
+        
+        return $this->belongsToMany(Offer::class, 'offer_products');
+    }
 
     public function images(): HasMany
     {
@@ -70,6 +71,11 @@ class Product extends Model
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function homeSections()
+    {
+        return $this->belongsToMany(HomeProductSection::class, 'home_product_section_product','product_id','home_product_section_id');
     }
 
     public function getPrimaryImageAttribute()

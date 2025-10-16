@@ -165,18 +165,32 @@ class ProductController extends Controller
         $request->merge($data);
 
         $request->validate([
-            'name'        => 'required|string|max:75',
-            'description' => 'required|string',
-            'section_id'  => 'required|exists:sections,id',
-            'category_id' => 'required|exists:categories,id',
-            'brand_id'    => 'required|exists:brands,id',
-            'material_id' => 'required|exists:materials,id',
-            'price'       => 'required|numeric|min:1|max:1000000000',
-            'sale_price'  => 'nullable|numeric|min:1|max:1000000000|lt:price',
-            'stock'       => 'required|integer|min:0',
-            'featured'    => 'boolean',
-            'status'      => 'required|in:active,inactive',
-            'images.*'    => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name'              => 'required|string|max:75',
+            'description'       => 'required|string',
+            'full_description'  => 'nullable|string', // mới thêm
+            'section_id'        => 'required|exists:sections,id',
+            'category_id'       => 'required|exists:categories,id',
+            'brand_id'          => 'required|exists:brands,id',
+            'material_id'       => 'required|exists:materials,id',
+            'price'             => 'required|numeric|min:1|max:1000000000',
+            'sale_price'        => 'nullable|numeric|min:1|max:1000000000|lt:price',
+            'stock'             => 'required|integer|min:0',
+            'featured'          => 'boolean',
+            'status'            => 'required|in:active,inactive',
+            'images.*'          => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required'        => 'Vui lòng nhập tên sản phẩm',
+            'description.required' => 'Vui lòng nhập mô tả ngắn',
+            'section_id.required'  => 'Vui lòng chọn khu vực',
+            'category_id.required' => 'Vui lòng chọn danh mục',
+            'brand_id.required'    => 'Vui lòng chọn thương hiệu',
+            'material_id.required' => 'Vui lòng chọn chất liệu',
+            'price.required'       => 'Vui lòng nhập giá',
+            'stock.required'       => 'Vui lòng nhập số lượng tồn',
+            'status.required'      => 'Vui lòng chọn trạng thái',
+            'images.*.image'       => 'Tệp tải lên phải là hình ảnh hợp lệ',
+            'images.*.mimes'       => 'Hình ảnh phải có định dạng: jpeg, png, jpg, gif',
+            'images.*.max'         => 'Kích thước hình ảnh không được vượt quá 2MB',
         ]);
 
         // Tạo slug duy nhất
@@ -192,6 +206,7 @@ class ProductController extends Controller
         $product = Product::create([
             'name'        => $request->name,
             'description' => $request->description,
+            'full_description'  => $request->full_description, // mới thêm
             'section_id'  => $request->section_id,
             'category_id' => $request->category_id,
             'brand_id'    => $request->brand_id,
@@ -268,6 +283,7 @@ class ProductController extends Controller
         $request->validate([
             'name'        => 'required|string|max:75',
             'description' => 'required|string',
+            'full_description'  => 'nullable|string', // mới thêm
             'section_id'  => 'required|exists:sections,id',
             'category_id' => 'required|exists:categories,id',
             'brand_id'    => 'required|exists:brands,id',
@@ -278,6 +294,19 @@ class ProductController extends Controller
             'featured'    => 'boolean',
             'status'      => 'required|in:active,inactive',
             'images.*'    => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ],[
+            'name.required'        => 'Vui lòng nhập tên sản phẩm',
+            'description.required' => 'Vui lòng nhập mô tả ngắn',
+            'section_id.required'  => 'Vui lòng chọn khu vực',
+            'category_id.required' => 'Vui lòng chọn danh mục',
+            'brand_id.required'    => 'Vui lòng chọn thương hiệu',
+            'material_id.required' => 'Vui lòng chọn chất liệu',
+            'price.required'       => 'Vui lòng nhập giá',
+            'stock.required'       => 'Vui lòng nhập số lượng tồn',
+            'status.required'      => 'Vui lòng chọn trạng thái',
+            'images.*.image'       => 'Tệp tải lên phải là hình ảnh hợp lệ',
+            'images.*.mimes'       => 'Hình ảnh phải có định dạng: jpeg, png, jpg, gif',
+            'images.*.max'         => 'Kích thước hình ảnh không được vượt quá 2MB',
         ]);
 
         // Tạo slug duy nhất (bỏ qua chính sản phẩm)
@@ -292,6 +321,7 @@ class ProductController extends Controller
         $product->update([
             'name'        => $request->name,
             'description' => $request->description,
+            'full_description'  => $request->full_description, // mới thêm
             'section_id'  => $request->section_id,
             'category_id' => $request->category_id,
             'brand_id'    => $request->brand_id,

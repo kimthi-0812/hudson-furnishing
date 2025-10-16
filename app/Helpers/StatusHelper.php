@@ -36,8 +36,40 @@ class StatusHelper
                 'label' => 'Ngừng sản xuất',
                 'class' => 'dark',
                 'description' => 'Sản phẩm đã ngừng sản xuất'
-            ]
+            ],
+            
+            
         ];
+    }
+
+
+    public static function getReviewStatusOption(): array
+    {
+        return [
+            '1' => [
+                'label' => 'Đã duyệt',
+                'class' => 'success',
+                'description' => 'Đã duyệt'
+            ],
+            '0' => [
+                'label' => 'Chờ duyệt',
+                'class' => 'warning',
+                'description' => 'Đang chờ duyệt'
+            ],
+        ];
+    }
+
+
+    public static function getReviewStatusLabel(int $status)
+    {
+        $options = self::getReviewStatusOption();
+        return $options[$status]['label'] ?? 'Chờ duyệt';
+    }
+
+    public static function getReviewStatusClass(int $status)
+    {
+        $options = self::getReviewStatusOption();
+        return $ooptions[$status]['class'] ?? 'secondary';
     }
 
     /**

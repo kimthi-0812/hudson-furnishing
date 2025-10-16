@@ -27,6 +27,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Admin\VisitorStatsController;
+use App\Http\Controllers\VisitorController;
+use App\Http\Controllers\Admin\HomeProductSectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -222,5 +224,15 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
         'edit'    => 'admin.users.edit',
         'update'  => 'admin.users.update',
         'destroy' => 'admin.users.destroy'
+    ]);
+
+    Route::resource('home-sections', HomeProductSectionController::class)->names([
+        'index'   => 'admin.home-sections.index',
+        'create'  => 'admin.home-sections.create',
+        'store'   => 'admin.home-sections.store',
+        'show'    => 'admin.home-sections.show',
+        'edit'    => 'admin.home-sections.edit',
+        'update'  => 'admin.home-sections.update',
+        'destroy' => 'admin.home-sections.destroy'
     ]);
 });

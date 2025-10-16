@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Offer;
 use App\Models\VisitorStat;
 use App\Models\SiteSetting;
+use App\Models\HomeProductSection;
 
 class HomeController extends Controller
 {
@@ -15,11 +16,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $featuredProducts = Product::with(['section', 'category', 'brand', 'material', 'images'])
-            ->where('featured', true)
-            ->where('status', 'active')
-            ->limit(8)
+
+        $siteSettings = SiteSetting::pluck('value', 'key')->toArray();
+        $homeSections = HomeProductSection::with(['products.images', 'products.category'])
+            ->orderBy('order')
             ->get();
+
+        $sectionsData = [];
+        foreach ($homeSections as $section) {
+            $sectionsData[$section->id] = $section->products()->limit($section->limit)->get();
+        }
 
         $activeOffers = Offer::where('status', 'active')
             ->where('start_date', '<=', now())
@@ -29,7 +35,7 @@ class HomeController extends Controller
 
         $siteSettings = SiteSetting::pluck('value', 'key')->toArray();
 
-        return view('pages.home', compact('featuredProducts', 'activeOffers', 'siteSettings'));
+        return view('pages.home', compact('sectionsData', 'activeOffers', 'siteSettings', 'homeSections'));
     }
 
     /**

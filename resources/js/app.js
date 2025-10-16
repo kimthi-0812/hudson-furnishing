@@ -315,7 +315,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.body.appendChild(backToTopButton);
 
-    window.addEventListener("scroll", function () {
+    function toggleBackToTop() {
         if (window.pageYOffset > 300) {
             backToTopButton.style.display = "block";
             backToTopButton.classList.add("bounce-in");
@@ -323,7 +323,10 @@ document.addEventListener("DOMContentLoaded", function () {
             backToTopButton.style.display = "none";
             backToTopButton.classList.remove("bounce-in");
         }
-    });
+    }
+
+    window.addEventListener("scroll", toggleBackToTop);
+    toggleBackToTop(); // 👈 kiểm tra trạng thái ngay khi trang vừa load
 
     backToTopButton.addEventListener("click", function () {
         window.scrollTo({

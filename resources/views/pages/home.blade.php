@@ -54,61 +54,43 @@
     </div>
 </section>
 
-
-<!-- Featured Products Section -->
-<section class="py-5">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold">Sản Phẩm Nổi Bật</h2>
-            <p class="lead text-muted">Khám phá những mẫu thiết kế được yêu thích nhất</p>
-        </div>
-        
-        <div class="row">
-            @forelse($featuredProducts as $product)
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div class="card h-100">
-                        @if($product->images->count() > 0)
-                            <img src="{{ asset('storage/uploads/' . $product->images->first()->url) }}" 
-                                 class="card-img-top" 
-                                 alt="{{ $product->name }}"
-                                 style="height: 200px; object-fit: cover;">
-                        @else
-                            <img src="{{ asset('images/placeholder.jpg') }}" 
-                                 class="card-img-top" 
-                                 alt="{{ $product->name }}"
-                                 style="height: 200px; object-fit: cover;">
-                        @endif
-                        <div class="card-body">
-                            <h6 class="card-title product-name-home">
-                                <a href="{{ route('product.show', $product->slug) }}" 
-                                   style="color: #8B0000 !important; text-decoration: none !important; background: none !important; border: none !important; outline: none !important; box-shadow: none !important; font-weight: 600 !important; font-size: 1rem !important; display: inline !important; cursor: pointer !important;">
-                                    {{ $product->name }}
-                                </a>
-                            </h6>
-                            <p class="card-text text-muted">{{ $product->section->name }}</p>
-                            <div class="d-flex justify-content-between align-items-end">
-                                <span class="fw-bold text-primary fs-5">@price($product->price)</span>
-                                <a href="{{ route('product.show', $product->slug) }}" class="btn btn-xs btn-outline-primary">Xem Chi Tiết</a>
+<!-- Home Sections -->
+@foreach($homeSections as $section)
+    @if($section->is_active) <!-- Chỉ hiển thị section đang bật -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">{{ $section->title }}</h2>
+            </div>
+            <div class="row">
+                @forelse($sectionsData[$section->id] ?? [] as $product)
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="card h-100">
+                            @if($product->images->count())
+                                <img src="{{ asset('storage/uploads/' . $product->images->first()->url) }}" class="card-img-top" alt="{{ $product->name }}" style="height:200px;object-fit:cover;">
+                            @else
+                                <img src="{{ asset('images/placeholder.jpg') }}" class="card-img-top" alt="{{ $product->name }}" style="height:200px;object-fit:cover;">
+                            @endif
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none text-dark fw-bold">{{ $product->name }}</a>
+                                </h6>
+                                <p class="text-muted">{{ $product->category->name ?? '' }}</p>
+                                <div class="d-flex justify-content-between align-items-end">
+                                    <span class="fw-bold text-primary">@price($product->price)</span>
+                                    <a href="{{ route('product.show', $product->slug) }}" class="btn btn-outline-primary btn-sm">Xem Chi Tiết</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            @empty
-                <div class="col-12">
-                    <div class="text-center py-5">
-                        <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
-                        <h4>Không có sản phẩm nổi bật</h4>
-                        <p class="text-muted">Quay lại sau để xem các sản phẩm mới!</p>
-                    </div>
-                </div>
-            @endforelse
+                @empty
+                    <div class="text-center text-muted py-5">Không có sản phẩm nào trong mục này.</div>
+                @endforelse
+            </div>
         </div>
-                
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-4 d-flex align-content-center text-center mt-4 ">
-            <a href="{{ route('products.index') }}" class="btn btn-primary btn-lg">Xem Tất Cả Sản Phẩm</a>
-        </div>
-    </div>
-</section>
+    </section>
+    @endif
+@endforeach
 
 <!-- Offers Section -->
 @if($activeOffers->count() > 0)
@@ -124,7 +106,7 @@
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100 d-flex flex-column">
                         @if($offer->image)
-                            <img src="{{ asset('uploads/offers/' . $offer->image) }}" 
+                            <img src="{{ asset('storage/' . $offer->image) }}" 
                                  class="card-img-top" 
                                  alt="{{ $offer->title }}"
                                  style="height: 200px; object-fit: cover;">

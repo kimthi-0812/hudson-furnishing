@@ -173,7 +173,7 @@ body {
 .product-name a:hover,
 .product-name a:active,
 .product-name a:focus {
-    color: #8B0000 !important;
+    color: #8b0000 !important;
     text-decoration: none !important;
     background: none !important;
     border: none !important;
@@ -202,7 +202,7 @@ body {
 .product-name-home a:hover,
 .product-name-home a:active,
 .product-name-home a:focus {
-    color: #8B0000 !important;
+    color: #8b0000 !important;
     text-decoration: none !important;
     background: none !important;
     border: none !important;
@@ -218,7 +218,7 @@ body {
 .product-card .product-name a:active,
 .product-card .product-name a:focus {
     all: unset !important;
-    color: #8B0000 !important;
+    color: #8b0000 !important;
     text-decoration: none !important;
     background: none !important;
     border: none !important;
@@ -237,7 +237,7 @@ body {
 .card .product-name-home a:active,
 .card .product-name-home a:focus {
     all: unset !important;
-    color: #8B0000 !important;
+    color: #8b0000 !important;
     text-decoration: none !important;
     background: none !important;
     border: none !important;
@@ -269,7 +269,7 @@ body {
 }
 
 .sale-price-large {
-    color: #8B0000;
+    color: #8b0000;
     font-weight: 600;
     font-size: 1.5rem;
     line-height: 1.2;
@@ -278,7 +278,7 @@ body {
 }
 
 .price-large {
-    color: #8B0000;
+    color: #8b0000;
     font-weight: 600;
     font-size: 1.5rem;
     line-height: 1.2;
@@ -312,7 +312,7 @@ body {
 }
 
 .product-price .sale-price-display .sale-price-large {
-    color: #8B0000 !important;
+    color: #8b0000 !important;
     font-weight: 600 !important;
     font-size: 2rem !important;
     line-height: 1.2 !important;
@@ -334,7 +334,7 @@ body {
 }
 
 .product-price .price-display .price-large {
-    color: #8B0000 !important;
+    color: #8b0000 !important;
     font-weight: 600 !important;
     font-size: 2rem !important;
     line-height: 1.2 !important;
@@ -657,7 +657,7 @@ body {
     height: auto;
     max-width: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 1px 1px rgba(0,0,0,.4));
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.4));
 }
 
 /* Social Links */
@@ -1345,7 +1345,7 @@ herosection
     height: 40px;
     width: auto;
     object-fit: contain;
-    filter: drop-shadow(0 1px 1px rgba(0,0,0,.4));
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.4));
     image-rendering: -webkit-optimize-contrast;
 }
 
@@ -1359,7 +1359,7 @@ herosection
     border-radius: 50%;
     background: linear-gradient(180deg, #3b6b75, #2f525a);
     color: #fff;
-    box-shadow: 0 8px 24px rgba(0,0,0,.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 .btn-back-to-top i {
     font-size: 18px;
@@ -1367,10 +1367,18 @@ herosection
 }
 
 @keyframes backToTopBounceIn {
-    0% { transform: translateY(10px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
+    0% {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
-.bounce-in { animation: backToTopBounceIn .2s ease-out; }
+.bounce-in {
+    animation: backToTopBounceIn 0.2s ease-out;
+}
 
 /* CSS CUỐI CÙNG - OVERRIDE MỌI THỨ */
 html body div.product-card div.product-info h5.product-name a,
@@ -1379,7 +1387,7 @@ html body div.product-card div.product-info h5.product-name a:visited,
 html body div.product-card div.product-info h5.product-name a:hover,
 html body div.product-card div.product-info h5.product-name a:active,
 html body div.product-card div.product-info h5.product-name a:focus {
-    color: #8B0000 !important;
+    color: #8b0000 !important;
     text-decoration: none !important;
     background: none !important;
     border: none !important;
@@ -1397,7 +1405,7 @@ html body div.card div.card-body h6.card-title.product-name-home a:visited,
 html body div.card div.card-body h6.card-title.product-name-home a:hover,
 html body div.card div.card-body h6.card-title.product-name-home a:active,
 html body div.card div.card-body h6.card-title.product-name-home a:focus {
-    color: #8B0000 !important;
+    color: #8b0000 !important;
     text-decoration: none !important;
     background: none !important;
     border: none !important;

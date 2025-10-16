@@ -45,6 +45,7 @@
                 <span class="badge bg-warning me-2">{{ $product->brand->name }}</span>
                 <span class="badge bg-success">{{ $product->material->name }}</span>
             </div>
+
             <div class="product-price mb-3">
                 @if($product->sale_price)
                     <div class="sale-price-display d-flex flex-column gap-1">
@@ -57,9 +58,11 @@
                     </div>
                 @endif
             </div>
+
             <div class="product-description mb-4">
                 <p>{{ $product->description }}</p>
             </div>
+            
             <div class="product-stock mb-4">
                 @if($product->stock > 0)
                     <span class="text-success"><i class="fas fa-check-circle me-1"></i>Có Sẵn ({{ $product->stock }} sản phẩm)</span>
@@ -67,13 +70,30 @@
                     <span class="text-warning"><i class="fas fa-exclamation-triangle me-1"></i>Sản phẩm tạm thời hết hàng</span>
                 @endif
             </div>
+
             <div class="product-actions mb-4">                
                 <button class="btn btn-outline-secondary btn-lg">
                     <i class="fas fa-heart me-1"></i>Thêm Vào Danh Sách Yêu Thích
                 </button>
+            </div>            
+        </div>
+    </div>
+
+    <!-- Full Description -->
+    @if(!empty($product->full_description))
+    {{-- Full Description --}}
+    <div class="col-md-12 mt-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-light">
+                <h4 class="mb-0">Mô Tả Chi Tiết</h4>
+            </div>
+            <div class="card-body content fs-6 lh-lg product-description-body">
+                {!! $product->full_description !!}
             </div>
         </div>
     </div>
+
+    @endif
 
     <!-- Reviews Section -->
     <div class="row mt-5">
@@ -138,9 +158,8 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                             @if(session('status'))
-                                <div class="alert alert-success">{{ session('status') }}</div>
+                                <div class="alert alert-success mt-2">{{ session('status') }}</div>
                             @endif
-
                         </div>
 
                         <div class="mb-3">
@@ -149,14 +168,15 @@
                                 @for($i = 1; $i <= 5; $i++)
                                     <i class="fas fa-star star" data-value="{{ $i }}"></i>
                                 @endfor
-                                <input type="hidden" id="rating-value" name="rating" >
+                                <input type="hidden" id="rating-value" name="rating">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Gửi Đánh Giá</button>
-                        @if(session('success'))
-                            <div class="alert alert-success">{{ session('success') }}</div>
-                        @endif
 
+                        <button type="submit" class="btn btn-primary">Gửi Đánh Giá</button>
+
+                        @if(session('success'))
+                            <div class="alert alert-success mt-3">{{ session('success') }}</div>
+                        @endif
                     </form>
                 </div>
             </div>
@@ -166,20 +186,74 @@
 @endsection
 
 @push('styles')
+
 <style>
+.product-description-body {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.product-description-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    display: block;
+    margin: 15px auto;
+}
+
+.product-description-body table {
+    width: 100% !important;
+    border-collapse: collapse;
+}
+
+.product-description-body iframe {
+    max-width: 100%;
+    height: auto;
+}
+
+.product-description-body p {
+    margin-bottom: 1rem;
+}
+
+.product-description-body ul, 
+.product-description-body ol {
+    padding-left: 1.5rem;
+}
+
+
+
+
 .star-rating .star {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #ccc;
     cursor: pointer;
     transition: color 0.2s;
 }
-
 .star-rating .star.hover,
 .star-rating .star.selected {
     color: #ffc107;
 }
+
+/* Thêm style riêng cho phần mô tả chi tiết */
+.product-full-description {
+    background: #fafafa;
+}
+.product-full-description h3 {
+    color: #333;
+    border-bottom: 2px solid #ffc107;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+.product-full-description .content p {
+    margin-bottom: 1rem;
+    text-align: justify;
+}
+
 </style>
 @endpush
+
 
 @push('scripts')
 <script>

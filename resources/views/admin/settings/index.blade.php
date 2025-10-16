@@ -25,26 +25,37 @@
                     
                     <!-- Settings Tabs Navigation -->
                     <ul class="nav nav-pills nav-fill mb-4" id="settingsTabs" role="tablist">
+                        <!--Tab cài đặt cơ bản-->
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="general-tab" data-bs-toggle="pill" data-bs-target="#general" type="button" role="tab">
                                 <i class="fas fa-home me-2"></i>Cơ Bản
                             </button>
                         </li>
+                        <!--Tad  Home Section -->
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="home-section-tab" data-bs-toggle="pill" data-bs-target="#home-section" type="button" role="tab">
+                                <i class="fas fa-home me-2"></i>Home Section
+                            </button>
+                        </li>
+                        <!--Tab liên hệ-->
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="contact-tab" data-bs-toggle="pill" data-bs-target="#contact" type="button" role="tab">
                                 <i class="fas fa-address-book me-2"></i>Liên Hệ
                             </button>
                         </li>
+                        <!--Tab socials-->
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="social-tab" data-bs-toggle="pill" data-bs-target="#social" type="button" role="tab">
                                 <i class="fas fa-share-alt me-2"></i>Mạng Xã Hội
                             </button>
                         </li>
+                        <!-- Tab SEO -->
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="seo-tab" data-bs-toggle="pill" data-bs-target="#seo" type="button" role="tab">
                                 <i class="fas fa-search me-2"></i>Cài Đặt SEO
                             </button>
                         </li>
+                        <!-- Tab Advanced -->
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="advanced-tab" data-bs-toggle="pill" data-bs-target="#advanced" type="button" role="tab">
                                 <i class="fas fa-sliders-h me-2"></i>Cài Đặt Khác
@@ -164,12 +175,101 @@
                                                 @endif
                                             </div>
                                     </div>
-                                </div>
-
-                                
+                                </div>                                
                             </div>
                         </div>
-                        
+
+                        <!-- Home Section Settings Tab -->
+                        <div class="tab-pane fade" id="home-section" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="settings-section">
+                                        <div class="section-header mb-3">
+                                            <h6 class="text-primary mb-1">
+                                                <i class="fas fa-home me-2"></i>Home Page Section
+                                            </h6>
+                                            <small class="text-muted">Cấu hình các section hiển thị trên trang chủ</small>
+                                        </div>
+
+                                        @php
+                                            $sections = [
+                                                'featured' => 'Sản phẩm nổi bật',
+                                                'new' => 'Sản phẩm mới',
+                                                'top_rated' => 'Sản phẩm đánh giá cao',
+                                                'custom' => 'Sản phẩm tùy chọn'
+                                            ];
+                                        @endphp
+
+                                        @foreach($sections as $key => $label)
+                                        <div class="mb-4 p-3 border rounded">
+                                            <div class="form-check form-switch mb-3 d-flex justify-content-between">
+                                                <div class="d-flex gap-2 align-items-center">                                                    
+                                                    <label class="form-check-label text-primary me-3" for="home_section_active_{{ $key }}">
+                                                        <i class="fas fa-home me-2"></i>{{ $label }}
+                                                    </label>
+                                                    <input class="form-check-input" type="checkbox" id="home_section_active_{{ $key }}" 
+                                                        name="home_section[{{ $key }}][is_active]" value="1"
+                                                        {{ isset($homeSections[$key]) && $homeSections[$key]->is_active ? 'checked' : '' }}>                                                    
+                                                </div>
+                                                <div class="d-flex gap-2 align-items-center">
+                                                    <label for="home_section_limit_{{ $key }}" class="form-label mb-0">Số lượng</label>
+                                                    <input type="number" class="form-control" id="home_section_limit_{{ $key }}" 
+                                                        name="home_section[{{ $key }}][limit]" value="{{ $homeSections[$key]->limit ?? 4 }}" min="1">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="home_section_title_{{ $key }}" class="form-label">Tiêu đề Section</label>
+                                                <input type="text" class="form-control home-title-input" id="home_section_title_{{ $key }}" 
+                                                    name="home_section[{{ $key }}][title]" value="{{ $homeSections[$key]->title ?? $label }}" 
+                                                    data-section="{{ $key }}">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="home_section_products_{{ $key }}" class="form-label">Chọn sản phẩm hiển thị</label>
+                                                <select name="home_section[{{ $key }}][products][]" id="home_section_products_{{ $key }}" class="form-select" multiple>
+                                                    @foreach($products as $product)
+                                                        <option value="{{ $product->id }}" 
+                                                            {{ isset($homeSections[$key]) && $homeSections[$key]->products->contains($product->id) ? 'selected' : '' }}>
+                                                            {{ $product->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <small class="form-text text-muted">Chọn các sản phẩm sẽ hiển thị trong section</small>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="home-preview">
+                                        <div class="section-header mb-3">
+                                            <h6 class="text-primary mb-1">
+                                                <i class="fas fa-eye me-2"></i>Xem Trước Home Section
+                                            </h6>
+                                            <small class="text-muted">Xem trước các section trên trang chủ</small>
+                                        </div>
+
+                                        <div class="preview-card p-3 bg-light rounded">
+                                            @foreach($sections as $key => $label)
+                                                <div class="mb-3">
+                                                    <h6 id="preview-home-title_{{ $key }}">{{ $homeSections[$key]->title ?? $label }}</h6>
+                                                    <div class="d-flex gap-2 flex-wrap">
+                                                        @if(isset($homeSections[$key]))
+                                                            @foreach($homeSections[$key]->products as $product)
+                                                                <div class="p-2 border rounded">{{ $product->name }}</div>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Contact Settings Tab -->
                         <div class="tab-pane fade" id="contact" role="tabpanel">
                             <div class="row">
@@ -455,6 +555,12 @@
                                                 <option value="0" {{ ($settings['maintenance_mode'] ?? '0') == '0' ? 'selected' : '' }}>Vô Hiệu Hóa</option>
                                                 <option value="1" {{ ($settings['maintenance_mode'] ?? '0') == '1' ? 'selected' : '' }}>Kích Hoạt</option>
                                             </select>
+                                            
+                                            <div class="mb-3">
+                                                <label for="maintenance_end" class="form-label">Thời Gian Kết Thúc</label>
+                                                <input type="datetime-local" class="form-control" id="maintenance_end" name="maintenance_end" 
+                                                    value="{{ $settings['maintenance_end'] ?? '' }}">
+                                            </div>
                                             <small class="form-text text-muted">Kích hoạt để hiển thị trang bảo trì cho khách truy cập</small>
                                         </div>
                                     </div>
@@ -592,5 +698,53 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         reader.readAsDataURL(input.files[0]);
     }
+
+    // preview hinh anh khi chon file
+    function previewImage(event) {
+        const input = event.target;
+        if (!input.files || !input.files[0]) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.querySelector('.preview-card img');
+            if (img) img.src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+    // Lấy tất cả các input tiêu đề section
+    const titleInputs = document.querySelectorAll('.home-title-input');
+
+    titleInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            const sectionKey = this.getAttribute('data-section');
+            const preview = document.getElementById(`preview-home-title_${sectionKey}`);
+
+            if (preview) {
+                preview.textContent = this.value.trim() || '(Chưa đặt tiêu đề)';
+            }
+        });
+    });
+});
+
+
+    // preview hinh anh khi chon file
+document.querySelectorAll('select[id^="home_section_products_"]').forEach(select => {
+    select.addEventListener('change', function() {
+        const sectionKey = this.id.replace('home_section_products_', '');
+        const previewContainer = document.querySelector(`#preview-home-title_${sectionKey}`).nextElementSibling;
+
+        previewContainer.innerHTML = '';
+
+        Array.from(this.selectedOptions).forEach(option => {
+            const div = document.createElement('div');
+            div.className = 'p-2 border rounded';
+            div.textContent = option.text;
+            previewContainer.appendChild(div);
+        });
+    });
+});
+
+
 </script>
 @endsection

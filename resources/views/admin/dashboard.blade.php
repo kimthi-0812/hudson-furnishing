@@ -191,11 +191,15 @@
                                         </div>
                                     </td>
                                     <td style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; white-space: nowrap; vertical-align: middle;">{{ $product->section->name }}</td>
-                                    <td style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; white-space: nowrap; vertical-align: middle;">
-                                        <span class="badge bg-{{ $product->status == 'active' ? 'success' : 'secondary' }}" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
-                                            {{ ucfirst($product->status) }}
+                                    <td style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; white-space: nowrap; vertical-align: middle;">                                        
+                                        @php
+                                            $options = \App\Helpers\StatusHelper::getStatusOptions();
+                                            $status = $product->status;
+                                        @endphp
+                                        <span class="badge bg-{{ $options[$status]['class'] ?? 'warning' }}">
+                                            {{ $options[$status]['label'] ?? ucfirst($status) }}
                                         </span>
-                                    </td>
+                                    </td>                                    
                                     <td style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; white-space: nowrap; font-size: 0.875rem; color: #6c757d; vertical-align: middle;">{{ $product->created_at->format('d/m/Y') }}</td>
                                 </tr>
                             @endforeach
@@ -209,7 +213,7 @@
     <div class="col-lg-6">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-light">Nhận Xét Mới Nhất</h6>
+                <h6 class="m-0 font-weight-bold text-light">Đánh Giá Mới Nhất</h6>
             </div>
             <div class="card-body">
                 <div style="overflow-x: auto;">
@@ -238,8 +242,12 @@
                                         </div>
                                     </td>
                                     <td style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; white-space: nowrap; vertical-align: middle;">
-                                        <span class="badge bg-{{ $review->approved ? 'success' : 'warning' }}" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
-                                            {{ $review->approved ? 'Approved' : 'Pending' }}
+                                        @php
+                                            $options = \App\Helpers\StatusHelper::getReviewStatusOption();
+                                            $status = $review->approved;
+                                        @endphp
+                                        <span class="badge bg-{{ $options[$status]['class'] ?? 'warning' }}">
+                                            {{ $options[$status]['label'] ?? ucfirst($status) }}
                                         </span>
                                     </td>
                                     <td style="border: 1px solid #e3e6f0; padding: 0.75rem 0.5rem; white-space: nowrap; font-size: 0.875rem; color: #6c757d; vertical-align: middle;">{{ $review->created_at->format('d/m/Y') }}</td>

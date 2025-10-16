@@ -166,11 +166,23 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            
+
+            {{-- Chi tiết sản phẩm (WYSIWYG) --}}
+            <div class="mb-3">
+                <label for="full_description" class="form-label">Chi Tiết Sản Phẩm</label>
+                <textarea class="form-control @error('full_description') is-invalid @enderror" 
+                        id="full_description" name="full_description" rows="10">{{ old('full_description', $product->full_description ?? '') }}</textarea>
+                <div class="form-text">Bạn có thể chèn hình, định dạng chữ, danh sách...</div>
+                @error('full_description')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            {{-- Hình ảnh sản phẩm --}}
             <div class="mb-3">
                 <x-image-upload 
                     name="images"
-                    label="Hình Ảnh Sản Phẩm"
+                    label="Ảnh Đại Diện Sản Phẩm"
                     :multiple="true"
                     :required="true"
                     :maxFiles="5"
@@ -261,6 +273,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    ClassicEditor
+        .create(document.querySelector('#full_description'))
+        .catch(error => { console.error(error); });
 });
 </script>
 @endsection

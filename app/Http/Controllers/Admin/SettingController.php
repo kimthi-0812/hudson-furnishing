@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Product;
+use Illuminate\Support\Facades\DB;
+use App\Models\HomeProductSection;
+
 
 class SettingController extends Controller
 {
@@ -14,9 +18,12 @@ class SettingController extends Controller
      */
     public function index()
     {
+
+        $products = Product::all();
+
         $settings = SiteSetting::pluck('value', 'key')->toArray();
 
-        return view('admin.settings.index', compact('settings'));
+        return view('admin.settings.index', compact('products','settings'));
     }
 
     /**
@@ -44,15 +51,50 @@ class SettingController extends Controller
             'hero_image_2' => 'nullable|image|max:2048',
             'hero_image_3' => 'nullable|image|max:2048',
             'google_map' => 'nullable|string|max:1000',
+
         ]);
 
-        // Handle logo upload if present
+        // Fields bảo trì
+        $maintenanceFields = [
+            'maintenance_mode', 
+            'maintenance_title', 
+            'maintenance_text', 
+            'maintenance_end', 
+            'maintenance_1', 
+            'maintenance_2', 
+            'maintenance_3'
+        ];
+
+        // bật tắt bảo trì
+        foreach ($maintenanceFields as $key) {
+            if ($key === 'maintenance_mode') {
+                $value = $request->has($key) ? '1' : '0';
+                SiteSetting::updateOrCreate(['key'=>$key], ['value'=>$value]);
+            } elseif(in_array($key, ['maintenance_1','maintenance_2','maintenance_3']) && $request->hasFile($key)) {
+                $file = $request->file($key);
+                $filename = time().'_'.$file->getClientOriginalName();
+                $path = $file->storeAs('uploads/maintenance', $filename, 'public');
+
+                // Xóa file cu
+                $old = SiteSetting::where('key',$key)->first();
+                if($old) Storage::disk('public')->delete($old->value);
+
+                SiteSetting::updateOrCreate(['key'=>$key], ['value'=>$path]);
+            } else {
+                // lưu giá trị cơ bản
+                $value = $request->input($key,'');
+                SiteSetting::updateOrCreate(['key'=>$key], ['value'=>$value]);
+            }
+        }
+
+
+        // Upload and save the logo
         if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
             $file = $request->file('logo');
             $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $file->getClientOriginalName());
             $path = $file->storeAs('uploads', $filename, 'public');
 
-            // Delete the old logo if it exists
+            // xóa file cu
             $oldLogo = SiteSetting::where('key', 'logo')->first();
             if ($oldLogo) {
                 Storage::disk('public')->delete($oldLogo->value);
@@ -119,7 +161,39 @@ class SettingController extends Controller
             }
         }
 
+        // --- Xử lý home_section --- //
+        if ($request->has('home_section')) {
+            foreach ($request->home_section as $key => $section) {
+                $homeSection = HomeProductSection::updateOrCreate(
+                    ['type' => $key],
+                    [
+                        'title' => $section['title'] ?? ucfirst($key),
+                        'limit' => $section['limit'] ?? 4,
+                        'is_active' => isset($section['is_active']) ? 1 : 0,
+                        'order' => array_search($key, array_keys($request->home_section)),
+                    ]
+                );
 
+                // Cập nhật sản phẩm
+                if (isset($section['products']) && is_array($section['products'])) {
+                    $homeSection->products()->sync($section['products']);
+                } else {
+                    $homeSection->products()->detach();
+                }
+            }
+        }
+
+        
+        $data = $request->except($except);
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $value = json_encode($value);
+            }
+            SiteSetting::updateOrCreate(['key' => $key], ['value' => (string) $value]);
+        }
+
+
+        // Xóa cache settings nếu có
         if (class_exists(\Illuminate\Support\Facades\Cache::class)) {
         \Illuminate\Support\Facades\Cache::forget('site_settings');
         }
