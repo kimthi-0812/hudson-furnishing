@@ -15,12 +15,10 @@
                     <form method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data" id="productForm">
                         @csrf
                         
-                        <!-- Thông tin cơ bản và Giá cả -->
                         <div class="row">
-                            <!-- Cột trái: Thông tin cơ bản -->
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="name" class="form-label fw-bold">Tên sản phẩm <span class="text-danger">*</span></label>
+                                    <label for="name" class="form-label">Tên sản phẩm <span class="text-danger">*</span></label>
                                     <input type="text" 
                                            class="form-control @error('name') is-invalid @enderror" 
                                            id="name" 
@@ -38,7 +36,7 @@
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="section_id" class="form-label fw-bold">Khu vực <span class="text-danger">*</span></label>
+                                    <label for="section_id" class="form-label">Khu vực <span class="text-danger">*</span></label>
                                     <select class="form-select @error('section_id') is-invalid @enderror" 
                                             id="section_id" name="section_id" >
                                         <option value="">Chọn Khu vực</option>
@@ -54,24 +52,18 @@
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="category_id" class="form-label fw-bold">Danh Mục <span class="text-danger">*</span></label>
+                                    <label for="category_id" class="form-label">Danh Mục <span class="text-danger">*</span></label>
                                     <select class="form-select @error('category_id') is-invalid @enderror" 
-                                            id="category_id" name="category_id" required>
-                                        <option value="">Chọn Danh Mục</option>
-                                        @foreach($categories as $category)
-                                            <option value="{{ $category->id }}" 
-                                                    {{ old('category_id') == $category->id ? 'selected' : '' }}
-                                                    data-section="{{ $category->section_id }}"
-                                                    style="display: none;">
-                                                {{ $category->name }}
-                                            </option>
-                                        @endforeach
+                                            id="category_id" name="category_id" disabled>
+                                        <option value="">Chọn khu vực trước</option>
                                     </select>
                                     <div class="form-text">
                                         <small class="text-muted">
                                             <i class="fas fa-info-circle me-1"></i>
-                                            Danh mục sẽ được lọc theo khu vực đã chọn
+                                            Vui lòng chọn khu vực trước để hiển thị danh mục
                                         </small>
+                                        <br>
+                                        <button type="button" class="btn btn-sm btn-outline-info mt-1" onclick="testCascade()">Test Cascade</button>
                                     </div>
                                     @error('category_id')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -79,7 +71,7 @@
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="brand_id" class="form-label fw-bold">Thương Hiệu <span class="text-danger">*</span></label>
+                                    <label for="brand_id" class="form-label">Thương Hiệu <span class="text-danger">*</span></label>
                                     <select class="form-select @error('brand_id') is-invalid @enderror" 
                                             id="brand_id" name="brand_id" >
                                         <option value="">Chọn loại thương hiệu</option>
@@ -95,7 +87,7 @@
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="material_id" class="form-label fw-bold">Chất Liệu <span class="text-danger">*</span></label>
+                                    <label for="material_id" class="form-label">Chất Liệu <span class="text-danger">*</span></label>
                                     <select class="form-select @error('material_id') is-invalid @enderror" 
                                             id="material_id" name="material_id" >
                                         <option value="">Chọn Loại Chất Liệu</option>
@@ -111,24 +103,22 @@
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input" 
-                                               type="checkbox" 
-                                               id="featured" 
-                                               name="featured" 
-                                               value="1" 
-                                               {{ old('featured') ? 'checked' : '' }}>
-                                        <label class="form-check-label fw-bold" for="featured">
-                                            Sản Phẩm Nổi Bật
-                                        </label>
-                                    </div>
+                                    <label for="description" class="form-label">Mô Tả Sản Phẩm <span class="text-danger">*</span></label>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" 
+                                              id="description" 
+                                              name="description" 
+                                              rows="4" 
+                                              placeholder="Nhập mô tả chi tiết về sản phẩm"
+                                              required>{{ old('description') }}</textarea>
+                                    @error('description')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             
-                            <!-- Cột phải: Giá cả và thông tin bổ sung -->
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="price" class="form-label fw-bold">Giá bán <span class="text-danger">*</span></label>
+                                    <label for="price" class="form-label">Giá bán <span class="text-danger">*</span></label>
                                     <input type="text" 
                                            class="form-control @error('price') is-invalid @enderror" 
                                            id="price" 
@@ -149,43 +139,21 @@
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label class="form-label fw-bold">Giá Khuyến Mãi</label>
-                                    
-                                    <!-- Input giảm giá với dropdown -->
-                                    <div class="input-group">
-                                        <input type="text" 
-                                               id="discount_value" 
-                                               name="discount_value" 
-                                               value="{{ old('discount_value') }}" 
-                                               placeholder="Nhập % hoặc số tiền giảm"
-                                               class="form-control @error('discount_value') is-invalid @enderror">
-                                        <select class="form-select" id="discount_type" name="discount_type" style="max-width: 120px;">
-                                            <option value="percent" {{ old('discount_type', 'percent') == 'percent' ? 'selected' : '' }}>%</option>
-                                            <option value="amount" {{ old('discount_type') == 'amount' ? 'selected' : '' }}>₫</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <!-- Hiển thị giá sau giảm -->
-                                    <div class="mt-2" id="final_price_display" style="display: none;">
-                                        <small class="text-muted">
-                                            <strong>Giá sau giảm:</strong> 
-                                            <span id="calculated_price" class="text-success"></span>
-                                        </small>
-                                    </div>
-                                    
-                                    <!-- Hidden input để gửi giá cuối cùng -->
-                                    <input type="hidden" id="sale_price" name="sale_price" value="{{ old('sale_price') }}">
-                                    
+                                    <label for="sale_price" class="form-label">Giá Sau Khi Giảm</label>
+                                    <x-number-format-input 
+                                        id="sale_price" 
+                                        name="sale_price" 
+                                        value="{{ old('sale_price') }}" 
+                                        placeholder="Nhập giá khuyến mãi"
+                                        class="@error('sale_price') is-invalid @enderror"
+                                    />
                                     @error('sale_price')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                    @error('discount_value')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="stock" class="form-label fw-bold">Số Lượng <span class="text-danger">*</span></label>
+                                    <label for="stock" class="form-label">Số Lượng <span class="text-danger">*</span></label>
                                     <x-number-format-input 
                                         id="stock" 
                                         name="stock" 
@@ -200,72 +168,44 @@
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="status" class="form-label fw-bold">Trạng thái <span class="text-danger">*</span></label>
+                                    <label for="status" class="form-label">Trạng thái <span class="text-danger">*</span></label>
                                     <select class="form-select @error('status') is-invalid @enderror" 
                                             id="status" name="status" required>
-                                        <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Hoạt động</option>
-                                        <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Không hoạt động</option>
+                                        <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
+                                        <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
                                     </select>
                                     @error('status')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Chi tiết và Mô tả sản phẩm -->
-                        <div class="row">
-                            <div class="col-md-6">
+                                
                                 <div class="mb-3">
-                                    <label for="specifications" class="form-label fw-bold">Chi Tiết Sản Phẩm <span class="text-danger">*</span></label>
-                                    <textarea class="form-control @error('specifications') is-invalid @enderror" 
-                                              id="specifications" 
-                                              name="specifications" 
-                                              rows="4" 
-                                              placeholder="Nhập thông số kỹ thuật, kích thước, trọng lượng..."
-                                              required>{{ old('specifications') }}</textarea>
-                                    <div class="form-text">
-                                        <small class="text-muted">
-                                            <i class="fas fa-info-circle me-1"></i>
-                                            Thông số kỹ thuật, kích thước, trọng lượng, chất liệu chi tiết...
-                                        </small>
+                                    <div class="form-check">
+                                        <input class="form-check-input" 
+                                               type="checkbox" 
+                                               id="featured" 
+                                               name="featured" 
+                                               value="1" 
+                                               {{ old('featured') ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="featured">
+                                            Sản Phẩm Nổi Bật
+                                        </label>
                                     </div>
-                                    @error('specifications')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="description" class="form-label fw-bold">Mô Tả Sản Phẩm</label>
-                                    <textarea class="form-control @error('description') is-invalid @enderror" 
-                                              id="description" 
-                                              name="description" 
-                                              rows="4" 
-                                              placeholder="Nhập mô tả chi tiết về sản phẩm">{{ old('description') }}</textarea>
-                                    @error('description')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
                                 </div>
                             </div>
                         </div>
                         
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label fw-bold">Ảnh Chính Sản Phẩm <span class="text-danger">*</span></label>
+                                    <label class="form-label">Ảnh Chính Sản Phẩm <span class="text-danger">*</span></label>
                                     <input type="file" id="primary_image" name="primary_image" accept="image/*" style="display: none;">
                                     
                                     <div class="primary-upload-area border border-2 border-dashed rounded p-3 text-center">
                                         <i class="fas fa-cloud-upload-alt fa-2x text-muted mb-2"></i>
                                         <h6 class="mb-2">Kéo thả ảnh chính vào đây</h6>
                                         <small class="text-muted d-block mb-2">hoặc</small>
-                                        <div class="d-flex justify-content-center">
-                                            <button type="button" class="btn btn-primary">
-                                                <i class="fas fa-plus me-1"></i>Chọn ảnh chính
-                                            </button>
-                                        </div>
+                                        <button type="button" class="btn btn-sm btn-outline-primary">Chọn ảnh chính</button>
                                         <small class="text-muted d-block mt-2">JPG, PNG, GIF tối đa 2MB</small>
                                     </div>
                                     
@@ -275,14 +215,12 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-12">
+                            
+                            <div class="col-md-6">
                                 <div class="mb-3">
+                                    <label class="form-label">Hình Ảnh Bổ Sung</label>
                                     <x-image-upload 
                                         name="images[]" 
-                                        label="Hình Ảnh Bổ Sung"
                                         multiple="true"
                                         maxSize="2MB"
                                         class="@error('images.*') is-invalid @enderror"
@@ -311,9 +249,6 @@ window.categoriesData = {!! json_encode($categories) !!};
 window.oldSectionId = '{{ old("section_id") }}';
 window.oldCategoryId = '{{ old("category_id") }}';
 </script>
-
-<!-- Load external JavaScript -->
-@vite('resources/js/pages/product-create.js')
 
 <style>
 /* CSS cho ảnh chính */
