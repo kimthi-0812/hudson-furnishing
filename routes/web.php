@@ -27,6 +27,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Admin\VisitorStatsController;
+use App\Http\Controllers\Admin\AboutPageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,7 +72,7 @@ Route::post('/contact', [ContactController::class, 'store'])->middleware('auth')
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
 // Visitor Stats
-Route::post('/track-visitor', [VisitorController::class, 'track'])->name('visitor.track');
+// Route::post('/track-visitor', [VisitorController::class, 'track'])->name('visitor.track');
 
 // Authentication Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -86,7 +87,14 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 
 // Profile Routes (Protected)
 Route::middleware(['auth'])->group(function () {
-    Route::get('/profile/change-password', [ProfileController::class, 'editPassword'])->name('password.edit');
+    // Profile management
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    
+    // Password change (redirect to profile edit)
+    Route::get('/profile/change-password', function() {
+        return redirect()->route('profile.edit');
+    })->name('password.edit');
     Route::post('/profile/change-password', [ProfileController::class, 'updatePassword'])->name('password.update');
 });
 
@@ -203,6 +211,13 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('settings', [SettingController::class, 'index'])->name('admin.settings.index');
     Route::put('settings', [SettingController::class, 'update'])->name('admin.settings.update');
     
+    // About Page Management
+    Route::get('about', [AboutPageController::class, 'index'])->name('admin.about.index');
+    Route::put('about', [AboutPageController::class, 'update'])->name('admin.about.update');
+    
+    // API Routes for AJAX
+    Route::get('api/categories/{section}', [App\Http\Controllers\Admin\ProductController::class, 'getCategoriesBySection'])->name('admin.api.categories');
+    
     // Trash Management
     Route::prefix('trash')->group(function () {
         Route::get('/', [App\Http\Controllers\Admin\TrashController::class, 'index'])->name('admin.trash.index');
@@ -223,4 +238,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
         'update'  => 'admin.users.update',
         'destroy' => 'admin.users.destroy'
     ]);
+});
+
+// API Routes for AJAX (outside admin group for testing)
+Route::middleware(['auth'])->group(function () {
+    Route::get('api/categories/{section}', [App\Http\Controllers\Admin\ProductController::class, 'getCategoriesBySection'])->name('api.categories');
 });
