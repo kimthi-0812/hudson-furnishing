@@ -21,7 +21,9 @@
                         <strong>Bản đồ</strong>
                         @if(!empty($siteSettings['google_map']))
                         <div class="map-responsive">
-                            <iframe src="{{ $siteSettings['google_map'] }}" width="800" height="800" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                            <iframe src="{{ $siteSettings['google_map'] }}"
+                            class="rounded-3 shadow-lg"
+                            width="800" height="800" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                         </div>
                         @endif
                     </div>

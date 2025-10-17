@@ -40,7 +40,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($materials as $material)
+                    @forelse($materials as $material)
                         <tr>
                             <td>
                                 @if($material->image)

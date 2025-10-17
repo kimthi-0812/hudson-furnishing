@@ -52,6 +52,10 @@ class TrashController extends Controller
         $request->validate([
             'model' => 'required|string',
             'id' => 'required|integer'
+        ],[
+            'model.required' => 'Vui lòng chọn Model',
+            'id.required' => 'Vui lòng chọn Dữ liệu',
+            'id.integer' => 'Dữ liệu khóng hợp lệ',
         ]);
         
         $models = SoftDeleteService::getSoftDeleteModels();
@@ -62,7 +66,7 @@ class TrashController extends Controller
         }
         
         if (SoftDeleteService::restoreItem($modelClass, $request->id)) {
-            return back()->with('success', 'Item restored successfully!');
+            return back()->with('success', 'Đã khôi phục thành công');
         }
         
         return back()->with('error', 'Failed to restore item');
@@ -76,6 +80,10 @@ class TrashController extends Controller
         $request->validate([
             'model' => 'required|string',
             'id' => 'required|integer'
+        ],[
+            'model.required' => 'Vui lòng chọn Model',
+            'id.required' => 'Vui lòng chọn Dữ liệu',
+            'id.integer' => 'Dữ liệu khóng hợp lệ',
         ]);
         
         $models = SoftDeleteService::getSoftDeleteModels();
@@ -86,10 +94,10 @@ class TrashController extends Controller
         }
         
         if (SoftDeleteService::forceDeleteItem($modelClass, $request->id)) {
-            return back()->with('success', 'Item permanently deleted!');
+            return back()->with('success', 'Đã xóa thành công');
         }
         
-        return back()->with('error', 'Failed to delete item');
+        return back()->with('error', 'Không thể xóa!');
     }
 
     /**
@@ -101,6 +109,10 @@ class TrashController extends Controller
             'model' => 'required|string',
             'ids' => 'required|array',
             'ids.*' => 'integer'
+        ],[
+            'model.required' => 'Vui lòng chọn Model',
+            'ids.required' => 'Vui lòng chọn Dữ liệu',
+            'ids.*.integer' => 'Dữ liệu khóng hợp lệ',
         ]);
         
         $models = SoftDeleteService::getSoftDeleteModels();
@@ -112,7 +124,7 @@ class TrashController extends Controller
         
         $count = SoftDeleteService::bulkRestore($modelClass, $request->ids);
         
-        return back()->with('success', "{$count} items restored successfully!");
+        return back()->with('success', "{$count} Đã khôi phục!");
     }
 
     /**
@@ -124,6 +136,10 @@ class TrashController extends Controller
             'model' => 'required|string',
             'ids' => 'required|array',
             'ids.*' => 'integer'
+        ],[
+            'model.required' => 'Vui lòng chọn Model',
+            'ids.required' => 'Vui lòng chọn dữ liệu',
+            'ids.*.integer' => 'Dữ liệu không hợp lệ',
         ]);
         
         $models = SoftDeleteService::getSoftDeleteModels();
@@ -135,7 +151,7 @@ class TrashController extends Controller
         
         $count = SoftDeleteService::bulkForceDelete($modelClass, $request->ids);
         
-        return back()->with('success', "{$count} items permanently deleted!");
+        return back()->with('success', "{$count} Đã xóa!");
     }
 
     /**
@@ -148,7 +164,7 @@ class TrashController extends Controller
         
         $message = 'Cleanup completed. ';
         foreach ($results as $model => $count) {
-            $message .= ucfirst($model) . ": {$count} items deleted. ";
+            $message .= ucfirst($model) . ": {$count} items. ";
         }
         
         return back()->with('success', $message);

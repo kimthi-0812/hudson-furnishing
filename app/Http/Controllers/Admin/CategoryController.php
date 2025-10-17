@@ -84,6 +84,11 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'section_id' => 'required|exists:sections,id',
+        ],[
+            'name.required' => 'Vui lòng nhập tên Danh Mục',
+            'name.string' => 'kiêu dữ liệu không hợp lệ',
+            'section_id.required' => 'vui lòng chọn Danh Mục',
+            'section_id.exists' => 'Danh Mục khong ton tai',
         ]);
 
         Category::create([

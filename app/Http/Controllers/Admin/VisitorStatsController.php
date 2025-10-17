@@ -14,6 +14,8 @@ class VisitorStatsController extends Controller
             ->orderBy('date')
             ->get(['date', 'total_visits', 'unique_visits']);
 
+        
+
         // Tổng lượt truy cập tất cả ngày (nếu muốn)
         $totalVisitors = VisitorStat::sum('total_visits');
 

@@ -172,12 +172,12 @@
                         <i class="fas fa-external-link-alt me-2"></i>Xem Trên Website
                     </a>
                     <form method="POST" action="{{ route('admin.products.destroy', $product) }}" 
-                          class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')">
+                          class="d-inline form-confirm">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger w-100">
                             <i class="fas fa-trash me-2"></i>Xóa Sản Phẩm
-                        </button>
+                        </button>                       
                     </form>
                 </div>
             </div>

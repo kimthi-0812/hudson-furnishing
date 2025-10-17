@@ -33,7 +33,7 @@
             @forelse($images as $image)
                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                     <div class="card h-100">
-                        <img src="{{ asset('uploads/products/' . $image->url) }}" 
+                        <img src="{{ asset('storage/uploads/' . $image->url) }}" 
                              class="card-img-top" 
                              alt="{{ $image->alt_text }}"
                              style="height: 200px; object-fit: cover;">
@@ -53,7 +53,7 @@
                                     </form>
                                 @endif
                                 <form method="POST" action="{{ route('admin.gallery.destroy', $image) }}" 
-                                      class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa hình ảnh này không?')">
+                                      class="d-inline form-confirm">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger">

@@ -117,7 +117,7 @@ class OfferController extends Controller
         ]);
 
 
-        return redirect()->route('admin.offers.index')->with('success', 'Offer created successfully!');
+        return redirect()->route('admin.offers.index')->with('success', 'Đã tạo thành công!');
     }
 
 
@@ -194,12 +194,12 @@ class OfferController extends Controller
             'image' => $imagePath,
         ]);
 
-        return redirect()->route('admin.offers.index')->with('success', 'Offer updated successfully!');
+        return redirect()->route('admin.offers.index')->with('success', 'Đã cập nhật thành công!');
     }
 
     public function destroy(Offer $offer)
     {
         $offer->delete();
-        return redirect()->route('admin.offers.index')->with('success', 'Offer deleted successfully!');
+        return redirect()->route('admin.offers.index')->with('success', 'Đã xóa thành công!');
     }
 }

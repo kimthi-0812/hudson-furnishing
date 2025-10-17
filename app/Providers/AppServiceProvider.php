@@ -47,5 +47,7 @@ class AppServiceProvider extends ServiceProvider
             return SiteSetting::pluck('value', 'key')->toArray();
         }));
 
+        Carbon::setLocale('vi');
+
     }
 }

@@ -19,14 +19,14 @@
                         <div class="contact-meta mb-3">
                             <p><strong>Email:</strong> {{ $contact->email }}</p>
                             @if($contact->phone)
-                                <p><strong>Phone:</strong> {{ $contact->phone }}</p>
+                                <p><strong>Số điện thoại:</strong> {{ $contact->phone }}</p>
                             @endif
-                            <p><strong>Status:</strong> 
+                            <p><strong>Tình Trạng:</strong> 
                                 <span class="badge bg-{{ $contact->status == 'new' ? 'warning' : ($contact->status == 'read' ? 'info' : 'success') }}">
                                     {{ ucfirst($contact->status) }}
                                 </span>
                             </p>
-                            <p><strong>Date:</strong> {{ $contact->created_at->format('d/m/Y H:i') }}</p>
+                            <p><strong>Ngày:</strong> {{ $contact->created_at->locale('vi')->translatedFormat('d F Y \\lú\\c H:i') }}</p>
                         </div>
                         
                         @if($contact->notes)
@@ -40,7 +40,7 @@
                     <div class="col-md-6">
                         <div class="card bg-light">
                             <div class="card-body">
-                                <h6>Quick Actions</h6>
+                                <h6>Thao Tác Nhanh</h6>
                                 <div class="d-grid gap-2">
                                     @if($contact->status == 'new')
                                         <form method="POST" action="{{ route('admin.contacts.read', $contact) }}" class="d-inline">
@@ -67,7 +67,7 @@
                                     </a>
                                     
                                     <form method="POST" action="{{ route('admin.contacts.destroy', $contact) }}" 
-                                          class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa tin nhắn liên hệ này không?')">
+                                          class="d-inline form-delete">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger w-100">
@@ -134,14 +134,14 @@
                         </div>
                     </div>
                     <div class="col-6 mb-3">
-                        <h4 class="text-success">{{ $contact->created_at->format('M') }}</h4>
+                        <h4 class="text-success">{{ $contact->created_at->locale('vi')->translatedFormat('F') }}</h4>
                         <small class="text-muted">Tháng</small>
                     </div>
                 </div>
                 
                 <div class="mt-3">
-                    <small class="text-muted">Nhận: {{ $contact->created_at->format('d/m/Y H:i') }}</small><br>
-                    <small class="text-muted">Cập Nhật: {{ $contact->updated_at->format('d/m/Y H:i') }}</small>
+                    <small class="text-muted">Nhận: {{ $contact->created_at->locale('vi')->translatedFormat('d F Y H:i') }}</small><br>
+                    <small class="text-muted">Cập Nhật: {{ $contact->updated_at->locale('vi')->translatedFormat('d F Y H:i') }}</small>
                 </div>
             </div>
         </div>

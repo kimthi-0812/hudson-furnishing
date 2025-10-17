@@ -29,6 +29,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Admin\VisitorStatsController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\Admin\HomeProductSectionController;
+use App\Http\Controllers\Admin\TrashController;
 
 /*
 |--------------------------------------------------------------------------
@@ -130,7 +131,11 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
         'edit'    => 'admin.products.edit',
         'update'  => 'admin.products.update',
         'destroy' => 'admin.products.destroy'
+        
     ]);
+
+    Route::post('products/bulk-delete', [AdminProductController::class, 'bulkDelete'])
+        ->name('admin.products.bulk-delete');
     Route::post('products/{product}/images', [AdminProductController::class, 'uploadImages'])->name('admin.products.images');
     Route::delete('products/{product}/images/{image}', [AdminProductController::class, 'deleteImage'])->name('admin.products.images.destroy');
     
@@ -206,15 +211,18 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::put('settings', [SettingController::class, 'update'])->name('admin.settings.update');
     
     // Trash Management
-    Route::prefix('trash')->group(function () {
-        Route::get('/', [App\Http\Controllers\Admin\TrashController::class, 'index'])->name('admin.trash.index');
-        Route::get('/{model}', [App\Http\Controllers\Admin\TrashController::class, 'show'])->name('admin.trash.show');
-        Route::post('/restore', [App\Http\Controllers\Admin\TrashController::class, 'restore'])->name('admin.trash.restore');
-        Route::post('/force-delete', [App\Http\Controllers\Admin\TrashController::class, 'forceDelete'])->name('admin.trash.force-delete');
-        Route::post('/bulk-restore', [App\Http\Controllers\Admin\TrashController::class, 'bulkRestore'])->name('admin.trash.bulk-restore');
-        Route::post('/bulk-force-delete', [App\Http\Controllers\Admin\TrashController::class, 'bulkForceDelete'])->name('admin.trash.bulk-force-delete');
-        Route::post('/cleanup', [App\Http\Controllers\Admin\TrashController::class, 'cleanup'])->name('admin.trash.cleanup');
-    });
+    Route::prefix('trash')
+        ->name('admin.trash.')
+        ->group(function () {
+            Route::get('/', [TrashController::class, 'index'])->name('index');
+            Route::get('/{model}', [TrashController::class, 'show'])->name('show');
+            Route::post('/restore', [TrashController::class, 'restore'])->name('restore');
+            Route::post('/force-delete', [TrashController::class, 'forceDelete'])->name('force-delete');
+            Route::post('/bulk-restore', [TrashController::class, 'bulkRestore'])->name('bulk-restore');
+            Route::post('/bulk-force-delete', [TrashController::class, 'bulkForceDelete'])->name('bulk-force-delete');
+            Route::post('/cleanup', [TrashController::class, 'cleanup'])->name('cleanup');
+        });
+
 
     Route::resource('users', UserController::class) ->names([
         'index'   => 'admin.users.index',

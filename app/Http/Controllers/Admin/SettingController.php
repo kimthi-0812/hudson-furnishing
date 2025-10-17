@@ -23,7 +23,16 @@ class SettingController extends Controller
 
         $settings = SiteSetting::pluck('value', 'key')->toArray();
 
-        return view('admin.settings.index', compact('products','settings'));
+        $homeSections = HomeProductSection::with('products')->get()->keyBy('type');
+
+        $sections = [
+            'featured' => 'section 1',
+            'new' => 'section 2',
+            'top_rated' => 'section 3',
+            'custom' => 'section 4',
+        ];
+
+        return view('admin.settings.index', compact('products','settings', 'homeSections', 'sections'));
     }
 
     /**
@@ -87,7 +96,7 @@ class SettingController extends Controller
             }
         }
 
-
+        // Logo
         // Upload and save the logo
         if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
             $file = $request->file('logo');
@@ -107,37 +116,22 @@ class SettingController extends Controller
             );
         }
 
-
-        // lưu các setting khác (loại trừ token/method/logo)
-        $except = ['_token', '_method', 'logo', 'google_map'];
-        $data = $request->except($except);
-
-        foreach ($data as $key => $value) {
-            // normalize booleans
-            if (is_array($value)) {
-                $value = json_encode($value);
-            }
-
-            SiteSetting::updateOrCreate(
-                ['key' => $key],
-                ['value' => (string) $value]
-            );
-        }
-
-        // Xử lý Google Map riêng
+        // --- Xử lý Google Map riêng --- //
         if ($request->filled('google_map')) {
             $googleMap = $request->input('google_map');
 
-            // Nếu admin dán cả iframe, thì tách lấy src
+            // Nếu admin dán cả iframe, tách lấy src
             if (preg_match('/src="([^"]+)"/', $googleMap, $matches)) {
                 $googleMap = $matches[1];
             }
 
+            // Cập nhật hoặc tạo mới Google Map
             SiteSetting::updateOrCreate(
                 ['key' => 'google_map'],
-                ['value' => $googleMap]
+                ['value' => trim($googleMap)]
             );
         } else {
+            // Nếu trống, xóa Google Map
             SiteSetting::where('key', 'google_map')->delete();
         }
 
@@ -183,8 +177,17 @@ class SettingController extends Controller
             }
         }
 
-        
+         // lưu các setting khác (loại trừ token/method/logo)
+        $except = ['_token',
+            '_method',
+            'logo',
+            'google_map',
+            'hero_image_1',
+            'hero_image_2',
+            'hero_image_3'
+        ];
         $data = $request->except($except);
+        
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 $value = json_encode($value);

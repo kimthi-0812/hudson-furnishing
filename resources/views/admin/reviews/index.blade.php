@@ -84,7 +84,7 @@
                                         </form>
                                     @endif
                                     <form method="POST" action="{{ route('admin.reviews.destroy', $review) }}" 
-                                          class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa đánh giá này không?')">
+                                          class="d-inline form-confirm">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger" title="Xóa đánh giá">

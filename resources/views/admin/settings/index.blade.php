@@ -14,12 +14,12 @@
                     </div>
                     <div>
                         <h5 class="m-0 font-weight-bold text-white">Cài Đặt Website</h5>
-                        <small class="text-white-50">Configure your website settings and preferences</small>
+                        <small class="text-white-50">Cấu hình cai đặt website và thiết lập</small>
                     </div>
                 </div>
             </div>
             <div class="card-body p-4">
-                <form method="POST" action="{{ route('admin.settings.update') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.settings.update') }}" enctype="multipart/form-data" class= "form-confirm">
                     @csrf
                     @method('PUT')
                     
@@ -28,7 +28,7 @@
                         <!--Tab cài đặt cơ bản-->
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="general-tab" data-bs-toggle="pill" data-bs-target="#general" type="button" role="tab">
-                                <i class="fas fa-home me-2"></i>Cơ Bản
+                                <i class="fas fa-info-circle me-2"></i>Cơ Bản
                             </button>
                         </li>
                         <!--Tad  Home Section -->
@@ -76,7 +76,7 @@
                                             </h6>
                                             <small class="text-muted">Cấu hình thông tin cơ bản của website</small>
                                         </div>
-                                        
+                                        <!-- site name -->
                                         <div class="mb-3">
                                             <label for="site_name" class="form-label">
                                                 <i class="fas fa-tag text-primary me-1"></i>Tên Website
@@ -85,7 +85,7 @@
                                                    value="{{ $settings['site_name'] ?? 'Hudson Furnishing' }}"
                                                    placeholder="Nhập tên website">
                                         </div>
-                                        
+                                        <!-- tagline -->
                                         <div class="mb-3">
                                             <label for="site_tagline" class="form-label">
                                                 <i class="fas fa-quote-right text-primary me-1"></i>Tagline Website
@@ -94,7 +94,7 @@
                                                    value="{{ $settings['site_tagline'] ?? 'Nội thất cao cấp cho mọi không gian' }}"
                                                    placeholder="Nhập tagline website">
                                         </div>
-                                        
+                                        <!-- description -->
                                         <div class="mb-3">
                                             <label for="site_description" class="form-label">
                                                 <i class="fas fa-align-left text-primary me-1"></i>Mô Tả Website
@@ -102,7 +102,7 @@
                                             <textarea class="form-control" id="site_description" name="site_description" rows="3" 
                                                       placeholder="Nhập mô tả website">{{ $settings['site_description'] ?? 'Hudson Furnishing cung cấp nội thất cao cấp cho mọi phòng trong ngôi nhà của bạn. Chất lượng thủ công gặp gỡ thiết kế hiện đại.' }}</textarea>
                                         </div>
-                                        
+                                        <!-- keywords -->                                        
                                         <div class="mb-3">
                                             <label for="site_keywords" class="form-label">
                                                 <i class="fas fa-tags text-primary me-1"></i>Từ Khóa Website
@@ -112,13 +112,30 @@
                                                    placeholder="Nhập từ khóa website">
                                             <small class="form-text text-muted">Separate keywords with commas</small>
                                         </div>
+                                        <!--logo-->
                                         <div class="mb-3">
                                             <label for="logo" class="form-label">Logo website</label>
                                             <input type="file" name="logo" id="logo" class="form-control" accept="image/*" onchange="previewLogo(event)">                                            
                                         </div>
+                                        <!-- google map -->
+                                        <div class="mb-3">
+                                        <label for="google_map" class="form-label">
+                                            <i class="fa-solid fa-map-location-dot text-primary me-1"></i>Dán link hoặc iframe Google Map
+                                        </label>
+                                        <textarea 
+                                            name="google_map" 
+                                            id="google_map" 
+                                            class="form-control" 
+                                            rows="3"
+                                            placeholder="Ví dụ: https://www.google.com/maps/embed?pb=!1m18!... hoặc dán toàn bộ thẻ <iframe>">{{ $settings['google_map'] ?? '' }}</textarea>
+                                        <small class="text-muted">
+                                            Bạn vui lòng dán toàn bộ thẻ <code>&lt;iframe&gt;</code> từ Google Maps vào.<br>
+                                            Hướng dẫn: Vào <a href="https://maps.google.com" target="_blank">Google Maps</a> → chọn địa điểm → Chia sẻ → Nhúng bản đồ → Sao chép iframe.
+                                        </small>
+                                    </div>
                                     </div>
                                 </div>
-                                
+                                <!-- preview -->
                                 <div class="col-md-6">
                                     <div class="settings-preview">
                                         <div class="section-header mb-3">
@@ -144,7 +161,6 @@
 
                                         <hr>
                                             <h5 class="mt-4 mb-3">Hero Carousel</h5>
-
                                             <div class="mb-3">
                                                 <label class="form-label">Hình ảnh Carousel 1</label>
                                                 <input type="file" name="hero_image_1" class="form-control" accept="image/*">
@@ -190,41 +206,35 @@
                                             </h6>
                                             <small class="text-muted">Cấu hình các section hiển thị trên trang chủ</small>
                                         </div>
-
-                                        @php
-                                            $sections = [
-                                                'featured' => 'Sản phẩm nổi bật',
-                                                'new' => 'Sản phẩm mới',
-                                                'top_rated' => 'Sản phẩm đánh giá cao',
-                                                'custom' => 'Sản phẩm tùy chọn'
-                                            ];
-                                        @endphp
-
+                                        
                                         @foreach($sections as $key => $label)
                                         <div class="mb-4 p-3 border rounded">
-                                            <div class="form-check form-switch mb-3 d-flex justify-content-between">
-                                                <div class="d-flex gap-2 align-items-center">                                                    
-                                                    <label class="form-check-label text-primary me-3" for="home_section_active_{{ $key }}">
-                                                        <i class="fas fa-home me-2"></i>{{ $label }}
-                                                    </label>
-                                                    <input class="form-check-input" type="checkbox" id="home_section_active_{{ $key }}" 
-                                                        name="home_section[{{ $key }}][is_active]" value="1"
-                                                        {{ isset($homeSections[$key]) && $homeSections[$key]->is_active ? 'checked' : '' }}>                                                    
-                                                </div>
-                                                <div class="d-flex gap-2 align-items-center">
-                                                    <label for="home_section_limit_{{ $key }}" class="form-label mb-0">Số lượng</label>
-                                                    <input type="number" class="form-control" id="home_section_limit_{{ $key }}" 
-                                                        name="home_section[{{ $key }}][limit]" value="{{ $homeSections[$key]->limit ?? 4 }}" min="1">
-                                                </div>
+                                            <!-- Checkbox Section -->
+                                            <div class="form-check form-switch mb-3 text-center">
+                                                <input class="form-check-input" type="checkbox" id="home_section_active_{{ $key }}" 
+                                                    name="home_section[{{ $key }}][is_active]" value="1"
+                                                    {{ isset($homeSections[$key]) && $homeSections[$key]->is_active ? 'checked' : '' }}>
+                                                <label class="form-check-label text-primary mt-1" for="home_section_active_{{ $key }}">
+                                                    <i class="fas fa-home me-2"></i>{{ $label }}
+                                                </label>
                                             </div>
 
+                                            <!-- Limit Input -->
+                                            <div class="mb-3 d-flex align-items-center gap-2">
+                                                <label for="home_section_limit_{{ $key }}" class="form-label mb-0">Số lượng</label>
+                                                <input type="number" class="form-control" id="home_section_limit_{{ $key }}" 
+                                                    name="home_section[{{ $key }}][limit]" value="{{ $homeSections[$key]->limit ?? 4 }}" min="1">
+                                            </div>
+
+                                            <!-- Section Title -->
                                             <div class="mb-3">
-                                                <label for="home_section_title_{{ $key }}" class="form-label">Tiêu đề Section</label>
+                                                <label for="home_section_title_{{ $key }}" class="form-label">Nhập tiêu đề Section</label>
                                                 <input type="text" class="form-control home-title-input" id="home_section_title_{{ $key }}" 
                                                     name="home_section[{{ $key }}][title]" value="{{ $homeSections[$key]->title ?? $label }}" 
                                                     data-section="{{ $key }}">
                                             </div>
 
+                                            <!-- Product Selection -->
                                             <div class="mb-3">
                                                 <label for="home_section_products_{{ $key }}" class="form-label">Chọn sản phẩm hiển thị</label>
                                                 <select name="home_section[{{ $key }}][products][]" id="home_section_products_{{ $key }}" class="form-select" multiple>
@@ -238,6 +248,7 @@
                                                 <small class="form-text text-muted">Chọn các sản phẩm sẽ hiển thị trong section</small>
                                             </div>
                                         </div>
+
                                         @endforeach
                                     </div>
                                 </div>
@@ -315,6 +326,41 @@
                                             <textarea class="form-control" id="business_hours" name="business_hours" rows="3" 
                                                       placeholder="Nhập giờ làm việc">{{ $settings['business_hours'] ?? "T2 - T6: 8:00 - 18:00\nT7: 9:00 - 17:00\nCN: Nghỉ" }}</textarea>
                                         </div>
+                                        <hr>
+                                        <h5 class="mt-4 mb-3">Hero Content</h5>
+
+                                        <div class="mb-3">
+                                            <label for="hero_title" class="form-label">Tiêu đề Hero</label>
+                                            <input type="text" class="form-control" id="hero_title" name="hero_title" 
+                                                value="{{ $siteSettings['hero_title'] ?? '' }}" placeholder="Nhập tiêu đề hero">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="hero_subtitle" class="form-label">Mô tả Hero</label>
+                                            <textarea class="form-control" id="hero_subtitle" name="hero_subtitle" rows="3"
+                                                    placeholder="Nhập mô tả hero">{{ $siteSettings['hero_subtitle'] ?? '' }}</textarea>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="hero_button_text" class="form-label">Text nút CTA</label>
+                                            <input type="text" class="form-control" id="hero_button_text" name="hero_button_text"
+                                                value="{{ $siteSettings['hero_button_text'] ?? '' }}" placeholder="Nhập text nút CTA">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="hero_button_link" class="form-label">Link nút CTA</label>
+                                            <input type="text" class="form-control" id="hero_button_link" name="hero_button_link"
+                                                value="{{ $siteSettings['hero_button_link'] ?? '' }}" placeholder="Nhập link nút CTA">
+                                        </div>
+
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" name="hero_button_enabled" id="hero_button_enabled"
+                                                value="1" {{ !empty($siteSettings['hero_button_enabled']) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="hero_button_enabled">
+                                                Hiển thị nút CTA
+                                            </label>
+                                        </div>
+
                                     </div>
                                 </div>
                                 
@@ -592,7 +638,7 @@
                         </div>
                     </div>
                     <div class="mt-4 text-end">
-                        <button type="submit" class="btn btn-primary" onclick="return confirm('Bạn có chắc chắn muốn áp dụng các thay đổi không?')">
+                        <button type="submit" class="btn btn-primary">
                             <i class="fas fa-save me-2"></i>Lưu Thay Đổi
                         </button>
                     </div>

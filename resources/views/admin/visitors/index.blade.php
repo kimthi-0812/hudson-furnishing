@@ -20,7 +20,7 @@
             <tbody>
                 @foreach($visitorStats as $stat)
                     <tr>
-                        <td>{{ $stat->date }}</td>
+                        <td>{{ $stat->date->format('d/m/Y') }}</td>
                         <td>{{ $stat->total_visits }}</td>
                         <td>{{ $stat->unique_visits }}</td>
                     </tr>

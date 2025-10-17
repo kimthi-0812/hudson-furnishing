@@ -54,8 +54,7 @@ class HomeProductSectionController extends Controller
             $section->products()->sync($data['products']);
         }
 
-        return redirect()->route('home-sections.index')
-                         ->with('success', 'Section đã được tạo thành công!');
+        return back()->with('success', 'Section đã được tạo thành công!');
     }
 
     /**

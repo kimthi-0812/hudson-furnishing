@@ -17,6 +17,7 @@
                             alt="Hero Image {{ $index + 1 }}"
                             style="object-fit: cover; max-height: 65vh; object-position: center ;"
                         >
+                        <div class="carousel-overlay position-absolute top-0 start-0 w-100 h-100"></div>
                     </div>
                 @endif
             @endforeach           
@@ -45,12 +46,15 @@
 
     <!-- Nội dung chữ -->
     <div class="container position-absolute bottom-0 start-50 translate-middle-x text-center z-2 mb-5">
-        <h1 class="display-4 fw-bold mb-4 bounce-in">Biến Đổi Không Gian Của Bạn!</h1>
-        <p class="lead mb-4 slide-in">
-            Khám phá bộ sưu tập nội thất cao cấp cho mọi phòng trong ngôi nhà của bạn.
-            Chất lượng thủ công gặp gỡ thiết kế hiện đại.
-        </p>
-        <a href="{{ route('products.index') }}" class="btn btn-secondary btn-lg bounce-in">Khám Phá Ngay!</a>
+        <h1>{{ $siteSettings['hero_title'] ?? 'Tiêu đề mặc định' }}</h1>
+        <p>{{ $siteSettings['hero_subtitle'] ?? 'Mô tả mặc định' }}</p>
+
+        @if(!empty($siteSettings['hero_button_enabled']))
+            <a class="btn btn-secondary btn-hero bounce-in" 
+                href="{{ !empty($siteSettings['hero_button_link']) ? $siteSettings['hero_button_link'] : route('products.index') }}">
+                {{ $siteSettings['hero_button_text'] ?? 'Khám Phá Ngay!' }}
+            </a>
+        @endif
     </div>
 </section>
 
@@ -177,6 +181,38 @@ document.addEventListener('DOMContentLoaded', function() {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 60vh;
 }
+
+.carousel-overlay {
+  background: rgba(0, 0, 0, 0.4); /* Tăng độ tối giúp chữ nổi hơn */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Đảm bảo nội dung hero nằm trên overlay */
+.hero-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Làm chữ rõ hơn */
+.hero-section h1,
+.hero-section p {
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+
+.btn-hero {
+  padding: 10px 35px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 500;
+  display: inline-block !important; /* giữ đúng kích thước theo nội dung */
+  width: auto !important; /* không chiếm full chiều ngang */
+  max-width: fit-content; /* tự co theo chữ */
+}
+
 
 .fade-in {
     animation: fadeIn 1s ease-in;

@@ -434,4 +434,19 @@ class ProductController extends Controller
             ], 500);
         }
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids');
+
+        if (!$ids) {
+            return redirect()->back()->with('error', 'Vui lòng chọn ít nhất 1 sản phẩm!');
+        }
+
+        // Nếu dùng soft delete
+        \App\Models\Product::whereIn('id', $ids)->delete();
+
+        return redirect()->back()->with('success', 'Đã xóa ' . count($ids) . ' sản phẩm!');
+    }
+
 }

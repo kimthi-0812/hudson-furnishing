@@ -58,7 +58,7 @@
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <form method="POST" action="{{ route('admin.categories.destroy', $category) }}" 
-                                          class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                          class="d-inline form-confirm">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger">

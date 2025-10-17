@@ -408,8 +408,8 @@ html body .pagination .page-link span {
 }
 
 /* Larger arrow characters for pagination */
-html body .pagination .page-link:contains('‹'),
-html body .pagination .page-link:contains('›') {
+html body .pagination .page-link:contains("‹"),
+html body .pagination .page-link:contains("›") {
     font-size: 1.2rem !important;
     font-weight: bold !important;
     line-height: 1 !important;
@@ -953,19 +953,19 @@ html body .pagination * {
         z-index: 1050;
         transition: left 0.3s ease;
     }
-    
+
     .sidebar.show {
         left: 0;
     }
-    
+
     .main-content {
         margin-left: 0;
     }
-    
+
     .card-body {
         padding: 1rem;
     }
-    
+
     .table-responsive {
         font-size: 0.875rem;
     }
@@ -986,8 +986,14 @@ html body .pagination * {
 
 /* Animation */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .fade-in {
@@ -1065,12 +1071,24 @@ html body .pagination * {
 }
 
 /* Text Colors */
-.text-primary { color: var(--admin-primary) !important; }
-.text-secondary { color: var(--admin-secondary) !important; }
-.text-success { color: var(--admin-success) !important; }
-.text-warning { color: var(--admin-warning) !important; }
-.text-danger { color: var(--admin-danger) !important; }
-.text-info { color: var(--admin-info) !important; }
+.text-primary {
+    color: var(--admin-primary) !important;
+}
+.text-secondary {
+    color: var(--admin-secondary) !important;
+}
+.text-success {
+    color: var(--admin-success) !important;
+}
+.text-warning {
+    color: var(--admin-warning) !important;
+}
+.text-danger {
+    color: var(--admin-danger) !important;
+}
+.text-info {
+    color: var(--admin-info) !important;
+}
 
 /* Action Icons Container - Center alignment */
 body .table td .btn-group {
@@ -1315,16 +1333,29 @@ html body .card .btn-sm.btn-outline-danger:hover {
     font-size: 1.2rem;
 }
 
-.settings-section, .settings-preview, .contact-preview, .social-preview, .seo-preview, .system-info {
+.settings-section,
+.settings-preview,
+.contact-preview,
+.social-preview,
+.seo-preview,
+.system-info {
     height: 100%;
 }
 
-.preview-card, .contact-card, .social-links, .seo-status, .system-card {
+.preview-card,
+.contact-card,
+.social-links,
+.seo-status,
+.system-card {
     border: 1px solid #e3e6f0;
     transition: all 0.3s ease;
 }
 
-.preview-card:hover, .contact-card:hover, .social-links:hover, .seo-status:hover, .system-card:hover {
+.preview-card:hover,
+.contact-card:hover,
+.social-links:hover,
+.seo-status:hover,
+.system-card:hover {
     box-shadow: 0 4px 15px rgba(51, 92, 103, 0.1);
 }
 
@@ -1338,7 +1369,9 @@ html body .card .btn-sm.btn-outline-danger:hover {
     background: linear-gradient(135deg, var(--admin-primary), #4a7c8a);
 }
 
-.contact-item, .status-item, .info-item {
+.contact-item,
+.status-item,
+.info-item {
     display: flex;
     align-items: center;
     font-size: 0.9rem;
@@ -1453,4 +1486,106 @@ html body .card .btn-sm.btn-outline-danger:hover {
     white-space: nowrap;
     font-size: 0.75rem;
     padding: 0.25rem 0.5rem;
+}
+
+/* SweetAlert2*/
+/* SweetAlert2 - Popup hiện đại */
+.swal2-modern-popup {
+    width: 600px !important;
+    height: 250px !important;
+    border-radius: 12px !important;
+    padding: 1.5rem !important;
+    background: #ffffff;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* ✅ Giảm kích thước icon cảnh báo */
+.swal2-icon.swal2-warning {
+    width: 50px !important;
+    height: 50px !important;
+    border-width: 3px !important;
+    margin: 0.5rem auto 0.5rem auto !important;
+}
+
+.swal2-icon.swal2-warning .swal2-icon-content {
+    font-size: 2rem !important; /* thu nhỏ dấu chấm than */
+}
+
+/* Tiêu đề */
+.swal2-modern-title {
+    font-size: 1.3rem !important;
+    color: #333 !important;
+    font-weight: 600 !important;
+    text-align: center;
+    margin-bottom: 0.4rem !important;
+}
+
+/* Nội dung */
+.swal2-modern-html {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.4;
+    text-align: center;
+    max-height: 90px;
+    overflow-y: auto;
+    margin: 0.5rem 0 1rem 0;
+}
+
+/* Khu vực nút */
+.swal2-actions {
+    display: flex !important;
+    justify-content: center !important;
+    justify-content: space-around !important;
+    gap: 2rem !important;
+    margin-top: auto !important;
+    margin-bottom: 1rem !important;
+    flex-wrap: wrap !important;
+}
+
+/* Nút xác nhận */
+.swal2-modern-confirm {
+    background: linear-gradient(135deg, #f33, #d00) !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    padding: 0.6rem 1.2rem !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.2s ease;
+}
+.swal2-modern-confirm:hover {
+    background: linear-gradient(135deg, #d00, #a00) !important;
+    transform: translateY(-2px);
+}
+
+/* Nút hủy */
+.swal2-modern-cancel {
+    background: #f0f0f0 !important;
+    color: #555 !important;
+    border-radius: 8px !important;
+    padding: 0.6rem 2rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease;
+}
+.swal2-modern-cancel:hover {
+    background: #e0e0e0 !important;
+    color: #333 !important;
+    transform: translateY(-2px);
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 768px) {
+    .swal2-modern-popup {
+        width: 90vw !important;
+        height: auto !important;
+        padding: 1.2rem !important;
+    }
+    .swal2-modern-html {
+        max-height: 120px;
+    }
 }

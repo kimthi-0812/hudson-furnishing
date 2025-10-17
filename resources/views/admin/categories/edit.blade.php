@@ -23,10 +23,10 @@
             </div>
             
             <div class="mb-3">
-                <label for="section_id" class="form-label">Mục Sản Phẩm *</label>
+                <label for="section_id" class="form-label">Khu Vưc </label>
                 <select class="form-select @error('section_id') is-invalid @enderror" 
                         id="section_id" name="section_id" required>
-                    <option value="">Chọn Mục Sản Phẩm</option>
+                    <option value="">Chọn Khu Vực</option>
                     @foreach($sections as $section)
                         <option value="{{ $section->id }}" {{ old('section_id', $category->section_id) == $section->id ? 'selected' : '' }}>
                             {{ $section->name }}

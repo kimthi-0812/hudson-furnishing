@@ -15,17 +15,17 @@
             <div class="mb-3">
                 <label for="name" class="form-label">Tên Danh Mục *</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" 
-                       id="name" name="name" value="{{ old('name') }}" required>
+                       id="name" name="name" value="{{ old('name') }}">
                 @error('name')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
             
             <div class="mb-3">
-                <label for="section_id" class="form-label">Mục Sản Phẩm *</label>
+                <label for="section_id" class="form-label">Khu Vực</label>
                 <select class="form-select @error('section_id') is-invalid @enderror" 
-                        id="section_id" name="section_id" required>
-                    <option value="">Chọn Mục Sản Phẩm</option>
+                        id="section_id" name="section_id">
+                    <option value="">Chọn Khu Vực</option>
                     @foreach($sections as $section)
                         <option value="{{ $section->id }}" {{ old('section_id') == $section->id ? 'selected' : '' }}>
                             {{ $section->name }}

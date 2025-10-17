@@ -74,7 +74,7 @@
                                         </form>
                                     @endif
                                     <form method="POST" action="{{ route('admin.contacts.destroy', $contact) }}" 
-                                          class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa tin nhắn liên hệ này không?')">
+                                          class="d-inline form-confirm">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger">

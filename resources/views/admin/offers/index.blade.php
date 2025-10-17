@@ -82,7 +82,7 @@
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <form method="POST" action="{{ route('admin.offers.destroy', $offer) }}" 
-                                          class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa khuyến mãi này không?')">
+                                          class="d-inline form-confirm">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger">
