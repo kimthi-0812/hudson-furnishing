@@ -9,6 +9,8 @@
 /storage/app/*
 !/storage/app/.gitkeep
 !/storage/app/public
+!/storage/app/public/uploads
+!/storage/app/public/uploads/products
 /storage/framework/cache/*
 !/storage/framework/cache/.gitkeep
 /storage/framework/sessions/*
