@@ -64,6 +64,10 @@ Route::get('/offers', [OfferController::class, 'index'])->name('offers.index');
 // Gallery Routes
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 
+// Independent Gallery Routes (Frontend)
+Route::get('/independent-gallery', [App\Http\Controllers\IndependentGalleryController::class, 'index'])->name('independent-gallery.index');
+Route::get('/independent-gallery/{gallery}', [App\Http\Controllers\IndependentGalleryController::class, 'show'])->name('independent-gallery.show');
+
 // Contact Routes
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'store'])->middleware('auth')->name('contact.store');
@@ -238,6 +242,34 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
         'update'  => 'admin.users.update',
         'destroy' => 'admin.users.destroy'
     ]);
+
+    // Independent Gallery Routes
+    Route::resource('independent-gallery', App\Http\Controllers\Admin\IndependentGalleryController::class)->names([
+        'index'   => 'admin.independent-gallery.index',
+        'create'  => 'admin.independent-gallery.create',
+        'store'   => 'admin.independent-gallery.store',
+        'show'    => 'admin.independent-gallery.show',
+        'edit'    => 'admin.independent-gallery.edit',
+        'update'  => 'admin.independent-gallery.update',
+        'destroy' => 'admin.independent-gallery.destroy'
+    ]);
+    
+    Route::post('independent-gallery/{gallery}/set-primary', [App\Http\Controllers\Admin\IndependentGalleryController::class, 'setPrimary'])
+        ->name('admin.independent-gallery.set-primary');
+
+    // Carousel Routes
+    Route::resource('carousels', App\Http\Controllers\Admin\CarouselController::class)->names([
+        'index'   => 'admin.carousels.index',
+        'create'  => 'admin.carousels.create',
+        'store'   => 'admin.carousels.store',
+        'show'    => 'admin.carousels.show',
+        'edit'    => 'admin.carousels.edit',
+        'update'  => 'admin.carousels.update',
+        'destroy' => 'admin.carousels.destroy'
+    ]);
+    
+    Route::post('carousels/{carousel}/toggle-status', [App\Http\Controllers\Admin\CarouselController::class, 'toggleStatus'])
+        ->name('admin.carousels.toggle-status');
 });
 
 // API Routes for AJAX (outside admin group for testing)

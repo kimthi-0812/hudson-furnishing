@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Offer;
 use App\Models\VisitorStat;
 use App\Models\SiteSetting;
+use App\Models\Carousel;
 
 class HomeController extends Controller
 {
@@ -57,8 +58,11 @@ class HomeController extends Controller
             ->get();
 
         $siteSettings = SiteSetting::pluck('value', 'key')->toArray();
+        
+        // Get active carousels ordered by sort_order
+        $carousels = Carousel::active()->ordered()->get();
 
-        return view('pages.home', compact('featuredProducts', 'activeOffers', 'selectedCategory', 'categoryProducts', 'allCategories', 'siteSettings'));
+        return view('pages.home', compact('featuredProducts', 'activeOffers', 'selectedCategory', 'categoryProducts', 'allCategories', 'siteSettings', 'carousels'));
     }
 
     /**

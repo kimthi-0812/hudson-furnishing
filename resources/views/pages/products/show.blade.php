@@ -67,10 +67,15 @@
                     <span class="text-warning"><i class="fas fa-exclamation-triangle me-1"></i>Sản phẩm tạm thời hết hàng</span>
                 @endif
             </div>
-            <div class="product-actions mb-4">                
-                <button class="btn btn-outline-secondary btn-lg">
-                    <i class="fas fa-heart me-1"></i>Thêm Vào Danh Sách Yêu Thích
-                </button>
+            <div class="product-actions mb-4">
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="{{ route('contact.index', ['product_id' => $product->id]) }}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-envelope me-1"></i>Liên Hệ Tư Vấn
+                    </a>
+                    <button class="btn btn-outline-secondary btn-lg">
+                        <i class="fas fa-heart me-1"></i>Thêm Vào Danh Sách Yêu Thích
+                    </button>
+                </div>
             </div>
         </div>
     </div>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Category Filter - Hudson Furnishing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .test-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+        .btn:hover { background: linear-gradient(135deg, #2980b9, #3498db); }
+        .btn-success { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+        .btn-warning { background: linear-gradient(135deg, #f39c12, #e67e22); }
+        .code {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        .feature-list {
+            background-color: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+        .test-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="test-title">🎯 Test Category Filter - Homepage</h1>
+        
+        <div class="test-section">
+            <h3>✅ Feature Implemented</h3>
+            <div class="status success">
+                <strong>🎉 Successfully implemented Category Filter with Sofa as default!</strong>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 Technical Implementation</h3>
+            <div class="feature-list">
+                <strong>✅ Backend Changes:</strong>
+                <ul>
+                    <li>✅ Updated HomeController@index to accept Request parameter</li>
+                    <li>✅ Added category selection logic with Sofa as default</li>
+                    <li>✅ Smart category detection using LIKE query</li>
+                    <li>✅ Optimized queries for selected category products</li>
+                    <li>✅ Added allCategories for dropdown population</li>
+                </ul>
+            </div>
+            
+            <div class="feature-list">
+                <strong>✅ Frontend Changes:</strong>
+                <ul>
+                    <li>✅ Beautiful category filter dropdown with icons</li>
+                    <li>✅ Auto-submit form on category change</li>
+                    <li>✅ Dynamic category header with product count</li>
+                    <li>✅ Responsive grid layout for products</li>
+                    <li>✅ Enhanced styling with gradients and shadows</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🎨 UI Features</h3>
+            <div class="status info">
+                <strong>✨ Visual Enhancements:</strong>
+                <ul>
+                    <li>🎨 Modern filter design with gradient styling</li>
+                    <li>🎯 Auto-submit dropdown for seamless UX</li>
+                    <li>🏷️ Product count display in dropdown options</li>
+                    <li>📱 Fully responsive design</li>
+                    <li>🎨 Category header with section info</li>
+                    <li>📸 Smart image handling (primary_image priority)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🧪 Test Instructions</h3>
+            <div class="status warning">
+                <strong>📋 How to test the category filter:</strong>
+                <ol>
+                    <li><strong>Default Sofa Display:</strong>
+                        <div class="code">
+                            1. Go to: http://127.0.0.1:8003/<br>
+                            2. Scroll to "Sản Phẩm Theo Danh Mục" section<br>
+                            3. Should see Sofa products by default
+                        </div>
+                    </li>
+                    <li><strong>Category Filter:</strong>
+                        <div class="code">
+                            1. Find the dropdown "Chọn danh mục"<br>
+                            2. Select different categories<br>
+                            3. Page should reload with new category products
+                        </div>
+                    </li>
+                    <li><strong>Test Different Categories:</strong>
+                        <div class="code">
+                            1. Try "Giường ngủ" (Bedroom)<br>
+                            2. Try "Tủ quần áo" (Wardrobe)<br>
+                            3. Try "Bàn cà phê" (Coffee Table)<br>
+                            4. Verify products change accordingly
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔗 Test Links</h3>
+            <div class="test-links">
+                <a href="http://127.0.0.1:8003/" class="btn btn-success" target="_blank">
+                    🏠 Homepage (Default Sofa)
+                </a>
+                <a href="http://127.0.0.1:8003/?category_id=1" class="btn" target="_blank">
+                    🛏️ Giường Ngủ
+                </a>
+                <a href="http://127.0.0.1:8003/?category_id=2" class="btn" target="_blank">
+                    👔 Tủ Quần Áo
+                </a>
+                <a href="http://127.0.0.1:8003/?category_id=7" class="btn" target="_blank">
+                    ☕ Bàn Cà Phê
+                </a>
+                <a href="http://127.0.0.1:8003/products" class="btn btn-warning" target="_blank">
+                    📦 All Products
+                </a>
+            </div>
+        </div>
+
+        <div class="highlight">
+            <h3>🎯 Key Features:</h3>
+            <ul>
+                <li><strong>Default Category:</strong> Sofa products shown by default</li>
+                <li><strong>Smart Detection:</strong> Uses LIKE query to find Sofa category</li>
+                <li><strong>Auto-Submit:</strong> Dropdown automatically submits form on change</li>
+                <li><strong>Product Count:</strong> Shows number of products in each category</li>
+                <li><strong>Responsive Design:</strong> Works on all device sizes</li>
+                <li><strong>Modern UI:</strong> Beautiful gradients and hover effects</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>✅ Expected Results</h3>
+            <div class="status success">
+                <strong>🎯 You should see:</strong>
+                <ul>
+                    <li>✅ <strong>Sofa products by default</strong> on homepage load</li>
+                    <li>✅ <strong>Category filter dropdown</strong> with all available categories</li>
+                    <li>✅ <strong>Product count</strong> displayed in dropdown options</li>
+                    <li>✅ <strong>Auto-submit</strong> when selecting different categories</li>
+                    <li>✅ <strong>Category header</strong> showing selected category name</li>
+                    <li>✅ <strong>Product grid</strong> updating with new category products</li>
+                    <li>✅ <strong>Responsive layout</strong> on mobile/desktop</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔍 Code Structure</h3>
+            <div class="code">
+<strong>HomeController@index(Request $request):</strong>
+- Accepts request parameter for category filtering
+- Defaults to Sofa category if no selection
+- Fetches products for selected category
+- Provides all categories for dropdown
+
+<strong>home.blade.php:</strong>
+- Category filter dropdown with auto-submit
+- Dynamic category header display
+- Product grid with hover effects
+- Responsive design implementation
+
+<strong>CSS Enhancements:</strong>
+- Modern filter styling
+- Category header gradients
+- Product card animations
+- Responsive grid layout
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🎉 Success Criteria</h3>
+            <div class="status info">
+                <strong>✅ The feature is successful if:</strong>
+                <ul>
+                    <li>✅ Sofa products show by default on homepage</li>
+                    <li>✅ Category dropdown works and shows all categories</li>
+                    <li>✅ Selecting different categories updates products</li>
+                    <li>✅ Product count is displayed in dropdown</li>
+                    <li>✅ Category header shows selected category info</li>
+                    <li>✅ Auto-submit works smoothly</li>
+                    <li>✅ Mobile layout is responsive</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="highlight">
+            <h3>🚀 Ready to Test!</h3>
+            <p><strong>The category filter is now live!</strong> Visit the homepage and test the dropdown to see different categories of products. The default display shows Sofa products as requested.</p>
+        </div>
+    </div>
+</body>
+</html>

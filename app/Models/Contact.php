@@ -16,6 +16,7 @@ class Contact extends Model
         'email',
         'phone',
         'message',
+        'product_id',
         'status',
         'notes',
     ];
@@ -24,4 +25,12 @@ class Contact extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    /**
+     * Get the product that the contact is about.
+     */
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

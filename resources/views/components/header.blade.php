@@ -51,10 +51,19 @@
                         </a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('gallery.*') ? 'active' : '' }}" href="{{ route('gallery.index') }}">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {{ request()->routeIs('gallery.*') || request()->routeIs('independent-gallery.*') ? 'active' : '' }}" 
+                       href="#" id="galleryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Thư Viện
                     </a>
+                    <ul class="dropdown-menu shadow">
+                        <li><a class="dropdown-item" href="{{ route('gallery.index') }}">
+                            Thư Viện Sản Phẩm
+                        </a></li>
+                        <li><a class="dropdown-item" href="{{ route('independent-gallery.index') }}">
+                            Thư Viện Độc Lập
+                        </a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('offers.*') ? 'active' : '' }}" href="{{ route('offers.index') }}">

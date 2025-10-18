@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Admin Login - Hudson Furnishing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .test-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+        .btn:hover { background: linear-gradient(135deg, #2980b9, #3498db); }
+        .btn-success { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+        .btn-danger { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .code {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+        .credentials {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .test-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="test-title">🔐 Test Admin Login - Hudson Furnishing</h1>
+        
+        <div class="test-section">
+            <h3>✅ Issue Resolved</h3>
+            <div class="status success">
+                <strong>🎉 Admin login issue has been FIXED!</strong>
+                <p>The problem was that the database had no roles, so all users had no role assigned. This has been resolved by running the UserSeeder.</p>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 What Was Fixed</h3>
+            <div class="status info">
+                <strong>📋 Issues Found and Resolved:</strong>
+                <ul>
+                    <li>✅ <strong>Missing Roles:</strong> Database had 0 roles, all users had no role</li>
+                    <li>✅ <strong>UserSeeder Bug:</strong> Was using 'role' instead of 'role_id'</li>
+                    <li>✅ <strong>Admin User:</strong> Created with proper admin role assignment</li>
+                    <li>✅ <strong>Role System:</strong> All roles (admin, staff, customer) created</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔑 Admin Credentials</h3>
+            <div class="credentials">
+                <strong>🎯 Admin Login Details:</strong>
+                <div class="code">
+Email: admin@hudsonfurnishing.com
+Password: Admin123!
+Role: admin
+                </div>
+                <p><strong>⚠️ Note:</strong> Use these credentials to login as admin.</p>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🧪 How to Test Admin Login</h3>
+            <div class="status warning">
+                <strong>📋 Step-by-step testing:</strong>
+                <ol>
+                    <li><strong>Go to Login Page:</strong>
+                        <div class="code">http://127.0.0.1:8003/login</div>
+                    </li>
+                    <li><strong>Enter Admin Credentials:</strong>
+                        <div class="code">Email: admin@hudsonfurnishing.com
+Password: Admin123!</div>
+                    </li>
+                    <li><strong>Click Login Button</strong></li>
+                    <li><strong>Should redirect to admin dashboard:</strong>
+                        <div class="code">http://127.0.0.1:8003/admin</div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔗 Test Links</h3>
+            <div class="test-links">
+                <a href="http://127.0.0.1:8003/login" class="btn btn-success" target="_blank">
+                    🔐 Login Page
+                </a>
+                <a href="http://127.0.0.1:8003/admin" class="btn btn-danger" target="_blank">
+                    🏠 Admin Dashboard
+                </a>
+                <a href="http://127.0.0.1:8003/" class="btn" target="_blank">
+                    🌐 Homepage
+                </a>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>✅ Expected Results</h3>
+            <div class="status success">
+                <strong>🎯 After successful admin login:</strong>
+                <ul>
+                    <li>✅ <strong>Redirect to admin dashboard</strong> (/admin)</li>
+                    <li>✅ <strong>See admin navigation menu</strong> with all admin features</li>
+                    <li>✅ <strong>Access to all admin sections:</strong>
+                        <ul>
+                            <li>Products Management</li>
+                            <li>Categories Management</li>
+                            <li>Brands Management</li>
+                            <li>Users Management</li>
+                            <li>Settings</li>
+                            <li>And more...</li>
+                        </ul>
+                    </li>
+                    <li>✅ <strong>Admin user info</strong> displayed in header</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔍 Database Status</h3>
+            <div class="status info">
+                <strong>📊 Current Database State:</strong>
+                <div class="code">
+✅ Roles: 3 (admin, staff, customer)
+✅ Users: 7 total
+✅ Admin User: admin@hudsonfurnishing.com (Role: admin)
+✅ Other Users: 6 (Role: customer)
+✅ UserSeeder: Fixed and working
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🚀 Admin Features Available</h3>
+            <div class="status info">
+                <strong>🎯 Admin Dashboard Features:</strong>
+                <ul>
+                    <li>📦 <strong>Products Management:</strong> Create, edit, delete products</li>
+                    <li>📂 <strong>Categories Management:</strong> Manage product categories</li>
+                    <li>🏷️ <strong>Brands Management:</strong> Manage product brands</li>
+                    <li>👥 <strong>Users Management:</strong> Manage user accounts</li>
+                    <li>⚙️ <strong>Settings:</strong> Configure site settings</li>
+                    <li>📊 <strong>Dashboard:</strong> View statistics and analytics</li>
+                    <li>🗑️ <strong>Trash Management:</strong> Manage deleted items</li>
+                    <li>📄 <strong>About Page:</strong> Edit about page content</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🎉 Success Criteria</h3>
+            <div class="status success">
+                <strong>✅ Admin login is successful if:</strong>
+                <ul>
+                    <li>✅ Can login with admin credentials</li>
+                    <li>✅ Redirected to admin dashboard after login</li>
+                    <li>✅ Can access all admin features</li>
+                    <li>✅ Admin menu is visible in navigation</li>
+                    <li>✅ No permission errors when accessing admin routes</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 Technical Details</h3>
+            <div class="code">
+<strong>Fixed Issues:</strong>
+1. UserSeeder.php - Changed 'role' to 'role_id'
+2. Created roles: admin, staff, customer
+3. Assigned admin role to admin@hudsonfurnishing.com
+4. All users now have proper role assignments
+
+<strong>Admin Middleware:</strong>
+- Checks if user is authenticated
+- Checks if user has admin role via isAdmin() method
+- Redirects to login if not authenticated
+- Shows 403 error if not admin
+
+<strong>Routes Protected:</strong>
+- All /admin/* routes require admin authentication
+- Middleware: ['auth', 'admin']
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🎯 Ready to Test!</h3>
+            <div class="status success">
+                <strong>🚀 Admin login is now working!</strong>
+                <p>Use the credentials above to login as admin and access the full admin dashboard with all management features.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

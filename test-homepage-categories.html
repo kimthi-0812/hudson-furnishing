@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Homepage Categories</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .test-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+        .btn:hover { background: linear-gradient(135deg, #2980b9, #3498db); }
+        .btn-success { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+        .code {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        .feature-list {
+            background-color: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="test-title">🏠 Test Homepage - Products by Category</h1>
+        
+        <div class="test-section">
+            <h3>✅ Feature Implemented</h3>
+            <div class="status success">
+                <strong>🎉 Successfully added "Sản Phẩm Theo Danh Mục" section to homepage!</strong>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 Technical Implementation</h3>
+            <div class="feature-list">
+                <strong>✅ Backend Changes:</strong>
+                <ul>
+                    <li>✅ Updated HomeController@index to fetch categories with products</li>
+                    <li>✅ Added categoriesWithProducts variable to view</li>
+                    <li>✅ Optimized queries with eager loading and limits</li>
+                </ul>
+            </div>
+            
+            <div class="feature-list">
+                <strong>✅ Frontend Changes:</strong>
+                <ul>
+                    <li>✅ Added "Products by Category" section to home.blade.php</li>
+                    <li>✅ Responsive grid layout for products</li>
+                    <li>✅ Category headers with "View All" buttons</li>
+                    <li>✅ Product cards with images, names, prices, and sale badges</li>
+                    <li>✅ Hover effects and animations</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🎨 UI Features</h3>
+            <div class="status info">
+                <strong>✨ Visual Enhancements:</strong>
+                <ul>
+                    <li>🎨 Modern card design with rounded corners</li>
+                    <li>🎯 Hover animations (lift effect, image zoom)</li>
+                    <li>🏷️ Sale badges for discounted products</li>
+                    <li>📱 Fully responsive design</li>
+                    <li>🎨 Gradient buttons with hover effects</li>
+                    <li>📸 Smart image handling (primary_image or first image)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Data Structure</h3>
+            <div class="code">
+<strong>Categories with Products:</strong>
+- Giường ngủ (3 products)
+- Tủ quần áo (4 products) 
+- Bàn đầu giường (2 products)
+- Tủ trang điểm (5 products)
+- Bộ phòng ngủ (5 products)
+- Sofa (5 products)
+- Bàn cà phê (2 products)
+- Tủ ly (1 products)
+
+<strong>Query Logic:</strong>
+- Shows up to 4 categories with products
+- Each category shows up to 4 products
+- Only active products are displayed
+- Includes all necessary relationships
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🧪 Test Instructions</h3>
+            <div class="status warning">
+                <strong>📋 How to test the new feature:</strong>
+                <ol>
+                    <li><strong>Visit Homepage:</strong>
+                        <div class="code">
+                            1. Go to: http://127.0.0.1:8002/<br>
+                            2. Scroll down past "Sản Phẩm Nổi Bật"<br>
+                            3. Look for "Sản Phẩm Theo Danh Mục" section
+                        </div>
+                    </li>
+                    <li><strong>Check Categories:</strong>
+                        <div class="code">
+                            1. Verify category headers are displayed<br>
+                            2. Check "Xem Tất Cả" buttons work<br>
+                            3. Confirm products are shown for each category
+                        </div>
+                    </li>
+                    <li><strong>Test Interactions:</strong>
+                        <div class="code">
+                            1. Hover over product cards (should lift up)<br>
+                            2. Click product names (should go to product detail)<br>
+                            3. Click "Xem Chi Tiết" buttons<br>
+                            4. Click "Xem Tất Cả" category buttons
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🚀 Test Links</h3>
+            <div class="status info">
+                <strong>🔗 Ready to test:</strong>
+                <div style="margin-top: 15px;">
+                    <a href="http://127.0.0.1:8002/" class="btn btn-success" target="_blank">
+                        🏠 Test Homepage
+                    </a>
+                    <a href="http://127.0.0.1:8002/products" class="btn" target="_blank">
+                        📦 All Products
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>✅ Expected Results</h3>
+            <div class="status success">
+                <strong>🎯 You should see:</strong>
+                <ul>
+                    <li>✅ "Sản Phẩm Theo Danh Mục" section on homepage</li>
+                    <li>✅ Multiple categories with product grids</li>
+                    <li>✅ Category headers with "Xem Tất Cả" buttons</li>
+                    <li>✅ Product cards with images and details</li>
+                    <li>✅ Hover effects on product cards</li>
+                    <li>✅ Sale badges on discounted products</li>
+                    <li>✅ Responsive layout on mobile/desktop</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔍 Code Structure</h3>
+            <div class="code">
+<strong>HomeController@index:</strong>
+- Fetches categories with products
+- Limits to 4 categories and 4 products per category
+- Includes all necessary relationships
+
+<strong>home.blade.php:</strong>
+- New section after Featured Products
+- Responsive grid layout
+- Product cards with hover effects
+- Category headers with navigation
+
+<strong>CSS Styles:</strong>
+- Product card animations
+- Hover effects and transitions
+- Responsive design
+- Modern card styling
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🎉 Success Criteria</h3>
+            <div class="status info">
+                <strong>✅ The feature is successful if:</strong>
+                <ul>
+                    <li>✅ Categories section appears on homepage</li>
+                    <li>✅ Products are displayed in organized grids</li>
+                    <li>✅ Navigation buttons work correctly</li>
+                    <li>✅ Hover effects are smooth and responsive</li>
+                    <li>✅ Mobile layout works properly</li>
+                    <li>✅ Performance is good (no slow loading)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

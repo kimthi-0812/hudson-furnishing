@@ -30,6 +30,7 @@
                         <th>Họ Tên</th>
                         <th>Email</th>
                         <th>Số Điện Thoại</th>
+                        <th>Sản Phẩm</th>
                         <th>Nội Dung</th>
                         <th>Tình Trạng</th>
                         <th>Ngày Tạo</th>
@@ -42,6 +43,15 @@
                             <td>{{ $contact->name }}</td>
                             <td>{{ $contact->email }}</td>
                             <td>{{ $contact->phone ?? 'N/A' }}</td>
+                            <td>
+                                @if($contact->product)
+                                    <a href="{{ route('product.show', $contact->product) }}" class="text-decoration-none">
+                                        {{ $contact->product->name }}
+                                    </a>
+                                @else
+                                    <span class="text-muted">Chung</span>
+                                @endif
+                            </td>
                             <td>{{ Str::limit($contact->message, 100) }}</td>
                             <td>
                                 <span class="badge bg-{{ $contact->status == 'new' ? 'warning' : ($contact->status == 'read' ? 'info' : 'success') }}">

@@ -7,19 +7,66 @@
 <section class="hero-section position-relative text-white d-flex align-items-center justify-content-center" style="min-height: 65vh; overflow: hidden;">
     <!-- Carousel nền -->
     <div id="heroCarousel" class="carousel slide carousel-fade position-absolute top-0 start-0 w-100 h-100" data-bs-ride="carousel" data-bs-pause="hover">
-        <div class="carousel-inner h-100">            
-           @foreach (['hero_image_1', 'hero_image_2', 'hero_image_3'] as $index => $key)
-                @if (!empty($siteSettings[$key]))
+        <div class="carousel-inner h-100">
+            @if($carousels->count() > 0)
+                @foreach($carousels as $index => $carousel)
                     <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                         <img 
-                            src="{{ Storage::url($siteSettings[$key]) }}" 
+                            src="{{ asset('storage/carousels/' . $carousel->image) }}" 
                             class="d-block w-100 h-100" 
-                            alt="Hero Image {{ $index + 1 }}"
-                            style="object-fit: cover; max-height: 65vh; object-position: center ;"
+                            alt="{{ $carousel->title }}"
+                            style="object-fit: cover; max-height: 65vh; object-position: center;"
                         >
+                        
+                        <!-- Carousel Content Overlay -->
+                        @if($carousel->title || $carousel->description || $carousel->button_text)
+                            <div class="carousel-caption d-none d-md-block">
+                                <div class="container">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-8 text-center">
+                                            @if($carousel->title)
+                                                <h1 class="display-4 fw-bold mb-4 bounce-in">{{ $carousel->title }}</h1>
+                                            @endif
+                                            @if($carousel->description)
+                                                <p class="lead mb-4 slide-in">{{ $carousel->description }}</p>
+                                            @endif
+                                            @if($carousel->button_text && $carousel->button_url)
+                                                <a href="{{ $carousel->button_url }}" class="btn btn-secondary btn-lg bounce-in">
+                                                    {{ $carousel->button_text }}
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
-                @endif
-            @endforeach           
+                @endforeach
+            @else
+                <!-- Fallback to default content if no carousels -->
+                <div class="carousel-item active">
+                    <img 
+                        src="{{ asset('images/HF_Home_1.jpg') }}" 
+                        class="d-block w-100 h-100" 
+                        alt="Hudson Furnishing"
+                        style="object-fit: cover; max-height: 65vh; object-position: center;"
+                    >
+                    <div class="carousel-caption d-none d-md-block">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8 text-center">
+                                    <h1 class="display-4 fw-bold mb-4 bounce-in">Biến Đổi Không Gian Của Bạn!</h1>
+                                    <p class="lead mb-4 slide-in">
+                                        Khám phá bộ sưu tập nội thất cao cấp cho mọi phòng trong ngôi nhà của bạn.
+                                        Chất lượng thủ công gặp gỡ thiết kế hiện đại.
+                                    </p>
+                                    <a href="{{ route('products.index') }}" class="btn btn-secondary btn-lg bounce-in">Khám Phá Ngay!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -34,24 +81,21 @@
     </button>
 
     <!-- Dấu chấm dưới -->
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
+    @if($carousels->count() > 1)
+        <div class="carousel-indicators">
+            @foreach($carousels as $index => $carousel)
+                <button type="button" 
+                        data-bs-target="#heroCarousel" 
+                        data-bs-slide-to="{{ $index }}" 
+                        aria-label="Slide {{ $index + 1 }}"
+                        {{ $index === 0 ? 'class="active" aria-current="true"' : '' }}>
+                </button>
+            @endforeach
+        </div>
+    @endif
 
     <!-- Lớp phủ mờ (overlay để chữ nổi bật hơn) -->
     <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(47, 62, 70, 0.1);"></div>
-
-    <!-- Nội dung chữ -->
-    <div class="container position-absolute bottom-0 start-50 translate-middle-x text-center z-2 mb-5">
-        <h1 class="display-4 fw-bold mb-4 bounce-in">Biến Đổi Không Gian Của Bạn!</h1>
-        <p class="lead mb-4 slide-in">
-            Khám phá bộ sưu tập nội thất cao cấp cho mọi phòng trong ngôi nhà của bạn.
-            Chất lượng thủ công gặp gỡ thiết kế hiện đại.
-        </p>
-        <a href="{{ route('products.index') }}" class="btn btn-secondary btn-lg bounce-in">Khám Phá Ngay!</a>
-    </div>
 </section>
 
 
@@ -63,12 +107,12 @@
             <p class="lead text-muted">Khám phá những mẫu thiết kế được yêu thích nhất</p>
         </div>
         
-        <div class="row">
+        <div class="row justify-content-center">
             @forelse($featuredProducts as $product)
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div class="card h-100">
+                <div class="col-lg-3 col-md-6 col-sm-6 mb-4 d-flex">
+                    <div class="card h-100 w-100">
                         @if($product->images->count() > 0)
-                            <img src="{{ asset('storage/uploads/' . $product->images->first()->url) }}" 
+                            <img src="{{ asset('uploads/' . $product->images->first()->url) }}" 
                                  class="card-img-top" 
                                  alt="{{ $product->name }}"
                                  style="height: 200px; object-fit: cover;">
@@ -161,12 +205,12 @@
                         <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                             <div class="card h-100 product-card">
                                 @if($product->primary_image)
-                                    <img src="{{ asset('storage/uploads/' . $product->primary_image) }}" 
+                                    <img src="{{ asset('uploads/' . $product->primary_image) }}" 
                                          class="card-img-top" 
                                          alt="{{ $product->name }}"
                                          style="height: 200px; object-fit: cover;">
                                 @elseif($product->images->count() > 0)
-                                    <img src="{{ asset('storage/uploads/' . $product->images->first()->url) }}" 
+                                    <img src="{{ asset('uploads/' . $product->images->first()->url) }}" 
                                          class="card-img-top" 
                                          alt="{{ $product->name }}"
                                          style="height: 200px; object-fit: cover;">

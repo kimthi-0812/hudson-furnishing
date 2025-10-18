@@ -10,7 +10,7 @@ class ContactController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Contact::query();
+        $query = Contact::with('product');
 
         // Search by name, email, or phone
         if ($request->has('search') && $request->search != '') {

@@ -79,7 +79,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-white {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}" 
                                href="{{ route('admin.gallery.index') }}">
-                                <i class="fas fa-images me-2"></i>Thư Viện
+                                <i class="fas fa-images me-2"></i>Thư Viện (SP)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white {{ request()->routeIs('admin.independent-gallery.*') ? 'active' : '' }}" 
+                               href="{{ route('admin.independent-gallery.index') }}">
+                                <i class="fas fa-photo-video me-2"></i>Thư Viện Độc Lập
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white {{ request()->routeIs('admin.carousels.*') ? 'active' : '' }}" 
+                               href="{{ route('admin.carousels.index') }}">
+                                <i class="fas fa-images me-2"></i>Carousel/Slider
                             </a>
                         </li>
                         <li class="nav-item">
